@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+        xmlns:mx="http://www.adobe.com/2006/mxml"
+        xmlns:components="br.com.cotecom.view.components.*"
+        xmlns:application="br.com.cotecom.view.components.application.*"
+        xmlns:busca="br.com.cotecom.view.components.busca.*">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.Session;
+
+        [Bindable]
+        public var text:Session = Session.getInstance();
+        ]]>
+	</mx:Script>
+    <components:View>
+
+        <mx:Label width="100%" text="Log de Erros:" color="#FFFFFF"/>
+        <mx:TextArea width="100%" height="100%" text="{text.errorConsole}"/>
+        <components:buttonBar>
+            <mx:HBox>
+                <mx:Button styleName="barButton"
+                           labelPlacement="bottom"
+                           label="Say Hi!"/>
+
+                <mx:Button styleName="barButton"
+                           labelPlacement="bottom"
+                           label="Enviar"/>
+
+            </mx:HBox>
+        </components:buttonBar>
+    </components:View>
+</mx:Canvas>

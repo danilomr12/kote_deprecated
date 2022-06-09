@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<mx:Label xmlns:mx="http://www.adobe.com/2006/mxml"
+          currentState="positive"
+          toolTip="Diferença percentual entre preço do escolhido e o próximo menor preço">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+
+        private const POSITIVE_COLOR:uint = 0x000000; // Black
+        private const NEGATIVE_COLOR:uint = 0xFF0000; // Red
+        private const ALERT_COLOR:uint = 0xFF0000; // Red
+        private const VALOR_ALERTA:uint = 30;
+
+        override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+            super.updateDisplayList(unscaledWidth, unscaledHeight);
+
+            var item:ItemAnaliseCotacaoDTO = ItemAnaliseCotacaoDTO(data);
+            if (item.naoComprar) {
+                this.currentState = "zero"
+            } else if (item.diferencaEntrePrimeiroESegundoPrecos > 0) {
+                if (item.diferencaEntrePrimeiroESegundoPrecos > VALOR_ALERTA) {
+                    this.currentState = "alert";
+                } else {
+                    this.currentState = "positive";
+                }
+                this.text = diferencaPercentual();
+            } else if (item.diferencaEntrePrimeiroESegundoPrecos < 0) {
+                this.currentState = "negative";
+                this.text = diferencaPercentual();
+            } else {
+                this.currentState = "zero";
+            }
+        }
+
+        public function lbfDiferenca(analiseItem:Object):String {
+            var dif:Number = (analiseItem as ItemAnaliseCotacaoDTO).diferencaEntrePrimeiroESegundoPrecos;
+            return dif != 0 ? dif.toFixed(2) + "%" : "0%";
+        }
+
+        private function diferencaPercentual():String {
+            var dif:Number = (data as ItemAnaliseCotacaoDTO).diferencaEntrePrimeiroESegundoPrecos;
+            return dif != 0 ? dif.toFixed(2) + "%" : "0%";
+        }
+        ]]>
+    </mx:Script>
+
+    <mx:states>
+        <mx:State name="positive">
+            <mx:SetStyle name="color" target="{this}" value="{POSITIVE_COLOR}"/>
+            <!--<mx:SetProperty name="text" target="{this}" value="{lbfDiferenca(data)}"/>-->
+        </mx:State>
+        <mx:State name="negative">
+            <mx:SetStyle name="color" target="{this}" value="{NEGATIVE_COLOR}"/>
+            <!--<mx:SetProperty name="text" target="{this}" value="{lbfDiferenca(data)}"/>-->
+        </mx:State>
+        <mx:State name="zero">
+            <mx:SetProperty target="{this}" name="text" value="-"/>
+        </mx:State>
+        <mx:State name="alert">
+            <mx:SetStyle name="color" target="{this}" value="{ALERT_COLOR}"/>
+            <!--<mx:SetProperty name="text" target="{this}" value="{lbfDiferenca(data)}"/>-->
+        </mx:State>
+    </mx:states>
+</mx:Label>

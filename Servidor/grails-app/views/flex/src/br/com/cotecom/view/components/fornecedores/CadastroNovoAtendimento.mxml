@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow
+        xmlns:mx="http://www.adobe.com/2006/mxml"
+        xmlns:application="br.com.cotecom.view.components.application.*"
+        xmlns:representante="br.com.cotecom.view.components.representante.*"
+        xmlns:contato="br.com.cotecom.view.components.contato.*"
+        title="Cadastro novo representante"
+        showCloseButton="true"
+        close="close()">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.fornecedores.CrieAtendimentoEvent;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+
+        import mx.events.ValidationResultEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var representante:Usuario;
+
+        private function canceleEFecheCadastro():void {
+            this.nomeTextInput.text = "";
+            this.emailTextImput.text = "";
+            close();
+        }
+
+        public function validateFields():Boolean {
+            var vResult1:ValidationResultEvent;
+            var vResult2:ValidationResultEvent;
+            vResult1 = validatorNome.validate();
+            vResult2 = validatorEmail.validate();
+
+            return !(vResult1.type == ValidationResultEvent.INVALID ||
+                    vResult2.type == ValidationResultEvent.INVALID)
+        }
+
+        private function salveRepresentanteEAdicioneAosAtendimentos(event:MouseEvent):void {
+            if (validateFields()) {
+                this.representante.nome = this.nomeTextInput.text;
+                this.representante.email = this.emailTextImput.text;
+                var saveAtendimentoEvent:CrieAtendimentoEvent = new CrieAtendimentoEvent(CrieAtendimentoEvent.EVENT_NAME,
+                        this.representante);
+                saveAtendimentoEvent.dispatch();
+                close();
+            }
+        }
+
+        protected function close():void {
+            PopUpManager.removePopUp(this)
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:StringValidator id="validatorNome" required="true" source="{nomeTextInput}"
+                        property="text" requiredFieldError="O nome do representante é obrigatório"/>
+    <mx:EmailValidator id="validatorEmail" required="true" source="{emailTextImput}"
+                       missingUsernameError="Faltando nome de usuário" invalidCharError="Carácter inválido"
+                       invalidDomainError="Domínio inválido" invalidPeriodsInDomainError="Formato incorreto"
+                       property="text" requiredFieldError="É necessário que o representante possua um email"
+                       missingPeriodInDomainError="O domínio do seu e-mail está faltando uma parte"/>
+
+    <mx:VBox width="100%" height="100%">
+        <mx:Form>
+            <mx:FormItem label="Nome" width="100%" id="nomeFormItem" required="true">
+                <mx:TextInput id="nomeTextInput" text="{this.representante.nome}" width="100%" toolTip="nome do representante"/>
+            </mx:FormItem>
+
+            <mx:FormItem label="E-mail" width="100%" id="emailFormItem" required="true">
+                <mx:TextInput id="emailTextImput" text="{this.representante.email}" width="100%" toolTip="E-mail do representante"/>
+            </mx:FormItem>
+
+            <mx:HBox id="hBoxButtonsAtendimento" width="100%">
+                <mx:Button id="Cancelar"
+                           styleName="cancelButton"
+                           label="Cancelar"
+                           width="100%"
+                           click="canceleEFecheCadastro()"/>
+                <mx:Button id="buttonSalvarAtendimento"
+                               styleName="addButton"
+                               label="Adicionar Representante"
+                               width="100%"
+                               click="salveRepresentanteEAdicioneAosAtendimentos(event)"/>
+            </mx:HBox>
+        </mx:Form>
+    </mx:VBox>
+</mx:TitleWindow>

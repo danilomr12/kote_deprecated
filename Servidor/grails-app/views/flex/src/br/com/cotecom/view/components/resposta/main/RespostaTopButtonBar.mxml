@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml"
+                          width="100%" height="100%">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.resposta.TelaResposta;
+        import br.com.cotecom.model.services.comprador.GerenciadorAplicacao;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+        import br.com.cotecom.view.components.fornecedores.CadastroRepresentante;
+
+        import com.flexspy.FlexSpy;
+
+        import mx.controls.Alert;
+        import mx.core.Application;
+        import mx.core.IFlexDisplayObject;
+        import mx.events.CloseEvent;
+        import mx.managers.PopUpManager;
+
+        private var dispState:String;
+        [Bindable]
+        public var session:Session = Session.getInstance();
+        [Bindable]
+        public var resposta:TelaResposta;
+
+        private function init(evt:Event):void {
+            /* Set up full screen handler. */
+            Application.application.stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreenHandler);
+            dispState = Application.application.stage.displayState;
+        }
+
+        private function fullScreenHandler(evt:FullScreenEvent):void {
+            dispState = Application.application.stage.displayState + " (fullScreen=" + evt.fullScreen.toString() + ")";
+            if (evt.fullScreen) {
+                /* Do something specific here if we switched to full screen mode. */
+            } else {
+                /* Do something specific here if we switched to normal mode. */
+            }
+        }
+
+
+        private function toggleFullScreen():void {
+            try {
+                switch (Application.application.stage.displayState) {
+                    case StageDisplayState.FULL_SCREEN:
+                        /* If already in full screen mode, switch to normal mode. */
+                        Application.application.stage.displayState = StageDisplayState.NORMAL;
+                        break;
+                    default:
+                        /* If not in full screen mode, switch to full screen mode. */
+                        Application.application.stage.displayState = StageDisplayState.FULL_SCREEN;
+                        break;
+                }
+            } catch (err:SecurityError) {
+                // ignore
+            }
+        }
+
+        public function editeDadosPessoais():void {
+            var cadastroAtendimento:CadastroRepresentante = new CadastroRepresentante();
+            cadastroAtendimento.representante = session.user;
+            showWindow(cadastroAtendimento);
+        }
+
+        private function showWindow(window:IFlexDisplayObject):void {
+            PopUpManager.addPopUp(window, Application.application as RespostaMain, true);
+            PopUpManager.centerPopUp(window)
+        }
+
+        private function sair():void {
+            Alert.yesLabel = "Sim";
+            Alert.noLabel = "Não";
+            Alert.show("Tem certeza que deseja sair? Quaisquer alterações não salvas serão perdidas", "Atenção", Alert.NO | Alert.YES,
+                    Application.application as RespostaMain, handleEvent, null, 4);
+        }
+
+        private function switchUserBack():void {
+            GerenciadorAplicacao.getInstance().switchUserBack();
+        }
+
+        private function handleEvent(event:CloseEvent):void {
+            if (event.detail == Alert.YES) {
+                GerenciadorResposta.getInstance().salveItens();
+                logout();
+            } else {
+                logout();
+            }
+        }
+
+        private function logout():void {
+            GerenciadorAplicacao.getInstance().logout();
+        }
+
+        private function openYoutubeVideos(event:MouseEvent):void {
+            var fullUrl:String = "https://www.youtube.com/channel/UCnx548iBz16rF4ghyKJhjTg/feed?view_as=public";
+            ExternalInterface.call("window.open",fullUrl);
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:Label text="Kote - Compras Inteligentes"/>
+
+    <mx:Spacer width="100%"/>
+    <mx:Label text="Bem-vindo," />
+    <mx:LinkButton
+            label="{Session.getInstance().user.email}"
+            fontSize="12"
+            click="editeDadosPessoais()"/>
+    <mx:LinkButton
+            visible="{Session.getInstance().user.isSwitched}"
+            includeInLayout="{Session.getInstance().user.isSwitched}"
+            label="Retornar para Admin"
+            fontSize="12"
+            click="switchUserBack()"/>
+    <mx:LinkButton
+            label="FlexSpy"
+            fontSize="12"
+            toolTip="Iniciar Flex Spy"
+            click="{FlexSpy.show()}"
+            visible="false"
+            includeInLayout="false"/>
+    <mx:Label text="|" width="9" fontSize="12" paddingRight="0" paddingLeft="0"/>
+    <mx:Label
+            fontSize="12"
+            fontStyle="normal"
+            fontWeight="normal"
+            text="{'Empresa: ' + Session.getInstance().user.empresa.nomeFantasia}"
+            toolTip="Dados cadastrais da empresa"
+            textDecoration="none"
+            paddingLeft="0"/>
+    <mx:LinkButton
+            label="Ajuda"
+            fontSize="12" click="openYoutubeVideos(event)"/>
+
+    <mx:LinkButton
+            label="Sair"
+            fontSize="12"
+            toolTip="Sair do sistema"
+            click="sair()"/>
+</mx:ApplicationControlBar>

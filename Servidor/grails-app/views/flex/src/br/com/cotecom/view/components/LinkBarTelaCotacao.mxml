@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+		 width="100%">
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.aplicacao.ShowViewCaixaDeEntradaEvent;
+        import br.com.cotecom.model.domain.cotacao.CotacaoDTO;
+
+        [Bindable]
+        public var cotacaoSelecionada:CotacaoDTO
+        private var linkButtonLabel:String = "<< voltar para Caixa de entrada"
+        ]]>
+	</mx:Script>
+	
+	<mx:HBox verticalAlign="middle">
+		<mx:LinkButton label="{linkButtonLabel}"
+					   click="new ShowViewCaixaDeEntradaEvent().dispatch()"/>
+		<mx:Label text=">>"/>
+		<mx:Label text="Cotação: {cotacaoSelecionada.titulo} "/> <!--{cotacaoSelecionada.titulo}-->
+	</mx:HBox>
+</mx:HBox>

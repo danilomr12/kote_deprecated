@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	alpha="1.0" creationComplete="preInitialize()"
+	backgroundAlpha="1.0" 
+	borderStyle="inset" borderColor="#00C6FF" cornerRadius="11" 
+	height="25" backgroundColor="#B2A7BE" themeColor="#ABFAFB" fontSize="9" fontFamily="Times New Roman" fontWeight="normal">
+
+	<mx:Script>
+		<![CDATA[
+        import mx.collections.ArrayCollection;
+
+        private var buttons:ArrayCollection;
+
+        [Bindable]
+        private var _state:int = 0;
+
+        public static const RASCUNHO:int = 0;
+        public static const AGUARDANDO_RESPOSTAS:int = 1;
+        public static const PRONTA_PARA_ANALISE:int = 2;
+        public static const EM_ANALISE:int = 3;
+        public static const PRONTA_PARA_ENVIO_PEDIDOS:int = 4;
+        public static const AGUARDANDO_PEDIDOS:int = 5;
+        public static const PRONTA_PARA_ANALISE_FALTAS:int = 6;
+        public static const CANCELADA:int = 7;
+        public static const FINALIZADA:int = 8;
+
+        [Bindable(event="updateStatusBar")]
+        public function set state(stt:int):void {
+            this._state = stt
+            updateState();
+            new EventDispatcher().dispatchEvent(new Event("updateStatusBar"))
+        }
+
+        public function get state():int {
+            return this._state;
+        }
+
+        public function preInitialize():void {
+            buttons = new ArrayCollection()
+            buttons.addItem(nova)
+            buttons.addItem(aguardandoRespostas)
+            buttons.addItem(prontaParaAnalise)
+            buttons.addItem(emAnalise)
+            buttons.addItem(prontaParaEnvioDePedidos)
+            buttons.addItem(aguardandoPedidos)
+            buttons.addItem(prontaParaAnaliseDeFaltas)
+            buttons.addItem(cancelada)
+            buttons.addItem(finalizada)
+        }
+
+        public function updateState():void {
+            for each (var item:Button in buttons) {
+                item.enabled = false
+            }
+            switch (_state) {
+                case RASCUNHO:
+                    nova.enabled = true;
+                    break;
+                case AGUARDANDO_RESPOSTAS:
+                    aguardandoRespostas.enabled = true
+                    break;
+                case PRONTA_PARA_ANALISE:
+                    prontaParaAnalise.enabled = true
+                    break;
+                case EM_ANALISE:
+                    emAnalise.enabled = true
+                    break;
+                case PRONTA_PARA_ENVIO_PEDIDOS:
+                    prontaParaEnvioDePedidos.enabled = true
+                    break;
+                case AGUARDANDO_PEDIDOS:
+                    aguardandoPedidos.enabled = true
+                    break;
+                case PRONTA_PARA_ANALISE_FALTAS:
+                    prontaParaAnaliseDeFaltas.enabled = true
+                    break;
+                case CANCELADA:
+                    cancelada.enabled = true
+                    break;
+                case FINALIZADA:
+                    finalizada.enabled = true
+                    break;
+                default:
+                    nova.enabled = true;
+                    break;
+            }
+        }
+        ]]>
+	</mx:Script>
+	
+	<!--<mx:Text id="statusText" width="70"/>-->
+	<mx:Button id="nova" label="Nova" 
+		toggle="true" enabled="false" width="100%"  fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<mx:Button id="aguardandoRespostas" label="Aguardando respostas" 
+		enabled="false" toggle="true" width="100%"  fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<mx:Button id="prontaParaAnalise" label="Pronta para análise" 
+		toggle="true" enabled="false" width="100%"  fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<mx:Button id="emAnalise" label="Em análise" 
+		toggle="true" enabled="false" width="100%" fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<mx:Button id="prontaParaEnvioDePedidos" label="Pronta para envio de pedidos" 
+		toggle="true" enabled="false" width="100%" fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<mx:Button id="aguardandoPedidos" label="Aguardando pedidos" 
+		toggle="true" enabled="false" width="100%" fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<mx:Button id="prontaParaAnaliseDeFaltas" label="Pronta para análise de faltas" 
+		toggle="true" enabled="false" width="100%" fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<mx:Button id="cancelada" label="Cancelada" 
+		toggle="true" enabled="false" width="100%" fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<mx:Button id="finalizada" label="Finalizada" 
+		toggle="true" enabled="false" width="100%" fillAlphas="[1.0, 1.0, 1.0, 1.0]"/>
+	<!--<mx:Text id="logo" text="CoteCOM(r)" width="70"/>-->
+</mx:HBox>
+ 

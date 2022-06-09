@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:analise="br.com.cotecom.view.components.cotacao.analise.*"
+         horizontalAlign="center"  height="100%" width="100%" show="refresh()" creationComplete="refresh()">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.AnaliseRespostaDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseRespostaDTO;
+
+        import mx.collections.ArrayCollection;
+
+        [Bindable]
+        public var _analise:AnaliseCotacaoDTO;
+
+        [Bindable]
+        public var respostaSelecionada:*;
+
+        [Bindable]
+        private var alerta:String = "<p> Abaixo encontram-se os pedidos que serão enviados aos seus fornecedores.</p> " +
+                "<p>Analise e valide cada pedido com atenção antes de enviá-los</p>";
+
+        private function changeFilterFunction():void {
+            _analise.itensAnaliseCotacao.refresh();
+        }
+
+        private function retornaItensDoRepresentanteSelecionado(item:Object):Boolean {
+            if (item.respostas.length == 0 || respostasList == null || item.naoComprar)
+                return false;
+            else {
+                if (respostasList.selectedItem == null) {
+                    return (item.respostas.getItemAt(0) as ItemAnaliseRespostaDTO).idRepresentante ==
+                            (_analise.respostas.getItemAt(0) as AnaliseRespostaDTO).representanteId;
+                }
+                return (item.respostas.getItemAt(0) as ItemAnaliseRespostaDTO).idRepresentante ==
+                        (respostasList.selectedItem as AnaliseRespostaDTO).representanteId;
+            }
+        }
+
+        public function set analise(analiseCotacao:AnaliseCotacaoDTO):void {
+            _analise = analiseCotacao;
+            respostaSelecionada = _analise.respostas.getItemAt(0);
+            this.refresh();
+        }
+
+        public function refresh():void {
+            _analise.itensAnaliseCotacao.filterFunction = retornaItensDoRepresentanteSelecionado;
+            _analise.itensAnaliseCotacao.refresh();
+        }
+
+        [Bindable]
+        public function get analise():AnaliseCotacaoDTO {
+            return this._analise;
+        }
+
+        public function lbfDiferenca(analiseItem:Object, col:DataGridColumn):String {
+            var respostas:ArrayCollection = (analiseItem as ItemAnaliseCotacaoDTO).respostas;
+            if (respostas.length > 1) {
+                var menorPreco:* = respostas.getItemAt(0).precoAtribuido;
+                var maiorPreco:* = respostas.getItemAt(1).precoAtribuido;
+                var diferenca:* = maiorPreco - menorPreco;
+                var difPercentual:* = 100 * diferenca / menorPreco;
+                return difPercentual.toFixed(2) + "%";
+            } else
+                return "";
+        }
+
+        private function lbfMelhorResposta(item:Object, col:DataGridColumn):String {
+            var analiseItem:ItemAnaliseCotacaoDTO = item as ItemAnaliseCotacaoDTO;
+            if (analiseItem.respostas.length != 0) {
+                var itemRespostaMelhorPreco:ItemAnaliseRespostaDTO = analiseItem.respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+                return itemRespostaMelhorPreco.precoEmbalagem + " (" + itemRespostaMelhorPreco.descricaoRepresentante + ")";
+            } else {
+                return "Sem respostas";
+            }
+        }
+
+        private function listLabelFunction(item:Object):String {
+            return item.nomeRepresentante;
+        }
+        ]]></mx:Script>
+
+    <mx:Text htmlText="{alerta}"/>
+
+    <mx:HBox horizontalGap="-3" height="100%" width="100%">
+        <mx:List id="respostasList" dataProvider="{analise.respostas}" labelFunction="listLabelFunction"
+                 width="180" fontWeight="bold" fontSize="12" backgroundAlpha="0"
+                 borderStyle="none" selectedIndex="0" paddingLeft="10" click="changeFilterFunction()"/>
+
+        <mx:DataGrid id="dataGridAnalise"
+                     doubleClickEnabled="true"
+                     dataProvider="{analise.itensAnaliseCotacao}"
+                     width="100%" height="100%" editable="{false}"
+                     borderStyle="solid" shadowDirection="left" dropShadowEnabled="true">
+
+            <mx:columns>
+                <mx:DataGridColumn dataField="descProduto" editable="false" headerText="Produto"/>
+                <mx:DataGridColumn dataField="respostas" labelFunction="lbfMelhorResposta"
+                                   headerText="Opção Escolhida" width="250" editable="false">
+                    <mx:itemRenderer>
+                        <mx:Component>
+                            <analise:AnaliseRespostasText editavel="true" itemAnaliseCotacao="{data as ItemAnaliseCotacaoDTO}">
+                                <mx:Script><![CDATA[
+                                    import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+                                    ]]></mx:Script>
+                            </analise:AnaliseRespostasText>
+                        </mx:Component>
+                    </mx:itemRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn labelFunction="lbfDiferenca" editable="false" headerText="Diferença" width="100"/>
+            </mx:columns>
+        </mx:DataGrid>
+    </mx:HBox>
+
+</mx:VBox>

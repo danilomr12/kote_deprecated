@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+          xmlns:components="br.com.cotecom.view.components.*"
+          xmlns:resposta="br.com.cotecom.view.components.resposta.*"
+          xmlns:components2="com.hillelcoren.components.*"
+          xmlns:application="br.com.cotecom.view.components.application.*"
+          creationComplete="canvas1_creationCompleteHandler(event)"
+          width="100%" height="100%" headerHeight="10" footerColors="[#FFCA51, #FFCA51]"
+          layout="vertical" dropShadowEnabled="true" shadowDirection="left"
+          currentState="{getEstadoAtual(this._telaResposta)}">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.aplicacao.ReenvieEmailCotacacaoEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewCaixaDeEntradaEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewCotacaoEnviadaEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewCotacaoRascunhoEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewRespostaEvent;
+        import br.com.cotecom.control.events.resposta.RespostaEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.dtos.inbox.RespostaItemInboxDTO;
+        import br.com.cotecom.model.domain.resposta.ItemResposta;
+        import br.com.cotecom.model.domain.resposta.TelaResposta;
+        import br.com.cotecom.model.services.comprador.GerenciadorCaixaDeEntrada;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+        import br.com.cotecom.model.utils.EstadoCotacao;
+        import br.com.cotecom.model.utils.EstadoResposta;
+        import br.com.cotecom.view.util.Icons;
+
+        import com.notifications.Notification;
+
+        import mx.collections.ArrayCollection;
+        import mx.events.FlexEvent;
+        import mx.events.ListEvent;
+
+        [Bindable]
+        private var respostasItemInboxDTO:ArrayCollection = new ArrayCollection();
+        [Bindable]
+        public var _telaResposta:TelaResposta = new TelaResposta();
+        public var editavel:Boolean = false;
+        [Bindable]
+        private var _respostas:ArrayCollection;
+        [Bindable]
+        public var gerenciadorCaixaEntrada:GerenciadorCaixaDeEntrada = GerenciadorCaixaDeEntrada.getInstance();
+
+        protected function canvas1_creationCompleteHandler(event:FlexEvent):void {
+            gridResposta.colunaPrecoUnitarioRepresentante.editable = false;
+            //editavel = !(telaResposta.resposta.status == Resposta.NOVA_COTACAO)
+        }
+
+        [Bindable(event="respostasChanged")]
+        public function get telaResposta():TelaResposta {
+            return this._telaResposta;
+        }
+
+        public function set telaResposta(tela:TelaResposta):void {
+            this._telaResposta = tela;
+            if (_telaResposta != null) {
+                this._respostas = gerenciadorCaixaEntrada.getRespostasDaMesmaCotacao(telaResposta.resposta.id);
+                if (getRespostaSelectedIndex() != -1)
+                    this.respostasCBox.selectedIndex = getRespostaSelectedIndex();
+            }
+            var event:Event = new Event("respostasChanged");
+            dispatchEvent(event);
+        }
+
+        protected function getRespostaSelectedIndex():int {
+            for (var i:int = 0; i <= _respostas.length - 1; i++) {
+                if (_respostas.getItemAt(i).id == telaResposta.resposta.id)
+                    return i;
+            }
+            return -1;
+        }
+
+        protected function mudeResposta(event:ListEvent):void {
+            var showViewResposta:ShowViewRespostaEvent = new ShowViewRespostaEvent(respostasCBox.selectedItem.id);
+            showViewResposta.dispatch();
+        }
+
+        protected function abraCotacao(event:MouseEvent):void {
+            var estadoCotacao:int = _telaResposta.cotacao.codigoEstadoCotacao;
+            if (estadoCotacao == EstadoCotacao.RASCUNHO) {
+                new ShowViewCotacaoRascunhoEvent(_telaResposta.cotacao.id).dispatch();
+            } else {
+                new ShowViewCotacaoEnviadaEvent(_telaResposta.cotacao.id, _telaResposta.cotacao.codigoEstadoCotacao).dispatch();
+            }
+        }
+
+        public function getNomeFornecedor(itemInbox:Object):String {
+            var itemInboxDTO:RespostaItemInboxDTO = itemInbox as RespostaItemInboxDTO;
+            if (itemInboxDTO.empresa != null)
+                return itemInboxDTO.representante + "(" + itemInboxDTO.empresa + ")";
+            return itemInboxDTO.representante
+        }
+
+        private var gerenciadorResposta:GerenciadorResposta = GerenciadorResposta.getInstance();
+
+        private function salveResposta(event:MouseEvent):void {
+            if (gerenciadorResposta.telaResposta == null) {
+                Session.getInstance().messageHandler.showTextMessage("Erro", "Sua Resposta não foi carregada.", Icons.ERROR);
+            } else {
+                gerenciadorResposta.salveItens();
+            }
+        }
+
+        public function setFilter():void {
+            if (gerenciadorResposta.telaResposta == null) {
+                return;
+            }
+            if (gerenciadorResposta.telaResposta.itensResposta != null) {
+                gerenciadorResposta.telaResposta.itensResposta.filterFunction = filterFuntion;
+                gerenciadorResposta.telaResposta.itensResposta.refresh();
+            }
+        }
+
+        public function filterFuntion(item:Object):Boolean {
+            var item2:ItemResposta = item as ItemResposta;
+            if (item2.categoria && item2.categoria.match(new RegExp(filtro.text, 'i')))
+                return true;
+            else if (item2.embalagem && item2.embalagem.match(new RegExp(filtro.text, 'i')))
+                return true;
+            else if (item2.descricao && item2.descricao.match(new RegExp(filtro.text, 'i')))
+                return true;
+            else if (item2.quantidade.toString() && item2.quantidade.toString().match(new RegExp(filtro.text, 'i')))
+                return true;
+            return false
+        }
+
+        private function filtreItensResposta(event:KeyboardEvent):void {
+            if (event.keyCode == Keyboard.TAB || event.keyCode == Keyboard.DOWN)
+                focusManager.setFocus(gridResposta);
+        }
+
+        private function setFocusOnFilter():void {
+            focusManager.setFocus(filtro.textInput);
+        }
+
+        private function reenvieEmail(event:MouseEvent):void {
+            var id:* = this._telaResposta.resposta.id;
+            if (id != null) {
+                new ReenvieEmailCotacacaoEvent(id).dispatch()
+            } else {
+                Notification.show("Resposta ainda não enviada", "Falha", 3000, Notification.NOTIFICATION_POSITION_TOP_CENTER, Icons.ERROR)
+            }
+        }
+
+        private function ressusciteResposta(event:MouseEvent):void {
+            new RespostaEvent(RespostaEvent.RESSUSCITAR, this._telaResposta.resposta).dispatch();
+        }
+
+        private function canceleResposta(event:MouseEvent):void {
+            new RespostaEvent(RespostaEvent.CANCELAR, this._telaResposta.resposta).dispatch();
+        }
+
+        private function reenvieEmailDePedido(event:MouseEvent):void {
+
+        }
+
+        private function getEstadoAtual(telaresposta:TelaResposta):String {
+            if (!telaresposta.resposta)
+                return "nova";
+            var status:int = telaresposta.resposta.status;
+            if (status == EstadoResposta.NOVA_COTACAO) {
+                return "nova";
+            } else if (isPerdidaOuRecusadaOuCanceladaECotacaoNaoFechada(status)) {
+                return "canceladaOuRecusadaOuPerdida";
+            } else if (status == EstadoResposta.RESPONDENDO || status == EstadoResposta.AGUARDANDO_OUTRAS_RESPOSTAS
+                    || status == EstadoResposta.AGUARDANDO_ANALISE || status == EstadoResposta.EM_ANALISE) {
+                return "respondendoOuAguardAnaliseOuEmAnalise";
+            } else if (status == EstadoResposta.RESPONDA_PEDIDO_PENDENTE
+                    || status == EstadoResposta.AGUARDANDO_RETORNO_DE_PEDIDOS) {
+                return "pedidoEnviado";
+            } else {
+                return "pedidoFaturado";
+            }
+        }
+
+        private function isPerdidaOuRecusadaOuCanceladaECotacaoNaoFechada(status:int):Boolean {
+            var codigoEstadoCotacao:int = this._telaResposta.cotacao.codigoEstadoCotacao;
+            return status == EstadoResposta.CANCELADA || status == EstadoResposta.RECUSADA
+                    || status == EstadoResposta.PERDIDA && (codigoEstadoCotacao == EstadoCotacao.AGUARDANDO_RESPOSTAS ||
+                    codigoEstadoCotacao == EstadoCotacao.PRONTA_PARA_ANALISE || codigoEstadoCotacao == EstadoCotacao.PRONTA_PARA_ANALISE);
+        }
+        ]]></mx:Script>
+
+    <mx:states>
+        <mx:State name="nova">
+            <mx:AddChild
+                    relativeTo="{btnHBox}"
+                    position="firstChild"
+                    creationPolicy="all">
+                <mx:Button label="Reenviar"
+                           height="100%"
+                           toolTip="Reenviar e-mail de notificação de cotação para este representante"
+                           click="reenvieEmail(event)"
+                           icon="{Icons.SEND_24}"
+                           styleName="barButton"
+                           labelPlacement="bottom"/>
+            </mx:AddChild>
+            <mx:AddChild
+                    relativeTo="{btnHBox}"
+                    position="firstChild"
+                    creationPolicy="all">
+                <mx:Button label="Cancelar"
+                           height="100%"
+                           toolTip="Cancela resposta excluindo-a da análise e geração de pedidos"
+                           click="canceleResposta(event)"
+                           icon="{Icons.CANCEL_24}"
+                           styleName="barButton"
+                           labelPlacement="bottom"/>
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="canceladaOuRecusadaOuPerdida">
+            <mx:AddChild
+                    relativeTo="{btnHBox}"
+                    position="firstChild"
+                    creationPolicy="all">
+                <mx:Button label="Reativar"
+                           height="100%"
+                           toolTip="Mudar estado desta resposta para Respondendo, permitindo que o representante continue a colocar preços"
+                           click="ressusciteResposta(event)"
+                           icon="{Icons.REVERT_24}"
+                           styleName="barButton"
+                           labelPlacement="bottom"/>
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="respondendoOuAguardAnaliseOuEmAnalise">
+            <mx:AddChild
+                    relativeTo="{btnHBox}"
+                    position="firstChild"
+                    creationPolicy="all">
+                <mx:Button label="Cancelar"
+                           height="100%"
+                           toolTip="Cancela resposta excluindo-a da análise e geração de pedidos"
+                           click="canceleResposta(event)"
+                           icon="{Icons.CANCEL_24}"
+                           styleName="barButton"
+                           labelPlacement="bottom"/>
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="pedidoEnviado">
+            <mx:AddChild
+                    relativeTo="{btnHBox}"
+                    position="firstChild"
+                    creationPolicy="all">
+                <mx:Button label="Reenviar pedido"
+                           height="100%"
+                           toolTip="Reenvia notificação de novo pedido via e-mail"
+                           click="reenvieEmailDePedido(event)"
+                           icon="{Icons.SEND_24}"
+                           styleName="barButton"
+                           labelPlacement="bottom"/>
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="pedidoFaturado">
+
+        </mx:State>
+    </mx:states>
+
+    <mx:HBox width="100%" horizontalGap="3">
+        <mx:Image source="assets/botones/atras1.png" buttonMode="true"
+                  click="new ShowViewCaixaDeEntradaEvent().dispatch()"/>
+        <mx:LinkButton paddingLeft="1" label="Caixa de Entrada" fontSize="12"
+                       click="new ShowViewCaixaDeEntradaEvent().dispatch()"/>
+        <mx:Image source="assets/botones/atras1.png" buttonMode="true"
+                  click="abraCotacao(event)"/>
+        <mx:LinkButton label="Cotação: {_telaResposta.cotacao.titulo.length > 22 ?
+                       _telaResposta.cotacao.titulo.substring(0,20)+'...':
+                       _telaResposta.cotacao.titulo}" paddingLeft="1" fontSize="12"
+                       buttonMode="true"
+                       click="abraCotacao(event)"
+                       toolTip="{_telaResposta.cotacao.titulo}"/>
+        <mx:Spacer width="20"/>
+        <mx:Form width="100%" paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0">
+            <mx:FormItem label="Fornecedor">
+                <mx:ComboBox id="respostasCBox"
+                             dataProvider="{_respostas}"
+                             labelFunction="getNomeFornecedor"
+                             change="mudeResposta(event)"/>
+            </mx:FormItem>
+        </mx:Form>
+        <mx:HBox width="100%" horizontalAlign="center">
+            <components2:PromptTextInput
+                    id="filtro" prompt="Filtro..."
+                    width="100%" change="setFilter()"
+                    keyDown="filtreItensResposta(event)"
+                    click="setFocusOnFilter()"/>
+            <mx:Button styleName="filterButton" click="setFilter()"
+                       width="25" cornerRadius="0">
+                <mx:icon>@Embed(source='/assets/img/filter16.png')</mx:icon>
+            </mx:Button>
+        </mx:HBox>
+    </mx:HBox>
+
+    <resposta:RespostaGrid id="gridResposta"
+                           dataProvider="{_telaResposta.itensResposta}"
+                           width="100%"
+                           currentState="comprador"
+                           height="100%"/>
+
+    <application:FooterControlBar>
+        <mx:HBox width="100%" height="100%" id="btnHBox">
+            <mx:Form width="100%" paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0">
+                <mx:FormItem label="Estado" fontWeight="bold">
+                    <mx:Label text="{_telaResposta.resposta.statusStringVisaoComprador()}" fontWeight="bold" fontSize="15"/>
+                </mx:FormItem>
+            </mx:Form>
+            <mx:Form width="100%" paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0">
+                <mx:FormItem label="Representante" fontWeight="bold">
+                    <mx:Label text="{_telaResposta.representante.nome}" fontWeight="normal"/>
+                </mx:FormItem>
+                <mx:FormItem label="email" fontWeight="bold">
+                    <mx:Label text="{_telaResposta.representante.email}" fontWeight="normal"/>
+                </mx:FormItem>
+            </mx:Form>
+            <mx:Form width="100%" paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0">
+                <mx:FormItem label="Empresa" fontWeight="bold">
+                    <mx:Label text="{_telaResposta.representante.empresa.nomeFantasia}" fontWeight="normal"/>
+                </mx:FormItem>
+                <mx:FormItem label="Fone" fontWeight="bold">
+                    <mx:Label text="{_telaResposta.representante.telefones.getItemAt(0)}" fontWeight="normal"/>
+                </mx:FormItem>
+            </mx:Form>
+        </mx:HBox>
+    </application:FooterControlBar>
+</mx:Panel>

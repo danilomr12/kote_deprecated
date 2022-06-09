@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:contato="br.com.cotecom.view.components.contato.*"
+        verticalGap="3">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.control.events.formularios.RemoveEvent;
+
+        import mx.collections.ArrayCollection;
+
+        [Bindable]
+        public var telefones:ArrayCollection;
+
+        private function rmTelefone(event:RemoveEvent):void {
+            telefones.removeItemAt(event.index);
+        }
+
+        private function addTelefone():void {
+            telefones.addItem(telefoneEditado.telefone)
+            telefoneEditado.visible = false;
+            novoTelBtn.visible = true;
+        }
+
+        private function showNovoTelefone():void {
+            telefoneEditado.visible = true;
+            novoTelBtn.visible = false;
+        }
+
+        private function hideNovoTelefone():void {
+            telefoneEditado.visible = true;
+            novoTelBtn.visible = false;
+        }
+        ]]></mx:Script>
+
+
+    <mx:Repeater id="telefonesList" dataProvider="{telefones}">
+        <contato:TelefoneBox index="{telefonesList.currentIndex}" telefone="{telefonesList.currentItem}" removeTelefone="rmTelefone(event as RemoveEvent)"/>
+    </mx:Repeater>
+
+    <mx:Canvas width="100%">
+        <mx:LinkButton id="novoTelBtn" label="Novo Telefone" x="0" click="showNovoTelefone()" visible="{telefones.length > 0}"/>
+        <contato:TelefoneBox id="telefoneEditado" visible="{telefones.length == 0}" x="0" width="100%" currentState="edit" telefoneAdded="addTelefone()" />
+    </mx:Canvas>
+
+
+</mx:VBox>

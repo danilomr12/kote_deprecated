@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+				showCloseButton="true"
+				close="closeThis(event)"
+				title="Dados do Cliente">
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+
+        import mx.events.CloseEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var comprador:Usuario
+
+        private function formateEnderecoEntrega(endereco:*):String {
+            var enderecoFormatado:String = ""
+            if (endereco != null) {
+                enderecoFormatado += endereco.logradouro
+                if (endereco.numero)
+                    enderecoFormatado += ", N.º" + endereco.numero
+                if (endereco.bairro) {
+                    if (endereco.numero)
+                        enderecoFormatado += ", "
+                    enderecoFormatado += "Setor: " + endereco.bairro
+                }
+                if (endereco.cidade && endereco.estado) {
+                    if (endereco.bairro)
+                        enderecoFormatado += ","
+                    enderecoFormatado += endereco.cidade + " - " + endereco.estado
+                }
+                if (endereco.cep)
+                    if (endereco.cidade)
+                        enderecoFormatado += ", "
+                enderecoFormatado += "Cep: " + endereco.cep
+                if (endereco.complemento) {
+                    if (endereco.cep)
+                        enderecoFormatado += ", "
+                    enderecoFormatado += endereco.complemento
+                }
+            } else {
+                enderecoFormatado = "Endereço não fornecido"
+            }
+
+            return enderecoFormatado
+        }
+
+
+        protected function closeThis(event:CloseEvent):void {
+            PopUpManager.removePopUp(this)
+        }
+        ]]>
+	</mx:Script>
+	<mx:Form>
+		<mx:FormHeading label="{comprador.empresa.nomeFantasia}" 
+						fontSize="16"/>
+		<mx:FormItem label="Razão social:" fontWeight="bold">
+			<mx:Label text="{comprador.empresa.razaoSocial}"
+					  fontWeight="normal"/>			
+		</mx:FormItem>
+		<mx:FormItem label="CNPJ:" fontWeight="bold">
+			<mx:Label text="{comprador.empresa.cnpj}" 
+					  fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:FormItem label="E-mail:" fontWeight="bold">
+			<mx:Label text="{comprador.empresa.email}"
+					  fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:FormItem label="Fone:" fontWeight="bold">
+			<mx:Label text="{comprador.empresa.telefones.getItemAt(0)}"
+					  fontWeight="normal"/>
+		</mx:FormItem>
+		
+		<mx:FormItem label="endereço:" fontWeight="bold">
+			<mx:Label text="{formateEnderecoEntrega(comprador.empresa.endereco)}"/>
+		</mx:FormItem>
+		
+		<mx:FormItem label="Comprador" fontWeight="bold">
+			<mx:Label text="{comprador.nome}"
+					  fontWeight="normal"/>
+			<mx:FormItem label="Fone:" fontWeight="bold">
+				<mx:Label text="{comprador.telefones.getItemAt(0)}"
+						  fontWeight="normal"/>
+			</mx:FormItem>
+			<mx:FormItem label="E-mail" fontWeight="bold">
+				<mx:Label text="{comprador.email}" fontWeight="normal"/>
+			</mx:FormItem>
+		</mx:FormItem>
+	</mx:Form>
+</mx:TitleWindow>

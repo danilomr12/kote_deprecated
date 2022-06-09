@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:analise="br.com.cotecom.view.components.cotacao.analise.*"
+         horizontalAlign="center"  height="100%" width="100%" show="refresh()" creationComplete="refresh()">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseRespostaDTO;
+
+        import mx.collections.ArrayCollection;
+
+        [Bindable]
+        public var _analise:AnaliseCotacaoDTO;
+
+        //todo: ao alterar algo nesta tela os graficos não se atualizam
+
+        private var alerta:String = "<p>Abaixo estão os itens que você alterou após a análise automática ou que possuem " +
+                "alguma observação deixada pelo representante. Deseja alterá-los?</p> " +
+                "<p>Para mudar a opção <b>clique duas vezes</b> sobre o produto e selecione a opção desejada.</p>";
+
+        private function retornaItensComPrecosMelhoresQueOEscolhidoEComObs(item:Object):Boolean {
+            var itemAnalise:ItemAnaliseCotacaoDTO = item as ItemAnaliseCotacaoDTO;
+            var possuiObs:Boolean = false;
+            if (itemAnalise.respostas && itemAnalise.respostas.length > 0) {
+                var itemAnaliseResposta:ItemAnaliseRespostaDTO = itemAnalise.respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+                possuiObs = (itemAnaliseResposta ? itemAnaliseResposta.observacao != null : false);
+            }
+            return (!itemAnalise.isItemEscolhidoOMaisBarato()) || possuiObs;
+        }
+
+        public function set analise(analiseCotacao:AnaliseCotacaoDTO):void {
+            _analise = analiseCotacao;
+            this.refresh();
+        }
+
+
+        public function refresh():void {
+            _analise.itensAnaliseCotacao.filterFunction = retornaItensComPrecosMelhoresQueOEscolhidoEComObs;
+            _analise.itensAnaliseCotacao.refresh();
+        }
+
+        public function get analise():AnaliseCotacaoDTO {
+            return this._analise;
+        }
+
+        public function lbfDiferenca(analiseItem:Object, col:DataGridColumn):String {
+            var respostas:ArrayCollection = (analiseItem as ItemAnaliseCotacaoDTO).respostas;
+            if (respostas.length > 1) {
+                var menorPreco:* = respostas.getItemAt(0).precoAtribuido;
+                var maiorPreco:* = respostas.getItemAt(1).precoAtribuido;
+                var diferenca:* = maiorPreco - menorPreco;
+                var difPercentual:* = 100 * diferenca / menorPreco;
+                return difPercentual.toFixed(2) + "%";
+            } else
+                return "";
+        }
+
+        private function lbfMelhorResposta(item:Object, col:DataGridColumn):String {
+            var analiseItem:ItemAnaliseCotacaoDTO = item as ItemAnaliseCotacaoDTO;
+            if (analiseItem.respostas.length != 0) {
+                var itemRespostaMelhorPreco:ItemAnaliseRespostaDTO = analiseItem.respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+                return itemRespostaMelhorPreco.precoEmbalagem + " (" + itemRespostaMelhorPreco.descricaoRepresentante + ")";
+            } else {
+                return "Sem respostas";
+            }
+        }
+        ]]></mx:Script>
+    
+    <mx:Text htmlText="{alerta}"/>
+
+    <mx:DataGrid id="dataGridAnalise" dataProvider="{analise.itensAnaliseCotacao}"
+                 doubleClickEnabled="true" editable="{analise.editavel}"
+                 width="100%" height="100%" x="0" y="0">
+
+        <mx:columns>
+            <mx:DataGridColumn dataField="descProduto" editable="false" headerText="Produto"/>
+            <mx:DataGridColumn dataField="respostas" labelFunction="lbfMelhorResposta"
+                               headerText="Opção Escolhida" width="250" editable="false">
+                <mx:itemRenderer>
+                    <mx:Component>
+                        <analise:AnaliseRespostasText editavel="true" itemAnaliseCotacao="{data as ItemAnaliseCotacaoDTO}">
+                            <mx:Script><![CDATA[
+                                import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+                                ]]></mx:Script>
+                        </analise:AnaliseRespostasText>
+                    </mx:Component>
+                </mx:itemRenderer>
+            </mx:DataGridColumn>
+            <mx:DataGridColumn labelFunction="lbfDiferenca" editable="false" headerText="Diferença" width="100"/>
+        </mx:columns>
+    </mx:DataGrid>
+
+
+</mx:VBox>

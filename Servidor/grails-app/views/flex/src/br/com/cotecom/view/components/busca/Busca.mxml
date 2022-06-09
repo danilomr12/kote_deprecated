@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:code="http://code.google.com/p/flexlib/" 
+	xmlns:components="com.hillelcoren.components.*"
+	width="100%"
+	horizontalGap="0"
+	creationComplete="init()" >
+	
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SearchEvent;
+
+        import mx.collections.ArrayCollection;
+        import mx.events.ValidationResultEvent;
+
+        public var type:String;
+        public var smallButton:Boolean;
+        public var alvo:ArrayCollection;
+
+        private function init():void {
+            if (!type) {
+                throw new Error("A variável \"type\" deve ser definida com uma das constantes da Classe \"SearchEvent\"\n");
+            }
+            if (this.smallButton) {
+                this.button.label = "";
+            }
+        }
+
+        public function search():void {
+            if (queryInput.text.length == 0 || buscaValidator.validate().type == ValidationResultEvent.VALID) {
+                var searchEvent:SearchEvent = new SearchEvent(type, queryInput.text, this.alvo);
+                searchEvent.dispatch();
+            }
+        }
+
+        private function onKeyDown(event:KeyboardEvent):void {
+            if (event.keyCode == Keyboard.ENTER) {
+                this.search();
+            }
+        }
+
+        public function setFocusOnInput():void {
+            focusManager.setFocus(queryInput.textInput);
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:StringValidator id="buscaValidator" minLength="3" tooShortError="Digite pelo menos 3 caracteres para efetuar a busca"
+                        property="text" source="{queryInput}" required="true"
+                        requiredFieldError="Digite algum caracter para efetuar a busca"/>
+	<components:PromptTextInput id="queryInput"
+								prompt="Pesquisar..."
+                                click="setFocusOnInput()"
+                                keyDown="onKeyDown(event)"
+                                width="100%"/>
+	<mx:Button id="button"
+               styleName="searchButton"
+               click="search()"
+               width="25"               
+               cornerRadius="0"/>
+	
+</mx:HBox>

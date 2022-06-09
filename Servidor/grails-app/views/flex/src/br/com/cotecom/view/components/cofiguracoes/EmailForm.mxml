@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 horizontalAlign="center"
+		 styleName="colorPanelInterno" paddingBottom="10">
+	<mx:Script>
+		<![CDATA[
+			
+			public var heightIdeal:int = 196;
+			public var widthIdeal:int = 360;
+			
+		]]>
+	</mx:Script>
+	<mx:Form paddingBottom="5">
+		<mx:FormHeading label="Alterar Login"/>
+		<mx:FormItem label="Nome">
+			<mx:TextInput/>
+		</mx:FormItem>
+		<mx:FormItem label="E-mail atual">
+			<mx:TextInput/>
+		</mx:FormItem>
+		<mx:FormItem label="Novo e-mail">
+			<mx:TextInput/>
+		</mx:FormItem>
+		<mx:FormItem label="Comfirmar novo e-mail">
+			<mx:TextInput/>
+		</mx:FormItem>
+	</mx:Form>
+	<mx:Button label="Confirmar"/>
+</mx:VBox>

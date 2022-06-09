@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="360" height="162" backgroundAlpha="0.0">
+	
+	<mx:Script>
+		<![CDATA[
+        import mx.collections.ArrayCollection;
+
+        [Bindable]
+        private var respostasDummy:ArrayCollection = new ArrayCollection([
+            {nomeRepresentante:"Representante A", preco:"157,34"},
+            {nomeRepresentante:"Representante B", preco:"157,34"},
+            {nomeRepresentante:"Representante C", preco:"157,34"},
+            {nomeRepresentante:"Representante D", preco:"157,34"},
+        ]);
+        ]]>
+	</mx:Script>
+	
+	<mx:DataGrid id="respostasProdutoDataGrid" 
+		dataProvider="{respostasDummy}"
+		width="246" height="162"
+		x="114" y="0"
+		showHeaders="false"
+		allowDragSelection="true" dragMoveEnabled="true"
+		dragEnabled="true" dropEnabled="true"
+		borderStyle="solid" borderThickness="7" alpha="1.0">
+
+		<mx:columns>
+			<mx:DataGridColumn dataField="nomeRepresentante"/>
+			<mx:DataGridColumn dataField="preco" />	
+		</mx:columns>
+		
+	</mx:DataGrid>
+	<mx:Canvas x="20" y="8" width="96" height="20" backgroundColor="#B7BABC" borderColor="#B7BABC" cornerRadius="8" backgroundAlpha="1.0">
+		<mx:Label text="Primeira Opção" width="97" textAlign="right" x="-10" y="2" fontSize="8" color="#000000" fontWeight="bold"/>
+	</mx:Canvas>
+	<mx:Canvas x="20" y="29" width="96" height="20" backgroundColor="#B7BABC" borderColor="#B7BABC" cornerRadius="0" backgroundAlpha="1.0">
+		<mx:Label x="-12" y="2" text="Segunda Opção" width="100" textAlign="right" fontSize="8" fontFamily="Verdana" color="#0C0C0C" fontWeight="bold"/>
+	</mx:Canvas>
+	
+	
+</mx:Canvas>

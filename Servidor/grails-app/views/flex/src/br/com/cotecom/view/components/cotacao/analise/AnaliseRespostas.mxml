@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:representante="br.com.cotecom.view.components.representante.*"
+	xmlns:analise="br.com.cotecom.view.components.cotacao.analise.*"
+	verticalGap="10" width="100%" height="100%"
+	horizontalAlign="center" verticalScrollPolicy="off"
+    currentState="respostasEnviadas">
+
+	<mx:Metadata>
+		[Event(name="representanteSelecionadoEvent" , type="br.com.cotecom.control.events.RepresentanteEvent")]
+	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.RepresentanteEvent;
+        import br.com.cotecom.control.events.cotacao.EnviaCotacaoParaFornecedorEvent;
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+
+        import mx.collections.ArrayCollection;
+
+        [Bindable]
+        public var analise:AnaliseCotacaoDTO;
+
+        public var idRepresentanteSelecionado:int = -1;
+
+        public function refreshValoresTotais():void {
+            for (var i:int = 0; i < analiseRespostasRepresentantes.length; i++) {
+                analiseRespostasRepresentantes[i].refreshValorTotal();
+            }
+        }
+
+        public function get respostasSelecionadas():ArrayCollection {
+            var analisesRespostas:ArrayCollection = new ArrayCollection;
+            for each(var analiseResposta:AnaliseRespostaRepresentante in analiseRespostasRepresentantes) {
+                if (analiseResposta.toggled) {
+                    analisesRespostas.addItem(analiseResposta.resposta);
+                }
+            }
+            return analisesRespostas;
+        }
+
+        private function enviaCotacaoParaRepresentante(event:RepresentanteEvent):void {
+            new EnviaCotacaoParaFornecedorEvent(analise.idCotacao, event.representante.id).dispatch();
+        }
+
+        private function mostrarTodos(event:Event):void {
+            this.idRepresentanteSelecionado = -1;
+            dispatchEvent(new RepresentanteEvent(RepresentanteEvent.REPRESENTANTE_SELECIONADO_EVENT, null));
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:states>
+        <mx:State name="processandoEnvio">
+            <mx:SetProperty name="includeInLayout" target="{representantesAEnviarAC}" value="false"/>
+                <mx:SetProperty name="visible" target="{representantesAEnviarAC}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{respostasPanel}" value="false"/>
+            <mx:SetProperty name="visible" target="{respostasPanel}" value="false"/>
+            <mx:SetProperty name="visible" target="{panelAlertaEnvio}" value="true"/>
+            <mx:SetProperty name="includeInLayout" target="{panelAlertaEnvio}" value="true"/>
+        </mx:State>
+        <mx:State name="respostasEnviadas">
+            <mx:SetProperty name="includeInLayout" target="{representantesAEnviarAC}" value="true"/>
+            <mx:SetProperty name="visible" target="{representantesAEnviarAC}" value="true"/>
+            <mx:SetProperty name="includeInLayout" target="{respostasPanel}" value="true"/>
+            <mx:SetProperty name="visible" target="{respostasPanel}" value="true"/>
+            <mx:SetProperty name="visible" target="{panelAlertaEnvio}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{panelAlertaEnvio}" value="false"/>
+        </mx:State>
+    </mx:states>
+
+	<representante:RepresentantesAutoComplete id="representantesAEnviarAC" width="100%"
+		representanteSelecionadoEvent="enviaCotacaoParaRepresentante(event)"
+        toolTip="Adicionar Fornecedor à Cotação"
+		visible="{analise.cotacao.codigoEstadoCotacao == 1 || analise.cotacao.codigoEstadoCotacao == 2}"
+        analise="{analise}"/>
+    <mx:Panel id="panelAlertaEnvio" width="100%" height="100%">
+            <mx:Text width="100%" text="Sua cotação está processando o envio aos representantes. Aguarde e já poderá visualiza-lo"/>
+        </mx:Panel>
+    <mx:VBox id="respostasPanel" maxHeight="{this.height - 45}" width="100%" verticalGap="5">
+        <mx:Repeater id="respostasRepeater" dataProvider="{analise.respostas} " height="100%">
+            <analise:AnaliseRespostaRepresentante  id="analiseRespostasRepresentantes" resposta="{respostasRepeater.currentItem}"/>
+        </mx:Repeater>
+    </mx:VBox>
+</mx:VBox>

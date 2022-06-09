@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+		horizontalGap="2" xmlns:components="br.com.cotecom.view.components.*"
+		creationComplete="init()">
+	<mx:Metadata>
+		[Event(name="buttonClick")]
+	</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.NavegadorVerticalEvent;
+
+        import mx.collections.ArrayCollection;
+        import mx.containers.ViewStack;
+        import mx.events.IndexChangedEvent;
+
+        public var dataProvider:ViewStack;
+        public var buttons:ArrayCollection;
+
+        public function init():void {
+            this.buttons = new ArrayCollection();
+            for each(var view:* in this.dataProvider.getChildren()) {
+                var button:ToggleButton = new ToggleButton();
+                if (view.label) {
+                    button.label = view.label
+                }
+                button.percentWidth = 100;
+                button.addEventListener(MouseEvent.CLICK, onClick);
+                this.addChild(button);
+                this.buttons.addItem(button);
+            }
+            dataProvider.addEventListener(IndexChangedEvent.CHANGE, onIndexChange);
+        }
+
+        public function onClick(event:MouseEvent):void {
+            var newIndex:int = this.buttons.getItemIndex(event.target);
+            this.dispatchEvent(new NavegadorVerticalEvent(event.target as ToggleButton, dataProvider.getChildAt(newIndex)));
+            updateIndex(newIndex);
+        }
+
+        public function onIndexChange(event:IndexChangedEvent):void {
+            updateIndex(event.newIndex);
+        }
+
+        public function updateIndex(index:int):void {
+            this.dataProvider.selectedIndex = index;
+            for each(var button:ToggleButton in this.buttons) {
+                button.selected = false;
+            }
+            (buttons.getItemAt(index) as ToggleButton).selected = true;
+        }
+        ]]>
+	</mx:Script>
+</mx:VBox>

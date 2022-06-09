@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:text="flash.text.*" 
+	backgroundColor="#F4F4F4"
+	verticalGap="0"
+	paddingTop="0" backgroundAlpha="0.7" cornerRadius="4" borderStyle="outset" borderColor="#DEDEDE"
+	creationComplete="init()">
+	
+	<mx:LinkButton cornerRadius="0" width="100%" label="Editar"/>
+	<mx:LinkButton cornerRadius="0" width="100%" label="Copiar" enabled="false"/>
+	<mx:LinkButton cornerRadius="0" width="100%" label="Recortar" enabled="false" />
+	<mx:LinkButton cornerRadius="0" width="100%" label="Colar" enabled="false" />
+	<mx:HRule />
+	<mx:LinkButton cornerRadius="4" width="100%" label="Excluir" click="excluir()"  alpha="0.5"/>
+	
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.view.screens.ProdutoView;
+
+        [Bindable]
+        public var model:Session = Session.getInstance();
+
+        public var target:ProdutoView;
+
+        public function init():void {
+            this.addEventListener(MouseEvent.ROLL_OUT, onRollOut);
+        }
+
+        public function onRollOut(event:MouseEvent):void {
+            this.hide();
+        }
+
+        public function hide():void {
+            this.visible = false;
+        }
+
+        public function modelHasClipBoard():Boolean {
+            return ( model.clipBoard == null ) ? false : true;
+        }
+
+        public function editar():void {
+            target.edit();
+            this.hide();
+        }
+
+        public function excluir():void {
+            target.remove();
+            this.hide();
+        }
+        ]]>
+	</mx:Script>
+	
+</mx:VBox>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Text id="msg" text="{_mensagem}" width="100%" height="30"/>
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:LinkButton id="linkDownloadPlanilhaModelo" label="download planilha modelo..." 
+					   click="loadArquivoExemplo()" buttonMode="true" textAlign="center"/>
+	</mx:HBox>
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:TextInput id="arquivoTextInput" width="100%"/>
+		<mx:Button label="Escolher" click="browseFile()"/>
+		<mx:Button id="importarButton" label="Importar" click="importeArquivo()" 
+				   enabled="false"/>
+	</mx:HBox>
+	<mx:ProgressBar id="progressBar" label="Selecione um arquivo..."
+					labelPlacement="center" width="100%" 
+					indeterminate="true" color="#8AE3F6" 
+					visible="false" 
+					includeInLayout="{progressBar.visible}"/>
+	
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.DownloadFileEvent;
+        import br.com.cotecom.control.message.IMessageHandler;
+        import br.com.cotecom.model.Session;
+
+        import mx.rpc.events.FaultEvent;
+        import mx.rpc.events.ResultEvent;
+
+        private var messageHandler:IMessageHandler = Session.getInstance().messageHandler;
+        private var fileRef:FileReference;
+        [Bindable]
+        private var _mensagem:String;
+        private var fileTypes:Array = new Array();
+        private var planilhaExemplo:* = new Object();
+
+        public function set mensagem(msg:String):void {
+            this._mensagem = msg;
+        }
+
+        public function addFileTypes(fileFilter:FileFilter):void {
+            this.fileTypes.push(fileFilter);
+        }
+
+        private function browseFile():void {
+            fileRef = new FileReference();
+            var success:Boolean = fileRef.browse(fileTypes);
+            fileRef.addEventListener(Event.SELECT, trateArquivoSelecionado);
+            fileRef.addEventListener(Event.COMPLETE, trateArquivoCompleto)
+        }
+
+        private function trateArquivoSelecionado(evt:Event):void {
+            //Esta forma usada para upload de arquivo usando BlazeDS
+            //só funciona para a versão do FP 10.0 em diante
+            fileRef.load();
+            importarButton.enabled = true;
+        }
+
+        private function trateArquivoCompleto(event:Event):void {
+            fileRef = event.currentTarget as FileReference;
+            var data:ByteArray = new ByteArray();
+            fileRef.data.readBytes(data, 0, fileRef.data.length);
+            arquivoTextInput.text = fileRef.name + " " + formatFileSize(fileRef.size)
+        }
+
+        private function importeArquivo():void {
+            /* var gerenciadorCatalogo:GerenciadorCatalogo = GerenciadorCatalogo.getInstance();
+             gerenciadorCatalogo.importePlanilha(fileRef.data) */
+            importService.importePlanilhaProdutos(fileRef.data);
+            progressBar.visible = true;
+            progressBar.label = "Processando...";
+        }
+
+        private function formatFileSize(numSize:Number):String {
+            var strReturn:String;
+            numSize = Number(numSize / 1000);
+            strReturn = String(numSize.toFixed(1) + " KB");
+            if (numSize > 1000) {
+                numSize = numSize / 1000;
+                strReturn = String(numSize.toFixed(1) + " MB");
+                if (numSize > 1000) {
+                    numSize = numSize / 1000;
+                    strReturn = String(numSize.toFixed(1) + " GB");
+                }
+            }
+            return strReturn;
+        }
+
+        //todo chamar ao concluir importacao
+        private function uploadSucesso(event:ResultEvent):void {
+            progressBar.indeterminate = false;
+            progressBar.mode = "manual";
+            progressBar.setProgress(100, 100);
+            progressBar.label = "Concluído";
+        }
+
+        private function loadArquivoExemplo():void {
+            var downloadEvent:DownloadFileEvent = new DownloadFileEvent(
+                    DownloadFileEvent.PLANILHA_IMPORTACAO_PRODUTOS_EXEMPLO);
+            downloadEvent.dispatch();
+        }
+
+        protected function importService_faultHandler(event:FaultEvent):void {
+            messageHandler.showTextMessage("Erro", "Ocorreu um erro ao tentar fazer o upload do " +
+                    "arquivo, tente novamente mais tarde")
+        }
+        ]]>
+	</mx:Script>
+	<mx:RemoteObject id="importService" destination="remoteProdutoService" result="uploadSucesso(event)"
+					 fault="importService_faultHandler(event)"/>	
+
+</mx:Form>

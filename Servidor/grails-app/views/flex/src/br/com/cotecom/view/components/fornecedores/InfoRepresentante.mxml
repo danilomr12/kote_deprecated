@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 xmlns:contato="br.com.cotecom.view.components.contato.*"
+         width="450" height="500">
+
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+
+        [Bindable]
+        public var representante:Usuario;
+        ]]>
+	</mx:Script>
+            <mx:FormHeading label="Representante"/>
+            <mx:Form label="Representante" width="100%" >
+                <mx:FormItem width="100%" label="Nome" >
+					<mx:Text text="{this.representante.nome}" width="100%" />
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="E-mail" >
+					<mx:Text text="{this.representante.email}" width="100%" />
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="Telefones">
+					<mx:Repeater id="telefonesRepresentanteRepeater" dataProvider="{this.representante.telefones}">
+						<mx:Text text="{telefonesRepresentanteRepeater.currentItem.toString()}"
+								 data="{telefonesRepresentanteRepeater.currentItem}"/>
+					</mx:Repeater>
+				</mx:FormItem>
+			</mx:Form>
+		    <mx:FormHeading label="Supervisor"/>
+			<mx:Form label="Supervisor" width="100%">
+				<mx:FormItem width="100%" label="Nome" >
+					<mx:Text text="{this.representante.supervisor.nome}" width="100%" />
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="E-mail">
+					<mx:Text text="{this.representante.supervisor.email}" width="100%" />
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="Telefones">
+					<mx:Repeater id="telefonesSupervisorRepeater" dataProvider="{this.representante.supervisor.telefones}">
+						<mx:Text text="{telefonesSupervisorRepeater.currentItem.toString()}"
+								 data="{telefonesSupervisorRepeater.currentItem}"/>
+					</mx:Repeater>
+				</mx:FormItem>
+			</mx:Form>
+            <mx:FormHeading label="Fornecedor"/>
+			<mx:Form label="Empresa" width="100%">
+				<mx:FormItem width="100%" label="Nome fantasia">
+					<mx:Text text="{this.representante.empresa.nomeFantasia}" />
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="Razão Social">
+					<mx:Text text="{this.representante.empresa.razaoSocial}" />
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="CNPJ">
+					<mx:Text text="{this.representante.empresa.cnpj}" />
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="E-mail">
+					<mx:Text text="{this.representante.empresa.email}"/>
+				</mx:FormItem>
+			</mx:Form>
+			<mx:Form id="enderecoFornecedorForm">
+                <mx:FormHeading label="Endereço"/>
+				<mx:FormItem width="100%" label="CEP">
+					<mx:Text text="{this.representante.empresa.endereco.cep}"/>
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="Logradouro">
+					<mx:Text text="{this.representante.empresa.endereco.logradouro}"/>
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="Cidade">
+					<mx:Text text="{this.representante.empresa.endereco.cidade}"/>
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="Estado">
+					<mx:HBox width="100%">
+						<mx:Text text="{this.representante.empresa.endereco.estado}"/>
+						<mx:Label text="N°"/>
+						<mx:Text text="{this.representante.empresa.endereco.numero}"/>
+					</mx:HBox>
+				</mx:FormItem>
+				<mx:FormItem width="100%" label="Complemento">
+					<mx:Text text="{this.representante.empresa.endereco.complemento}"/>
+				</mx:FormItem>
+			</mx:Form>
+</mx:VBox>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service id="message-service" class="flex.messaging.services.MessageService"
+         messageTypes="flex.messaging.messages.AsyncMessage">
+
+    <adapters>
+        <adapter-definition id="jms" class="flex.messaging.services.messaging.adapters.JMSAdapter" default="true"/>
+    </adapters>
+
+    <destination id="caixaDeEntradaTopic">
+        <properties>
+            <jms>
+                <message-type>javax.jms.ObjectMessage</message-type>
+                <connection-factory>ConnectionFactory</connection-factory>
+                <destination-jndi-name>caixaDeEntradaTopic</destination-jndi-name>
+                <delivery-mode>NON_PERSISTENT</delivery-mode>
+                <message-priority>DEFAULT_PRIORITY</message-priority>
+                <acknowledge-mode>AUTO_ACKNOWLEDGE</acknowledge-mode>
+                <transacted-sessions>false</transacted-sessions>
+                <initial-context-environment>
+                    <property>
+                        <name>Context.PROVIDER_URL</name>
+                        <value>vm://localhost:8081</value>
+                    </property>
+                    <property>
+                        <name>Context.INITIAL_CONTEXT_FACTORY</name>
+                        <value>org.apache.activemq.jndi.ActiveMQInitialContextFactory</value>
+                    </property>
+                    <property>
+                        <name>topic.caixaDeEntradaTopic</name>
+                        <value>caixaDeEntradaTopic</value>
+                    </property>
+                </initial-context-environment>
+            </jms>
+        </properties>
+    </destination>
+
+    <default-channels>
+        <channel ref="my-http"/>
+        <channel ref="my-polling-amf"/>
+        <channel ref="my-amf"/>
+    </default-channels>
+
+</service>

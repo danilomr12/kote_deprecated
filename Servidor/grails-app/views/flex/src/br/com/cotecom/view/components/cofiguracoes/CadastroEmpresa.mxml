@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:utils="br.com.cotecom.model.utils.*" horizontalAlign="center"
+         xmlns:components="br.com.cotecom.view.components.*" xmlns:contato="br.com.cotecom.view.components.contato.*">
+
+    <mx:Metadata>
+        [Event(name="cancelada")]
+        [Event(name="alteracoesSalvas")]
+    </mx:Metadata>
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SaveEvent;
+        import br.com.cotecom.model.domain.Endereco;
+        import br.com.cotecom.model.domain.dtos.usuarios.Empresa;
+        import br.com.cotecom.view.util.Icons;
+
+        import com.Notification;
+
+        import mx.collections.ArrayCollection;
+        import mx.events.ValidationResultEvent;
+
+        [Bindable]
+        public var tmpTelefones:ArrayCollection;
+        [Bindable]
+        public var empresa:Empresa;
+
+        private function fieldsAreValid():Boolean {
+            return !(nomeFantasiaValidator.validate().type == ValidationResultEvent.INVALID ||
+                    emailValidator.validate().type == ValidationResultEvent.INVALID) &&
+                    enderecoForm.validateFields();
+        }
+
+        private function salveAlteracoes():void {
+            if (fieldsAreValid()) {
+                empresa.nomeFantasia = nomeFantasiaInput.text;
+                empresa.razaoSocial = razaoSocialInput.text;
+                empresa.email = emailInput.text;
+                empresa.telefones = telefonesForm.telefones;
+                empresa.endereco = enderecoForm.endereco;
+                new SaveEvent(SaveEvent.EMPRESA_CLIENTE, empresa).dispatch();
+                dispatchEvent(new Event('alteracoesSalvas', true))
+            } else {
+                Notification.show("Verifique se os campos obrigatórios foram preenchidos!", "Dados imcompletos", 4000,
+                        Notification.NOTIFICATION_POSITION_TOP_CENTER, Icons.WARNING)
+            }
+        }
+        ]]>
+	</mx:Script>
+    <mx:Validator id="nomeFantasiaValidator" source="{nomeFantasiaInput}" property="text"
+                  required="true" requiredFieldError="O campo 'Nome Fantasia' é obrigatório"/>
+    <mx:EmailValidator id="emailValidator" required="false" source="{emailInput}"
+                       missingUsernameError="Faltando nome de usuário" invalidCharError="Carácter inválido"
+                       invalidDomainError="Domínio inválido" invalidPeriodsInDomainError="Formato incorreto"
+                       property="text"/>
+    <mx:HBox>
+        <mx:Form width="100%">
+            <mx:FormItem label="Nome Fantasia" width="100%">
+                <mx:TextInput id="nomeFantasiaInput" width="100%" text="{empresa.nomeFantasia}"/>
+            </mx:FormItem>
+            <mx:FormItem label="Razão Social" width="100%">
+                <mx:TextInput id="razaoSocialInput" width="100%" text="{empresa.razaoSocial}"/>
+            </mx:FormItem>
+            <mx:FormItem label="E-mail" width="100%">
+                <mx:TextInput id="emailInput" width="100%" text="{empresa.email}"/>
+            </mx:FormItem>
+            <contato:TelefonesForm id="telefonesForm" telefones="{empresa.telefones}"/>
+        </mx:Form>
+        <components:EnderecoForm id="enderecoForm" heading="Endereço de Entrega"
+                                 endereco="{empresa.endereco}"/>
+    </mx:HBox>
+
+    <mx:HBox>
+        <mx:Button id="btnCancelar"
+                   label="Cancelar"
+                   styleName="cancelButton"
+                   click="{dispatchEvent(new Event('cancelada',true))}"/>
+        <mx:Button label="Salvar"
+                   styleName="saveButton"
+                   click="salveAlteracoes()"/>
+    </mx:HBox>
+
+</mx:VBox>

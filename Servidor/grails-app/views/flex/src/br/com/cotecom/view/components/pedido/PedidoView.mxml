@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.hillelcoren.components.*"
+          xmlns:application="br.com.cotecom.view.components.application.*"
+          xmlns:pedido="br.com.cotecom.view.components.pedido.*"
+          headerHeight="0" left="320" right="10" top="0" bottom="10" paddingTop="10"
+          borderStyle="solid" dropShadowEnabled="true" shadowDirection="left">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.control.events.DownloadFileEvent;
+        import br.com.cotecom.control.events.LoadEvent;
+        import br.com.cotecom.control.events.pedido.FaturePedidoEvent;
+        import br.com.cotecom.control.events.pedido.FaturePedidoEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.pedido.ItemPedido;
+        import br.com.cotecom.model.domain.pedido.Pedido;
+        import br.com.cotecom.model.domain.resposta.ItemResposta;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+        import br.com.cotecom.view.components.resposta.DadosCliente;
+        import br.com.cotecom.view.components.resposta.DadosCotacao;
+        import br.com.cotecom.view.util.DinheiroUtil;
+        import br.com.cotecom.view.util.Icons;
+
+        import com.notifications.Notification;
+
+        import mx.containers.ViewStack;
+        import mx.controls.Alert;
+        import mx.controls.dataGridClasses.DataGridColumn;
+        import mx.core.Application;
+        import mx.events.CloseEvent;
+        import mx.events.DataGridEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        private var gerenciadorResposta:GerenciadorResposta = GerenciadorResposta.getInstance();
+
+        private function getEstadoAtual():String {
+
+            switch (gerenciadorResposta.telaPedidoDTO.pedido.faturado) {
+                case true:
+                    return "faturado";
+                    break;
+                case false:
+                    return "naoFaturado";
+                    break;
+                default:
+                    return "naoFaturado";
+            }
+        }
+
+        public function setFilter():void {
+            if (gerenciadorResposta.telaPedidoDTO == null) {
+                return;
+            }
+            if (gerenciadorResposta.telaPedidoDTO.itensPedido != null) {
+                gerenciadorResposta.telaPedidoDTO.itensPedido.filterFunction = filterFuntion;
+                gerenciadorResposta.telaPedidoDTO.itensPedido.refresh();
+            }
+        }
+
+        private function filtreItensResposta(event:KeyboardEvent):void {
+            if (event.keyCode == Keyboard.TAB || event.keyCode == Keyboard.DOWN)
+                focusManager.setFocus(pedidoDataGrid);
+        }
+
+        public function filterFuntion(item:Object):Boolean {
+            var item2:ItemPedido = item as ItemPedido;
+
+            if (item2.descricao && item2.descricao.match(new RegExp(filtro.text, 'i')))
+                return true;
+            else if (item2.embalagem && item2.embalagem.match(new RegExp(filtro.text, 'i')))
+                return true;
+            else if (item2.qtdPedida.toString() && item2.qtdPedida.toString().match(new RegExp(filtro.text, 'i')))
+                return true;
+            return false
+        }
+
+        private function setFocusOnFilter():void {
+            focusManager.setFocus(filtro.textInput);
+        }
+
+        private function visualizeDadosCliente(event:MouseEvent):void {
+            if (gerenciadorResposta.telaPedidoDTO == null) {
+                Session.getInstance().messageHandler.showTextMessage("Erro", "Sua Cotação não foi carregada.", Icons.ERROR);
+                return;
+            }
+            var window:DadosCliente = new DadosCliente();
+            window.comprador = gerenciadorResposta.telaPedidoDTO.comprador;
+            window.showCloseButton = true;
+            PopUpManager.addPopUp(window, Application.application as DisplayObject, true);
+            PopUpManager.centerPopUp(window)
+        }
+
+        private function abraCaixaDeEntrada(event:MouseEvent):void {
+            var viewStack:ViewStack = this.parent as ViewStack;
+            new LoadEvent(LoadEvent.RESPOSTAS).dispatch();
+            viewStack.selectedIndex = 0;
+        }
+
+        private function abraResposta(event:MouseEvent):void {
+
+        }
+
+        private function faturePedido(event:MouseEvent):void {
+            var pedido:Pedido = gerenciadorResposta.telaPedidoDTO.pedido;
+            if(pedido != null && !pedido.faturado){
+                var fatureEvent:FaturePedidoEvent = new FaturePedidoEvent(FaturePedidoEvent.EVENT_NAME, pedido.id);
+                fatureEvent.dispatch()
+            }else {
+                Alert.show("Seu pedido já foi faturado, atualize sua caixa de entrada e aparecerá como faturado")
+            }
+        }
+
+        private function downloadPedido(event:MouseEvent):void {
+            var pedido:Pedido = gerenciadorResposta.telaPedidoDTO.pedido;
+            var downloadFileEvent:DownloadFileEvent = new DownloadFileEvent(DownloadFileEvent.PEDIDO);
+            downloadFileEvent.params = pedido.id;
+            downloadFileEvent.dispatch();
+        }
+        ]]>
+    </mx:Script>
+
+    <mx:HBox width="100%" horizontalGap="3">
+        <mx:Image source="assets/botones/atras1.png" buttonMode="true"/>
+        <mx:LinkButton paddingLeft="1" label="Caixa de Entrada" fontSize="12"
+                       click="abraCaixaDeEntrada(event)"/>
+        <mx:LinkButton label="Resposta" paddingLeft="1" fontSize="12"
+                       click="abraResposta(event)"
+                       toolTip="Clique para abrir a resposta da cotação enviada"/>
+        <components:PromptTextInput
+                id="filtro" prompt="Filtro..."
+                width="100%" change="setFilter()"
+                keyDown="filtreItensResposta(event)"
+                click="setFocusOnFilter()"/>
+        <mx:Button styleName="filterButton" click="setFilter()"
+                   width="25" cornerRadius="0">
+            <mx:icon>@Embed(source='/assets/img/filter16.png')</mx:icon>
+        </mx:Button>
+
+    </mx:HBox>
+
+
+    <pedido:PedidoGrid
+            id="pedidoDataGrid"
+            color="0x323232"
+            verticalGridLines="false"
+            horizontalGridLines="true"
+            horizontalGridLineColor="#d6d5d5"
+            textAlign="center"
+            alternatingItemColors="[0xe7e7e7,0xe7e7e7]"
+            width="100%" height="100%"
+            dataProvider="{gerenciadorResposta.telaPedidoDTO.itensPedido}"/>
+
+    <application:FooterControlBar>
+        <mx:HBox width="100%" height="100%">
+            <mx:Button label="Download Pedido"
+                       height="100%"
+                       toolTip="Fazer download do pedido em formato excel"
+                       icon="{Icons.EXPORT_24}"
+                       click="downloadPedido(event)"
+                       styleName="barButton"
+                       labelPlacement="bottom"/>
+            <mx:Button label="Faturar"
+                       height="100%"
+                       toolTip="Marcar pedido como faturado"
+                       icon="{Icons.OK_24}"
+                       styleName="barButton"
+                       labelPlacement="bottom"
+                       enabled="{!gerenciadorResposta.telaPedidoDTO.pedido.faturado}"
+                       click="faturePedido(event)"/>
+            <mx:Form width="100%" paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0" color="0xffffff">
+                <mx:FormItem label="Comprador">
+                    <mx:LinkButton label="{gerenciadorResposta.telaPedidoDTO.comprador.nome}" fontWeight="normal"
+                                   click="visualizeDadosCliente(event)"/>
+                </mx:FormItem>
+                <mx:FormItem label="Email do comprador">
+                    <mx:LinkButton label="{gerenciadorResposta.telaPedidoDTO.comprador.email}" fontWeight="normal"
+                                   click="visualizeDadosCliente(event)"/>
+                </mx:FormItem>
+            </mx:Form>
+
+            <mx:Form width="100%" paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0" color="0xffffff">
+                <mx:FormItem label="Cliente">
+                    <mx:LinkButton label="{gerenciadorResposta.telaPedidoDTO.comprador.empresa.nomeFantasia}"
+                                   click="visualizeDadosCliente(event)"/>
+                </mx:FormItem>
+                <mx:FormItem label="Fone">
+                    <mx:LinkButton label="{gerenciadorResposta.telaPedidoDTO.comprador.telefones.getItemAt(0)}"
+                                   click="visualizeDadosCliente(event)"/>
+                </mx:FormItem>
+            </mx:Form>
+
+            <mx:Form width="100%" paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0" color="0xffffff">
+                <mx:FormItem label="Valor total do pedido: " >
+                    <mx:Label text="{gerenciadorResposta.telaPedidoDTO.pedido.totalPedidoFormatadoReal}"/>
+                </mx:FormItem>
+                <mx:FormItem label="Total de itens do pedido: ">
+                    <mx:Label text="{gerenciadorResposta.telaPedidoDTO.pedido.totalItens}"/>
+                </mx:FormItem>
+            </mx:Form>
+
+        </mx:HBox>
+    </application:FooterControlBar>
+</mx:Panel>

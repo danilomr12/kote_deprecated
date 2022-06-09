@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<mx:DataGrid xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:analise="br.com.cotecom.view.components.cotacao.analise.*"
+             doubleClickEnabled="true"
+             dataProvider="{this._analise.itensAnaliseCotacao}"
+             itemEditEnd="onEditEnd(event)"
+             borderStyle="solid" dropShadowEnabled="true"
+             shadowDirection="right">
+
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseRespostaDTO;
+        import br.com.cotecom.view.util.DinheiroUtil;
+
+        import mx.events.DataGridEvent;
+
+        [Bindable]
+        public var _analise:AnaliseCotacaoDTO;
+
+        public function set analise(analiseCotacao:AnaliseCotacaoDTO):void {
+            this._analise = analiseCotacao;
+        }
+
+        private function lbfTotalProduto(analiseItem:Object, col:DataGridColumn):String {
+            if (analiseItem.naoComprar)
+                return " - ";
+            if ((analiseItem as ItemAnaliseCotacaoDTO).respostas.length != 0) {
+                var melhorResposta:ItemAnaliseRespostaDTO = (analiseItem as ItemAnaliseCotacaoDTO).respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+                var quantidade:int = (analiseItem as ItemAnaliseCotacaoDTO).quantidade;
+                return  DinheiroUtil.formatAsReal(quantidade * melhorResposta.precoAtribuido);
+            } else {
+                return " - ";//DinheiroUtil.formatAsReal(0);
+            }
+        }
+
+        private function onEditEnd(evt:DataGridEvent):void {
+            var vScroll:int = this.verticalScrollPosition;
+            evt.target.dataProvider.refresh();
+            this.verticalScrollPosition = vScroll;
+        }
+
+        public function setItemUnsaved(data:Object):void {
+            _analise.setItemAsUnsaved(data.id);//todo: testar
+        }
+
+        private static function sortDifPercentualFunction(obj1:Object, obj2:Object):int {
+            var d1:Number = (obj1 as ItemAnaliseCotacaoDTO).diferencaEntrePrimeiroESegundoPrecos;
+            var d2:Number = (obj2 as ItemAnaliseCotacaoDTO).diferencaEntrePrimeiroESegundoPrecos;
+            if (d1 < d2) {
+                return -1;
+            } else if (d1 == d2) {
+                return 0;
+            }
+            return 1;
+        }
+
+        private static function sortTotalFunction(obj1:Object, obj2:Object):int {
+            var d1:Number = 0;
+            var d2:Number = 0;
+            if ((obj1 as ItemAnaliseCotacaoDTO).respostas.length != 0) {
+                var melhorResposta1:ItemAnaliseRespostaDTO = (obj1 as ItemAnaliseCotacaoDTO).respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+                var quantidade1:int = (obj1 as ItemAnaliseCotacaoDTO).quantidade;
+                d1 = quantidade1 * melhorResposta1.precoAtribuido;
+            }
+            if ((obj2 as ItemAnaliseCotacaoDTO).respostas.length != 0) {
+                var melhorResposta2:ItemAnaliseRespostaDTO = (obj2 as ItemAnaliseCotacaoDTO).respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+                var quantidade2:int = (obj2 as ItemAnaliseCotacaoDTO).quantidade;
+                d2 = quantidade2 * melhorResposta2.precoAtribuido;
+            }
+            if (d1 < d2) {
+                return -1;
+            } else if (d1 == d2) {
+                return 0;
+            }
+            return 1;
+        }
+        ]]></mx:Script>
+
+    <mx:columns>
+        <mx:DataGridColumn dataField="quantidade" headerText="Quantidade" width="50"
+                           editable="{_analise.editavel}" editorDataField="value">
+            <mx:itemEditor>
+                <mx:Component>
+                    <mx:NumericStepper maximum="999999" change="outerDocument.setItemUnsaved(data)">
+                        <mx:Script><![CDATA[
+                            ]]></mx:Script>
+                    </mx:NumericStepper>
+                </mx:Component>
+            </mx:itemEditor>
+        </mx:DataGridColumn>
+
+        <mx:DataGridColumn dataField="descProduto" editable="false" headerText="Descrição" width="220"/>
+
+        <mx:DataGridColumn dataField="respostas" headerText="Melhor Opção" editable="false" width="150">
+            <mx:itemRenderer>
+                <mx:Component>
+                    <analise:AnaliseRespostasText editavel="{outerDocument._analise.editavel}" itemAnaliseCotacao="{data as ItemAnaliseCotacaoDTO}">
+                        <mx:Script><![CDATA[
+                            import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+                            ]]></mx:Script>
+                    </analise:AnaliseRespostasText>
+                </mx:Component>
+            </mx:itemRenderer>
+        </mx:DataGridColumn>
+
+        <mx:DataGridColumn headerText="Diferença" width="70" editable="false" textAlign="center"
+                           itemRenderer="br.com.cotecom.view.components.cotacao.analise.AnaliseDiferencaFormatadaLabel" sortCompareFunction="sortDifPercentualFunction"/>
+
+        <mx:DataGridColumn labelFunction="lbfTotalProduto" editable="false" headerText="Total" textAlign="center" sortCompareFunction="sortTotalFunction"/>
+
+    </mx:columns>
+
+
+</mx:DataGrid>

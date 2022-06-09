@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+        xmlns:mx="http://www.adobe.com/2006/mxml"
+        xmlns:screens="br.com.cotecom.view.screens.*"
+        xmlns:controllers="br.com.cotecom.control.controllers.*"
+        xmlns:components="br.com.cotecom.view.components.*"
+        xmlns:growler="com.hydraframework.components.growler.*"
+        xmlns:application="br.com.cotecom.view.components.application.*"
+        layout="absolute"
+        preloader="br.com.cotecom.preloader.NewPreloader"
+        creationComplete="initApp()"
+        pageTitle="Kote - Cotações Inteligentes">
+    <mx:Style source="/assets/css/mainSkin.css"/>
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.InitializeEvent;
+        import br.com.cotecom.control.events.LoadEvent;
+        import br.com.cotecom.control.events.NavegadorVerticalEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewCaixaDeEntradaEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.services.comprador.GerenciadorAplicacao;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.model.services.comprador.GerenciadorRepresentantes;
+        import br.com.cotecom.view.components.login.LoginWindow;
+        import br.com.cotecom.view.screens.CotacaoNovaView;
+        import br.com.cotecom.view.screens.FornecedoresView;
+
+        import com.flexspy.FlexSpy;
+        import com.hydraframework.demos.growler.growls.DefaultGrowl;
+
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var model:Session = Session.getInstance();
+        [Bindable]
+        public var gerenciadorCotacao:GerenciadorCotacao = GerenciadorCotacao.getInstance();
+        [Bindable]
+        public var gerenciadorRepresentantes:GerenciadorRepresentantes = GerenciadorRepresentantes.getInstance();
+        [Bindable]
+        public var isLoggedUserAdmin:Boolean = false;
+
+        private function initApp():void {
+            var initializeEvent:InitializeEvent = new InitializeEvent();
+            initializeEvent.dispatch();
+            model.viewState.applicationViewStack = this.viewStack;
+            gerenciadorCotacao.viewNovaCotacao =
+                    this.viewStack.getChildByName("screenNovaCotacao") as CotacaoNovaView;
+        }
+
+        private function getViewStackLabels():Array {
+            var labels:Array;
+            for each(var view:Object in viewStack) {
+                labels.push(view.label);
+            }
+            return labels;
+        }
+
+        protected function leftMenu_click(event:MouseEvent):void {
+            //Caixa de Entrada
+            if (leftMenu.selectedIndex == 0) {
+                gerenciadorCotacao.crieNovaCotacaoRascunho();
+            } else if (leftMenu.selectedIndex == 1) {
+                model.caixaDeEntradaService.getAllItens();
+                screenBaseCaixaDeEntrada.selectedIndex = 0;
+            } else if (leftMenu.selectedIndex == 3) {
+                gerenciadorRepresentantes.representantesComAtendimento.filterFunction = null;
+                gerenciadorRepresentantes.representantesComAtendimento.refresh();
+            }
+
+        }
+
+        /*public function setUserAdmin(isAdmin:Boolean):void {
+         if (isAdmin) {
+         if (!this.viewStack.getChildByName("screenDebugTools"))
+         this.viewStack.addChild(screenDebugTools);
+         } else {
+         if (this.viewStack.getChildByName("screenDebugTools"))
+         this.viewStack.removeChild(screenDebugTools);
+         }
+         this.isLoggedUserAdmin = isAdmin;
+         }
+         */
+        public function doLogin():void {
+            var login:LoginWindow = new LoginWindow();
+            PopUpManager.addPopUp(login, this, true);
+            PopUpManager.centerPopUp(login);
+        }
+        ]]>
+	</mx:Script>
+
+    <controllers:ProdutoController/>
+    <controllers:CotacaoController/>
+    <controllers:ApplicationController/>
+    <controllers:FornecedoresController/>
+    <controllers:UsuarioController/>
+    <controllers:CompradorController/>
+
+    <components:TopButtonBar/>
+
+    <mx:Binding destination="leftMenu.selectedIndex" source="model.viewState.applicationViewStack.selectedIndex"/>
+
+    <application:Logo/>
+
+    <mx:List id="leftMenu" styleName="leftMenu" dataProvider="{viewStack.getChildren()}" labelField="label"
+             click="leftMenu_click(event)" width="180" selectedIndex="1"/>
+
+    <!--<mx:LinkButton label="FlexSpy"
+                   id="flexSpy"
+                   fontSize="10" left="10" top="300"
+                   toolTip="Iniciar Flex Spy"
+                   click="{FlexSpy.show()}"
+                   visible="true"
+                   includeInLayout="true"/>-->
+    <mx:LinkButton label="Fazer Login"
+                   id="login"
+                   fontSize="10" left="10" top="350"
+                   toolTip="Realizar Login"
+                   click="{doLogin()}"
+                   visible="{isLoggedUserAdmin}"
+                   includeInLayout="{isLoggedUserAdmin}"/>
+
+    <mx:VBox left="180" right="10" top="40" bottom="10">
+        <mx:ViewStack id="viewStack" creationPolicy="all"
+                      selectedIndex="{leftMenu.selectedIndex}" width="100%" height="100%">
+            <screens:CotacaoNovaView id="screenNovaCotacao"
+                                     label="Nova Cotação"
+                                     telaCotacaoDTO="{gerenciadorCotacao.telaCotacaoDTO}"/>
+            <screens:BaseCaixaDeEntrada id="screenBaseCaixaDeEntrada"
+                                        label="Caixa de Entrada"/>
+            <screens:ProdutoView id="screenProdutos"
+                                 label="Catalogo"/>
+            <screens:FornecedoresView id="screenRepresentante"
+                                      label="Fornecedores"/>
+            <!--<screens:DebugToolsView id="screenDebugTools"
+                                    label="Debug Tools"/>-->
+        </mx:ViewStack>
+    </mx:VBox>
+
+    <growler:Growler
+            top="5"
+            height="{this.height-10}"
+            growlerClass="{DefaultGrowl}"
+            id="growlerNovaResposta"
+            x="{this.width-growlerNovaResposta.width}"
+            horizontalGap="5"
+            verticalGap="5"/>
+
+    <growler:Growler
+            top="5"
+            height="{this.height-10}"
+            growlerClass="{DefaultGrowl}"
+            id="growlerNovaRespostaDaCotacao"
+            x="{this.width-growlerNovaResposta.width}"
+            horizontalGap="5"
+            verticalGap="5"/>
+
+</mx:Application>

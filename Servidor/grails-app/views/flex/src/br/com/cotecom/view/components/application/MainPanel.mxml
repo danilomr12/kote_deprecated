@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+          width="100%" height="100%" headerHeight="10"
+          layout="horizontal" styleName="painel" verticalScrollPolicy="off"
+          paddingLeft="10" paddingRight="10" dropShadowEnabled="true" shadowDirection="left">
+
+</mx:Panel>

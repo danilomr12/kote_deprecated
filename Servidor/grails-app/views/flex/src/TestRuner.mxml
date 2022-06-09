@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:flexunit="flexunit.flexui.*"
+	creationComplete="init()">
+	
+	<mx:Script>
+		<![CDATA[
+			import flexunit.framework.TestSuite;
+			
+			private function init():void{
+				testRunner.test = createSuite();
+				testRunner.startTest();
+			}
+			
+			private function createSuite():TestSuite {
+				var testSuite:TestSuite = new TestSuite();
+				
+			//	testSuite.addTestSuite( ArrayCollectionsTest );
+				/* testSuite.addTestSuite( RespostaTest );
+				testSuite.addTestSuite( ResponderTest ); */
+				
+				return testSuite;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<flexunit:TestRunnerBase id="testRunner"
+		width="100%" height="100%" />
+</mx:Application>

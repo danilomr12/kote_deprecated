@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" currentState="show" width="100%">
+
+
+    <mx:Metadata>
+        [Event(name="telefoneAdded" , type="flash.events.Event")]
+        [Event(name="removeTelefone" , type="flash.events.Event")]
+    </mx:Metadata>
+
+    <mx:states>
+
+        <mx:State name="edit" >
+            <mx:RemoveChild target="{showBox}"/>
+        </mx:State>
+
+        <mx:State name="show" >
+            <mx:RemoveChild target="{editBox}"/>
+        </mx:State>
+        
+    </mx:states>
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.control.events.formularios.RemoveEvent;
+        import br.com.cotecom.model.domain.Telefone;
+
+        [Bindable]
+        public var telefone:*;
+
+        [Bindable]
+        public var index:int;
+
+        private function addTelefone():void {
+            var telefone:Telefone = new Telefone();
+            telefone.ddd = textInputDdd.text;
+            telefone.numero = textInputNumero.text;
+            telefone.descricaoTipo = comboTipo.selectedLabel;
+            this.telefone = telefone;
+            dispatchEvent(new Event('telefoneAdded', true));
+            clear();
+        }
+
+        private function removeTelefone():void {
+            dispatchEvent(new RemoveEvent('removeTelefone', index));
+        }
+
+        private function onDddChange(event:Event):void {
+            if ((event.target as TextInput).text.length == 2) {
+                focusManager.setFocus(textInputNumero);
+            }
+        }
+
+        private function clear():void {
+            comboTipo.selectedIndex = 0;
+            textInputDdd.text = "";
+            textInputNumero.text = "";
+        }
+        ]]></mx:Script>
+
+    <mx:HBox id="showBox" width="100%">
+        <mx:Text text="{telefone}"/>
+        <mx:Spacer width="100%"/>
+        <mx:LinkButton id="remBtn" label="Remover" click="removeTelefone()"/>
+    </mx:HBox>
+
+    <mx:HBox id="editBox" width="100%">
+
+        <mx:ComboBox id="comboTipo" dataProvider="{Telefone.TIPOS}"
+                     selectedIndex="{telefone.tipo}"/>
+        <mx:TextInput id="textInputDdd" maxChars="2" restrict="0-9" width="30"
+                      change="onDddChange(event)" toolTip="DDD"
+                      text="{telefone.ddd}"/>
+        <mx:TextInput id="textInputNumero" maxChars="8" restrict="0-9" width="100%"
+                      toolTip="Número de telefone" text="{telefone.numero}"/>
+        <mx:Button id="addBtn" label="+" click="addTelefone()" />
+
+    </mx:HBox>
+
+</mx:HBox>

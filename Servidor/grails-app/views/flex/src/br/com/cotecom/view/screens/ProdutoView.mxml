@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+          xmlns:busca="br.com.cotecom.view.components.busca.*"
+          xmlns:application="br.com.cotecom.view.components.application.*"
+          headerHeight="10"
+          footerColors="[#FFCA51, #FFCA51]"
+          dropShadowEnabled="true" shadowDirection="left"
+          width="100%" height="100%"
+          creationComplete="init()">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SearchEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.dtos.Produto;
+        import br.com.cotecom.model.services.comprador.GerenciadorCatalogo;
+        import br.com.cotecom.view.components.application.UploadForm;
+        import br.com.cotecom.view.components.produto.NewProdutoPopUp;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.containers.TitleWindow;
+        import mx.core.Application;
+        import mx.events.*;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var gerenciadorCatalogo:GerenciadorCatalogo = GerenciadorCatalogo.getInstance();
+
+        [Bindable]
+        public var model:Session = Session.getInstance();
+        private var menuRollOVertimer:Timer;
+        private var datagridProperties:Object;
+        private var fileRef:FileReference = new FileReference();
+        private var titleWindow:TitleWindow;
+
+        public function init():void {
+            //				this.menu = new GridMenu();
+            //				menu.target = this;
+            //				menu.visible = false;
+            //				addChild( menu );
+            //				this.menuRollOVertimer = new Timer(800,1)
+            //				this.menuRollOVertimer.addEventListener(TimerEvent.TIMER_COMPLETE,showGrifMenu)
+            //datagridProperties = new Object();
+            var searchEvent:SearchEvent = new SearchEvent(SearchEvent.PRODUTO, "", null);
+            searchEvent.dispatch();
+            /* Security.allowDomain("http://localhost")
+             Security.loadPolicyFile("http://localhost:8080/Kote/crossdomain.xml") */
+        }
+
+        public function add():void {
+            var newProdutoWindow:NewProdutoPopUp = new NewProdutoPopUp();
+            newProdutoWindow.currentState = NewProdutoPopUp.STATE_PRODUTO;
+            PopUpManager.addPopUp(newProdutoWindow, Application.application as DisplayObject, false);
+            PopUpManager.centerPopUp(newProdutoWindow)
+        }
+
+        public function edit():void {
+            /*datagridProperties.verticalScrollPosition = dataGrid.verticalScrollPosition;
+             datagridProperties.selectedIndex = dataGrid.selectedIndex;*/
+            var newProdutoWindow:NewProdutoPopUp = new NewProdutoPopUp();
+            newProdutoWindow.produto = dataGrid.selectedItem as Produto;
+            PopUpManager.addPopUp(newProdutoWindow, Application.application as DisplayObject, false);
+            PopUpManager.centerPopUp(newProdutoWindow)
+        }
+
+        private function restoreGrid(properties:Object):void {
+            /*dataGrid.verticalScrollPosition = datagridProperties.verticalScrollPosition;
+             dataGrid.selectedIndex = datagridProperties.selectedIndex;*/
+        }
+
+        public function remove(targetIndex:int = -1):void {
+            gerenciadorCatalogo.deleteProduto(dataGrid.selectedItem as Produto);
+            var index:int = gerenciadorCatalogo.produtosEncontrados.getItemIndex(dataGrid.selectedItem);
+            gerenciadorCatalogo.produtosEncontrados.removeItemAt(index);
+        }
+
+        public function onItemDoubleClick(event:ListEvent):void {
+            edit();
+        }
+
+        public function onMouseOutOfMenu(event:MouseEvent):void {
+            //				(event.target as Menu);
+        }
+
+        private function menuHandler(event:MenuEvent):void {
+            this[event.item.@method]();
+        }
+
+        protected function dataGrid_itemRollOverHandler(event:ListEvent):void {
+            if (menuRollOVertimer.running) {
+                menuRollOVertimer.reset();
+            } else {
+                menuRollOVertimer.start()
+            }
+        }
+
+        private function closeWindow(event:Event):void {
+            PopUpManager.removePopUp(titleWindow);
+        }
+
+        private function importePlanilhaDeProdutos(event:MouseEvent):void {
+            titleWindow = new TitleWindow();
+            titleWindow.showCloseButton = true;
+            titleWindow.addEventListener(CloseEvent.CLOSE, closeWindow);
+            var form:UploadForm = new UploadForm();
+            var documentTypes:FileFilter = new FileFilter("Documents (*.xls)", ("*.xls"));
+            form.addFileTypes(documentTypes);
+            form.mensagem = "Selecione uma planilha de MS excel 97/2003(.xls) para importar";
+            titleWindow.addChild(form);
+            PopUpManager.addPopUp(titleWindow, Application.application as DisplayObject, false);
+            PopUpManager.centerPopUp(titleWindow);
+        }
+
+        private function embalagem(object:Object, column:DataGridColumn):String {
+            var produto:Produto = (object as Produto);
+            if (produto)
+                return produto.embalagem;
+            return "";
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:ApplicationControlBar cornerRadius="0" width="100%">
+        <mx:HBox height="100%" width="100%">
+            <busca:Busca width="300" id="busca" type="{SearchEvent.PRODUTO}"/>
+            <mx:Spacer width="100%"/>
+            <mx:CheckBox id="barCodeCkbox" selected="true"/>
+            <mx:Label text="Código Barras"/>
+            <mx:CheckBox id="descCkbox" selected="true"/>
+            <mx:Label text="Descrição"/>
+            <mx:CheckBox id="catCkbox" selected="true"/>
+            <mx:Label text="Categoria"/>
+            <mx:CheckBox id="embCkbox" selected="true"/>
+            <mx:Label text="Embalagem"/>
+            <mx:CheckBox id="embMasterCkbox" selected="true"/>
+            <mx:Label text="E.M." toolTip="Embalagem Master"/>
+            <mx:CheckBox id="marcaCkBox" selected="true"/>
+            <mx:Label text="Marca"/>
+            <mx:CheckBox id="fabCkbox" selected="false"/>
+            <mx:Label text="Fabricante"/>
+            <mx:CheckBox id="pesoCkbox" selected="false"/>
+            <mx:Label text="Peso"/>
+        </mx:HBox>
+    </mx:ApplicationControlBar>
+
+    <mx:DataGrid
+            id="dataGrid"
+            dataProvider="{gerenciadorCatalogo.produtosEncontrados}"
+            width="100%" height="100%"
+            doubleClickEnabled="true"
+            itemDoubleClick="onItemDoubleClick(event)">
+        <mx:columns>
+            <mx:DataGridColumn id="codeColumn" headerText="Código de Barras" dataField="barCode" width="120" visible="{barCodeCkbox.selected}"/>
+            <mx:DataGridColumn headerText="Descrição" dataField="descricao" width="350" visible="{descCkbox.selected}" textAlign="left"/>
+            <mx:DataGridColumn headerText="Categoria" dataField="categoria" width="100" visible="{catCkbox.selected}"/>
+            <mx:DataGridColumn headerText="Embalagem" dataField="embalagem" labelFunction="embalagem" width="100" visible="{embCkbox.selected}"/>
+            <mx:DataGridColumn headerText="Embalagem Master" dataField="qtdMaster" width="100" visible="{embMasterCkbox.selected}"/>
+            <mx:DataGridColumn headerText="Fabricante" dataField="fabricante" visible="{fabCkbox.selected}"/>
+            <mx:DataGridColumn headerText="Marca" dataField="marca" visible="{marcaCkBox.selected}"/>
+            <mx:DataGridColumn headerText="Peso" dataField="peso" width="45" visible="{pesoCkbox.selected}"/>
+        </mx:columns>
+    </mx:DataGrid>
+
+    <application:FooterControlBar>
+        <mx:HBox width="100%" height="100%">
+            <mx:Button label="Novo"
+                       height="100%"
+                       toolTip="Adicionar novo produto ao catálogo"
+                       click="add()"
+                       icon="{Icons.ADD_PRODUTO_24}"
+                       styleName="barButton"
+                       labelPlacement="bottom"/>
+            <mx:Button label="Editar"
+                       styleName="barButton"
+                       labelPlacement="bottom"
+                       toolTip="Editar descrição do produto"
+                       enabled="{dataGrid.selectedItem}"
+                       click="edit()"
+                       icon="{Icons.EDIT_24}"
+                       height="100%"/>
+            <mx:Button label="Excluir"
+                       toolTip="Excluir produto do catálogo"
+                       enabled="{dataGrid.selectedItem}"
+                       click="remove()"
+                       icon="{Icons.DELETE_24}"
+                       styleName="barButton"
+                       labelPlacement="bottom"
+                       height="100%"/>
+            <mx:Button label="Importar"
+                       click="importePlanilhaDeProdutos(event)"
+                       toolTip="Importar lista de produtos em excel para o catálogo"
+                       icon="{Icons.IMPORT_24}"
+                       visible="false"
+                       includeInLayout="false"
+                       styleName="barButton"
+                       labelPlacement="bottom"
+                       height="100%"/>
+        </mx:HBox>
+    </application:FooterControlBar>
+</mx:Panel>

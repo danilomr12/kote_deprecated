@@ -1,0 +1,61 @@
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+
+mainClassName = "br.com.analise.Main"
+
+sourceCompatibility = 1.6
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Projeto': 'Analise1.0', 'Versao': 1.0
+    }
+}
+
+repositories {
+    mavenCentral()
+	maven {
+		url 'http://maven.springframework.org/release'
+    }
+}
+
+dependencies {
+	groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.5'
+
+    //compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '1.4.1.RELEASE'
+	compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '1.0.1.RELEASE'
+	runtime group: 'org.springframework.data', name: 'spring-data-commons-core', version: '1.2.0.RELEASE'
+	runtime group: 'org.mongodb', name: 'mongo-java-driver' , version: '2.7.3'
+	
+	compile group: 'org.springframework.integration', name: 'spring-integration-core', version: '2.1.0.RELEASE'
+	
+	compile group: 'net.sf.ehcache', name: 'ehcache-core', version: '2.5.1'
+	compile group: 'org.slf4j', name: 'slf4j-api', version:'1.6.4'
+	compile group: 'org.slf4j', name: 'slf4j-log4j12', version:'1.6.4'
+	compile group: 'log4j', name: 'log4j', version:'1.2.16'
+	
+	compile group: 'org.perf4j', name: 'perf4j', version: '0.9.16'
+	compile group: 'org.aspectj', name: 'aspectjrt', version: '1.6.12'
+	compile 'org.aspectj:aspectjweaver:1.6.12'
+	compile group: 'commons-jexl', name:'commons-jexl', version: '1.1'
+	compile group: 'cglib', name:'cglib', version: '2.2.2'
+	
+	compile 'org.hibernate:hibernate-validator:4.1.0.Final'
+	compile 'javax.validation:validation-api:1.0.0.GA'                   
+	
+	testCompile group: 'org.springframework', name: 'spring-test', version: '3.1.1.RELEASE'
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}

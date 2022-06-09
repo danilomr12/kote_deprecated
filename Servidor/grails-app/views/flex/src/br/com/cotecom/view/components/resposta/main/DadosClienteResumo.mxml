@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" title="Dados do Comprador" width="100%" maxWidth="300">
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+        import br.com.cotecom.view.components.resposta.DadosCliente;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.core.Application;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        private var gerenciadorResposta:GerenciadorResposta = GerenciadorResposta.getInstance();
+
+        private function visualizeDadosCliente(event:MouseEvent):void {
+            if (gerenciadorResposta.telaResposta == null) {
+                Session.getInstance().messageHandler.showTextMessage("Erro", "Sua Cotação não foi carregada.", Icons.ERROR);
+                return;
+            }
+            var window:DadosCliente = new DadosCliente();
+            window.comprador = gerenciadorResposta.telaResposta.comprador;
+            window.showCloseButton = true;
+            PopUpManager.addPopUp(window, Application.application as DisplayObject);
+            PopUpManager.centerPopUp(window)
+        }
+        ]]>
+	</mx:Script>
+	
+	<mx:TextArea width="100%" fontSize="12" textAlign="center" fontWeight="bold" editable="false" selectable="false"
+				 text="{gerenciadorResposta.telaResposta.comprador.empresa.nomeFantasia}"/>
+	<mx:Form>
+		<mx:FormItem label="Fone:" fontWeight="bold">
+		<mx:Label text="{gerenciadorResposta.telaResposta.comprador.empresa.telefones.getItemAt(0)}"
+		fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:FormItem label="Comprador" fontWeight="bold">
+		<mx:Label text="{gerenciadorResposta.telaResposta.comprador.nome}"
+		fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:FormItem label="Fone:" fontWeight="bold">
+		<mx:Label text="{gerenciadorResposta.telaResposta.comprador.telefones.getItemAt(0)}"
+		fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:Button label="Mais Informações" icon="{Icons.MORE_24}" height="30"  click="visualizeDadosCliente(event)"/>
+	</mx:Form>
+</mx:Panel> 

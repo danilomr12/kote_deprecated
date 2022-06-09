@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml"
+		 color="{labelColor}" 
+		 width="270"
+		 paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0"
+		 creationComplete="init()"
+		 currentState="visualizing">
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.message.IMessageHandler;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.Telefone;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+        import br.com.cotecom.model.services.resposta.GerenciadorFornecedores;
+        import br.com.cotecom.model.utils.ArrayCollections;
+        import br.com.cotecom.model.utils.BindingDebugger;
+
+        import mx.collections.ArrayCollection;
+        import mx.controls.dataGridClasses.DataGridColumn;
+
+        private var messageHandler:IMessageHandler = Session.getInstance().messageHandler;
+
+        [Bindable]
+        public var gerenciador:GerenciadorFornecedores = GerenciadorFornecedores.getInstance();
+        [Bindable]
+        public var heading:String = "Usuário";
+        [Bindable]
+        public var labelColor:uint = 0xeeeeee;
+        [Bindable]
+        public var inputColor:uint = 0x111111;
+        [Bindable]
+        private var fones:ArrayCollection;
+        [Bindable]
+        public var _dataProvider:Object;
+        [Bindable]
+        public var tmpObject:Object;
+        [Bindable]
+        public var tmpTelefones:ArrayCollection;
+        [Bindable]
+        public var dataTipo:Class = Usuario;
+        [Bindable]
+        private var _listProvider:ArrayCollection;
+
+        [Bindable(event="propListChange")]
+        public function set listProvider(value:ArrayCollection):void {
+            this._listProvider = value;
+            var equivalente:* = ArrayCollections.getEqualIdItem(this.listProvider, this.dataProvider);
+            comboBox.selectedIndex = this.listProvider.getItemIndex(equivalente);
+            this.dispatchEvent(new Event("propListChange"));
+        }
+
+        public function get listProvider():ArrayCollection {
+            return this._listProvider;
+        }
+
+        [Bindable(event="propDataChange")]
+        public function set dataProvider(value:Object):void {
+
+            if (value) {
+                this._dataProvider = value;
+                var equivalente:* = ArrayCollections.getEqualIdItem(this.listProvider, value);
+                if (equivalente) {
+                    comboBox.selectedIndex = this.listProvider.getItemIndex(equivalente);
+                }
+                if (dataProvider && dataProvider.telefones)
+                    this.tmpTelefones = ArrayCollections.cloneAll(dataProvider.telefones);
+                dispatchEvent(new Event("propDataChange"));
+            }
+        }
+
+        public function get dataProvider():Object {
+            return this._dataProvider;
+        }
+
+        private function init():void {
+            BindingDebugger.debugComponent(this);
+        }
+
+
+        public function salvar():Object {
+            this.tmpObject = {nome:nomeTextInput.text, email:emailTextImput.text, telefones:tmpTelefones};
+            return this.tmpObject;
+        }
+
+        protected function adicione():void {
+            if (currentState == "editing") {
+                currentState = "editingFones";
+                ddd.setFocus();
+                ddd.drawFocus(true);
+            } else {
+                if (ddd.text && numero.text) {
+                    var novaLista:ArrayCollection = new ArrayCollection([new Telefone(ddd.text, numero.text, tipo.selectedIndex)]);
+                    if (tmpTelefones)
+                        novaLista.addAll(tmpTelefones);
+                    tmpTelefones = novaLista;
+                }
+                cancele();
+            }
+        }
+
+        protected function cancele(event:MouseEvent = null):void {
+            if (currentState == "editingFones") {
+                clearInputs();
+                currentState = "editing";
+            } else {
+                currentState = "hiden";
+            }
+        }
+
+        protected function clearInputs():void {
+            ddd.text = "";
+            numero.text = "";
+            tipo.selectedIndex = 0;
+        }
+
+        protected function onDddChange(event:Event):void {
+            if ((event.target as TextInput).text.length == 2) {
+                focusManager.setFocus(numero);
+            }
+        }
+
+        private function foneLabel(item:Object, column:DataGridColumn):String {
+            messageHandler.showTextMessage("DEBUG", item.toString());
+            return item.toString();
+        }
+
+        private function edite():void {
+            this.currentState = 'editing'
+        }
+
+        private function remova():void {
+            if (this.listTelefones.selectedItem) {
+                (this.listTelefones.dataProvider as ArrayCollection).removeItemAt(this.listTelefones.selectedIndex);
+                var tmp:* = this.listTelefones.dataProvider;
+                this.listTelefones.dataProvider = null;
+                this.listTelefones.dataProvider = tmp;
+            }
+        }
+
+        private function criarNovo():void {
+            var novo:* = new this.dataTipo();
+            this.listProvider.addItem(novo);
+            dataProvider = novo;
+            edite();
+        }
+        ]]>
+	</mx:Script>
+	<mx:states>
+		<mx:State name="hiden">
+			<mx:SetProperty target="{nomeFormItem}" name="label" value=" "/>
+			<mx:SetProperty target="{listTelefones}" name="includeInLayout" value="false"/>
+			<mx:SetProperty target="{listTelefones}" name="visible" value="false"/>
+			<mx:RemoveChild target="{nomeTextInput}"/>
+			<mx:SetProperty target="{emailFormItem}" name="visible" value="false"/>
+			<mx:SetProperty target="{emailFormItem}" name="includeInLayout" value="false"/>
+			<mx:SetProperty target="{formitem3}" name="visible" value="false"/>
+			<mx:AddChild relativeTo="{nomeFormItem}" position="lastChild">
+				<mx:HBox width="100%">
+					<mx:Button label="Editar" click="edite()" width="100%"  enabled="{Boolean(dataProvider)}" color="{inputColor}"/>
+					<mx:Button label="Criar novo" width="100%" click="criarNovo()" visible="{Boolean(dataTipo)}" includeInLayout="{Boolean(dataTipo)}" id="button1" color="{inputColor}"/>
+				</mx:HBox>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="editing">
+			<mx:SetProperty target="{telForm}" name="visible" value="false"/>
+			<mx:SetProperty target="{telForm}" name="includeInLayout" value="false"/>
+			<mx:RemoveChild target="{formitem4}"/>
+		</mx:State>
+		<mx:State name="editingFones">
+			<mx:SetProperty target="{listTelefones}" name="visible" value="false"/>
+			<mx:SetProperty target="{listTelefones}" name="includeInLayout" value="false"/>
+			<mx:SetProperty target="{btnRemover}" name="visible" value="false"/>
+			<mx:SetProperty target="{btnRemover}" name="includeInLayout" value="false"/>
+			<mx:SetProperty target="{btnCriar}" name="label" value="Adicionar"/>
+			<mx:RemoveChild target="{formitem4}"/>
+		</mx:State>
+		<mx:State name="visualizing">
+			<mx:RemoveChild target="{nomeTextInput}"/>
+			<mx:AddChild relativeTo="{nomeFormItem}" position="lastChild">
+				<mx:Label text="{this.dataProvider.nome}" width="160"/>
+			</mx:AddChild>
+			<mx:RemoveChild target="{emailTextImput}"/>
+			<mx:AddChild relativeTo="{emailFormItem}" position="lastChild">
+				<mx:Label text="{this.dataProvider.email}" width="160"/>
+			</mx:AddChild>
+			<mx:SetStyle target="{listTelefones}" name="backgroundColor" value="#666666"/>
+			<mx:SetStyle target="{listTelefones}" name="color" value="#EDEDED"/>
+			<mx:RemoveChild target="{telForm}"/>
+			<mx:SetProperty target="{hbox1}" name="visible" value="false"/>
+			<mx:SetProperty target="{hbox1}" name="includeInLayout" value="false"/>
+			<mx:SetStyle name="verticalGap"/>
+			<mx:SetProperty target="{nomeFormItem}" name="height" value="22"/>
+			<mx:SetProperty target="{emailFormItem}" name="height" value="22"/>
+			<mx:SetStyle target="{emailFormItem}" name="paddingTop" value="2"/>
+			<mx:SetStyle target="{nomeFormItem}" name="paddingTop" value="2"/>
+			<mx:RemoveChild target="{formitem4}"/>
+			<mx:SetProperty target="{listTelefones}" name="height" value="78"/>
+		</mx:State>
+	</mx:states>
+	<mx:Binding destination="dataProvider" source="comboBox.selectedItem"/>
+	<mx:Binding source="dataProvider" destination="comboBox.selectedItem"/>
+	<mx:FormHeading label="{heading}" width="100%"/>
+	
+	<mx:FormItem width="100%" id="formitem4">
+		<mx:ComboBox id="comboBox" width="100%" dataProvider="{this.listProvider}" color="{inputColor}" prompt="Selecione" enabled="{Boolean(listProvider.length)}"/>
+	</mx:FormItem>
+	
+	<mx:FormItem label="Nome" width="100%" id="nomeFormItem">
+		<mx:TextInput id="nomeTextInput" text="{this.dataProvider.nome}" width="100%" color="{inputColor}"/>
+	</mx:FormItem>
+	
+	<mx:FormItem label="E-mail" width="100%" id="emailFormItem">
+		<mx:TextInput id="emailTextImput" text="{this.dataProvider.email}" width="100%" color="{inputColor}"/>
+	</mx:FormItem>
+	
+	<mx:FormItem label="Telefones" width="100%" id="formitem3">
+		<mx:List 
+			id="listTelefones" 
+			includeInLayout="{listTelefones.visible}" 
+			height="50" width="100%" 
+			color="{inputColor}" 
+			dataProvider="{tmpTelefones}"
+			>
+		</mx:List>
+		<mx:VBox 
+			id="telForm" 
+			visible="{!listTelefones.visible}" 
+			includeInLayout="{!listTelefones.visible}" 
+			color="{inputColor}" width="100%">
+			<mx:HBox width="100%">
+				<mx:TextInput id="ddd" maxChars="2" restrict="0-9" width="30" change="onDddChange(event)" toolTip="DDD"/>
+				<mx:TextInput id="numero" maxChars="8" restrict="0-9" width="100%" toolTip="Número de telefone"/>	
+			</mx:HBox>
+			<mx:ComboBox id="tipo" width="100%" dataProvider="{Telefone.TIPOS}" color="{inputColor}"/>
+		</mx:VBox>
+		<mx:HBox id="hbox1" width="100%">
+			<mx:Button label="Novo" click="adicione()" width="100%" id="btnCriar" color="{inputColor}"/>
+			<mx:Button label="Del" click="remova()" width="100%" id="btnRemover" color="{inputColor}"/>
+			<mx:Button label="Cancel" click="cancele()" width="100%" id="btnCancelar" color="{inputColor}"/>
+		</mx:HBox>
+	</mx:FormItem>
+</mx:Form>

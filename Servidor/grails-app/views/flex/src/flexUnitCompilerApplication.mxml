@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" minWidth="1024" minHeight="768">	
+<mx:Script>
+	<![CDATA[
+		import br.com.cotecom.test.RespostaTests;
+		private var RespostaTests_obj:RespostaTests;
+	]]>
+</mx:Script>	
+<mx:Script>
+	<![CDATA[
+
+			//private var br_com_cotecom_model_tests_RespostaTest_obj:br.com.cotecom.model.tests.RespostaTest;
+	]]>
+</mx:Script>	
+<mx:Script>
+	<![CDATA[
+
+
+				//private var br_com_cotecom_model_tests_ResponderTest_obj:br.com.cotecom.model.tests.ResponderTest; 
+		]]>
+</mx:Script>	
+<mx:Script>
+	<![CDATA[
+
+					import br.com.cotecom.model.tests.ArrayCollectionsTest;
+
+					private var br_com_cotecom_model_tests_ArrayCollectionsTest_obj:br.com.cotecom.model.tests.ArrayCollectionsTest;
+			]]>
+</mx:Script>	
+<mx:Script>
+	<![CDATA[
+
+						import flexunit.framework.EventfulTestCase;
+
+						private var flexunit_framework_EventfulTestCase_obj:flexunit.framework.EventfulTestCase;
+				]]>
+</mx:Script>
+	
+</mx:Application>

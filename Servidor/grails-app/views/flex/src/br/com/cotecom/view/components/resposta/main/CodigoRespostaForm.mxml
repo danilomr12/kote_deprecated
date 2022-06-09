@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Panel>
+		<mx:VBox>
+			<mx:Label text="Para continuar, informe o código da cotação enviado por E-mail"/>
+			<mx:HBox>
+				<mx:Label text="Codigo:"/>
+				<mx:TextInput id="codigo" width="300"/>
+			</mx:HBox>
+			<mx:HBox>
+				<mx:Button label="Confirmar"/>
+				<mx:Button label="Cancelar"/>
+				<mx:LinkButton label="mais informações"/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:Panel>
+</mx:TitleWindow>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:components="br.com.cotecom.view.components.*" 
+	width="100%" height="100%"
+	verticalScrollPolicy="off"
+	horizontalScrollPolicy="off"
+	creationComplete="init()"
+	>
+	
+	<mx:Metadata>
+		[DefaultProperty("children")]
+	</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+        import mx.containers.HBox;
+
+        public var buttonBar:HBox;
+
+        private function init():void {
+            buttonBar.x = 20;
+            this.addChild(buttonBar);
+        }
+
+        private var _children:Array = [];
+        private var _childrenChanged:Boolean = false;
+
+        public function set children(value:*):void {
+            if (value is DisplayObject)
+                _children = [ value ];
+            else
+                _children = value;
+
+            _childrenChanged = true;
+            invalidateProperties();
+        }
+
+        public function get children():Array {
+            return _children;
+        }
+
+        protected override function commitProperties():void {
+            super.commitProperties();
+
+            if (_childrenChanged) {
+                for each(var child:DisplayObject in _children) {
+                    slot.addChild(child);
+                }
+            }
+        }
+        ]]>
+	</mx:Script>
+	<!--mx:Image source="assets/img/TopBackground.png" includeInLayout="false"/-->
+	<mx:VBox id="slot" 
+			   styleName="colorPanel"
+			   top="90"
+			   height="100%" width="100%"
+			   verticalScrollPolicy="off">
+		
+	</mx:VBox>
+</mx:Canvas>
+

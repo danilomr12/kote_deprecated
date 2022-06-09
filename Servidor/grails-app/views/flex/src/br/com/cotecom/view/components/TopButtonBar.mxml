@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ApplicationControlBar xmlns:mx="http://www.adobe.com/2006/mxml"
+                          height="30" width="100%">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.Endereco;
+        import br.com.cotecom.model.services.comprador.GerenciadorAplicacao;
+        import br.com.cotecom.view.components.empresa.EmpresaView;
+        import br.com.cotecom.view.screens.ConfiguracoesView;
+
+        import mx.containers.Panel;
+        import mx.core.Application;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var session:Session = Session.getInstance();
+
+        public function configuracoes():void {
+            var configuracoes:ConfiguracoesView = new ConfiguracoesView();
+            configuracoes.usuario = Session.getInstance().user;
+            PopUpManager.addPopUp(configuracoes, Application.application as DisplayObject);
+            PopUpManager.centerPopUp(configuracoes);
+        }
+
+        public function openEnderecoDeEntrega():void {
+            var panel:Panel = new Panel();
+            var enderecoForm:EnderecoForm = new EnderecoForm();
+            enderecoForm.heading = "Endereço de Entrega";
+            enderecoForm.endereco = session.user.empresa.endereco;
+            panel.addChild(enderecoForm);
+            PopUpManager.addPopUp(panel, Application.application as DisplayObject, true);
+            PopUpManager.centerPopUp(panel);
+        }
+
+        private function openEmpresaForm():void {
+            var empresaView:EmpresaView = new EmpresaView();
+            empresaView.empresa = Session.getInstance().user.empresa;
+            PopUpManager.addPopUp(empresaView, Application.application as DisplayObject, false);
+            PopUpManager.centerPopUp(empresaView);
+        }
+
+        private function logout():void {
+            GerenciadorAplicacao.getInstance().logout();
+        }
+
+        private function switchUserBack():void {
+            GerenciadorAplicacao.getInstance().switchUserBack();
+        }
+
+        private function openYoutubeVideos():void{
+            var fullUrl:String = "https://www.youtube.com/channel/UCnx548iBz16rF4ghyKJhjTg/feed?view_as=public";
+            ExternalInterface.call("window.open",fullUrl);
+        }
+
+        ]]>
+	</mx:Script>
+
+    <mx:Label text="Kote - Compras Inteligentes"
+              fontSize="12"
+              fontWeight="bold"/>
+
+    <mx:Spacer width="100%"/>
+
+    <mx:HBox horizontalGap="2">
+        <mx:Label text="Bem-vindo,"/>
+        <mx:LinkButton
+                fontSize="12"
+                label="{Session.getInstance().user.email}"
+                toolTip="Dados cadastrais"
+                click="configuracoes()"
+                paddingRight="0"/>
+        <mx:LinkButton
+                visible="{Session.getInstance().user.isSwitched}"
+                includeInLayout="{Session.getInstance().user.isSwitched}"
+                label="Retornar para Admin"
+                fontSize="12"
+                click="switchUserBack()"/>
+        <mx:Label text="|" width="9" fontSize="12" paddingRight="0" paddingLeft="0"/>
+        <mx:LinkButton
+                fontSize="12"
+                label="{'Empresa: ' + Session.getInstance().user.empresa.nomeFantasia}"
+                toolTip="Dados cadastrais da empresa"
+                paddingLeft="0"
+                click="openEmpresaForm()"/>
+    </mx:HBox>
+
+    <mx:LinkButton
+            label="Ajuda"
+            fontSize="12"
+            click="openYoutubeVideos()"
+            />
+
+    <mx:LinkButton
+            label="Sair"
+            fontSize="12"
+            toolTip="Sair do sistema"
+            click="logout()"/>
+
+</mx:ApplicationControlBar>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:cofiguracoes="br.com.cotecom.view.components.cofiguracoes.*"
+                xmlns:contato="br.com.cotecom.view.components.contato.*"
+                horizontalAlign="center"
+                title="Dados Pessoais"
+                showCloseButton="true"
+                close="close()"
+                headerHeight="30"
+                paddingBottom="15" paddingLeft="0" paddingRight="0" paddingTop="30">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.control.events.SaveEvent;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+        import br.com.cotecom.model.services.comprador.GerenciadorAplicacao;
+
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var usuario:Usuario;
+
+        private function close():void {
+            PopUpManager.removePopUp(this);
+        }
+
+        private function fieldsAreValid():Boolean {
+            //TODO Validar campos do formulario
+            return true;
+        }
+
+        private function salvaAlteracoes():void {
+            if (fieldsAreValid()) {
+                usuario.nome = nomeInput.text;
+                usuario.telefones = telefonesForm.telefones;
+                new SaveEvent(SaveEvent.COMPRADOR, usuario).dispatch();
+                close();
+            }
+        }
+
+        private function mudarSenha():void {
+            GerenciadorAplicacao.getInstance().mudeSenha()
+        }
+        ]]></mx:Script>
+
+    <mx:Form width="400" height="100%">
+
+        <mx:FormItem label="Nome" width="100%">
+            <mx:TextInput id="nomeInput" text="{usuario.nome}" width="100%"/>
+        </mx:FormItem>
+
+        <mx:FormItem label="Telefones" width="100%" height="77">
+            <contato:TelefoneList id="telefonesForm" telefones="{usuario.telefones}" width="100%"/>
+        </mx:FormItem>
+        <mx:FormItem >
+            <mx:LinkButton label="mudar senha" click="mudarSenha()"/>
+        </mx:FormItem>
+    </mx:Form>
+
+    <mx:HBox>
+        <mx:Button label="cancelar"
+                   styleName="cancelButton"
+                   click="close()"/>
+        <mx:Button label="Salvar"
+                   styleName="saveButton"
+                   click="salvaAlteracoes()"/>
+    </mx:HBox>
+    
+</mx:TitleWindow>

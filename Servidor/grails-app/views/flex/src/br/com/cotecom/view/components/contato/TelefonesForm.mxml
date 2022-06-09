@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:FormItem xmlns:mx="http://www.adobe.com/2006/mxml"
+			 width="100%">
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.Telefone;
+
+        import mx.collections.ArrayCollection;
+        import mx.events.ValidationResultEvent;
+
+        [Bindable]
+        public var telefones:ArrayCollection;
+        [Bindable]
+        private var selectedTelefone:Telefone;
+
+        private function onDddChange(event:Event):void {
+            if ((event.target as TextInput).text.length == 2) {
+                focusManager.setFocus(textInputNumero);
+            }
+        }
+
+        protected function adicioneTelefone(event:MouseEvent):void {
+            if (validateForm() && this.selectedTelefone != null) {
+                this.selectedTelefone.ddd = this.textInputDdd.text;
+                this.selectedTelefone.numero = this.textInputNumero.text;
+                this.selectedTelefone.descricaoTipo = this.comboTipo.selectedItem as String;
+                clearForm();
+            } else if (validateForm()) {
+                var telefone:Telefone = new Telefone(this.textInputDdd.text, this.textInputNumero.text);
+                telefone.descricaoTipo = this.comboTipo.selectedItem as String;
+
+                if (this.telefones == null)
+                    this.telefones = new ArrayCollection();
+                this.telefones.addItem(telefone);
+                clearForm();
+            }
+        }
+
+        private function clearForm():void {
+            this.selectedTelefone = null;
+            this.textInputDdd.text = "";
+            this.textInputDdd.errorString = "";
+            this.textInputNumero.text = "";
+            this.textInputNumero.errorString = "";
+            this.comboTipo.selectedIndex = 0;
+            focusManager.setFocus(textInputDdd);
+        }
+
+        private function validateForm():Boolean {
+            return validatorDdd.validate().type == ValidationResultEvent.VALID &&
+                    validatorNumero.validate().type == ValidationResultEvent.VALID;
+        }
+
+        protected function buttonRemover_clickHandler(event:MouseEvent):void {
+            if (this.selectedTelefone)
+                this.telefones.removeItemAt(this.telefones.getItemIndex(this.selectedTelefone));
+            clearForm();
+        }
+
+        protected function buttonNovo_clickHandler(event:MouseEvent):void {
+            this.selectedTelefone = new Telefone();
+        }
+        ]]>
+	</mx:Script>
+	<mx:StringValidator id="validatorDdd" required="true" source="{textInputDdd}"					
+						minLength="2" property="text" requiredFieldError="O DDD é obrigatório"
+						tooShortError="O DDD deve conter 2 dígitos"/>
+	<mx:StringValidator id="validatorNumero" required="true" source="{textInputNumero}"
+						minLength="8" property="text" requiredFieldError="O número do telefone é obrigatório"
+						tooShortError="O número do telefone deve conter 8 dígitos"/>
+						
+	<mx:DataGrid id="listTelefones"
+		height="80" width="100%"
+		dataProvider="{telefones}"
+		itemClick="this.selectedTelefone = DataGrid(event.target).selectedItem as Telefone">
+		<mx:columns>
+			<mx:DataGridColumn headerText="Telefones" dataField="telefoneFormatado"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:VBox 
+		id="vBoxTelefones" 
+		width="100%">
+        <mx:HBox width="100%">
+            <mx:ComboBox id="comboTipo" width="60" dataProvider="{Telefone.TIPOS}"
+                         selectedIndex="{selectedTelefone.tipo}"/>
+            <mx:TextInput id="textInputDdd" maxChars="2" restrict="0-9" width="30" 
+						  change="onDddChange(event)" toolTip="DDD"
+						  text="{selectedTelefone.ddd}"/>
+            <mx:TextInput id="textInputNumero" maxChars="8" restrict="0-9" width="100%"
+						  toolTip="Número de telefone" text="{selectedTelefone.numero}"/>
+		</mx:HBox>
+	</mx:VBox>
+	<mx:HBox 
+		id="hBoxButtons" 
+		width="100%" horizontalAlign="right">
+		<mx:LinkButton id="buttonSalvar" label="Adicionar"
+				   click="adicioneTelefone(event)"/>
+		<mx:LinkButton id="buttonRemover" label="Remover"
+				   click="buttonRemover_clickHandler(event)"/>
+	</mx:HBox>	
+</mx:FormItem>

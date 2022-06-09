@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:cofiguracoes="br.com.cotecom.view.components.cofiguracoes.*"
+                xmlns:contato="br.com.cotecom.view.components.contato.*"
+                horizontalAlign="right"
+                title="Dados da Empresa"
+                showCloseButton="true"
+                close="close()"
+                headerHeight="30"
+                paddingBottom="20" paddingLeft="0" paddingRight="0" paddingTop="30">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.domain.dtos.usuarios.Empresa;
+
+        import mx.managers.PopUpManager;
+
+        private function close():void {
+            PopUpManager.removePopUp(this);
+        }
+
+        [Bindable]
+        public var empresa:Empresa;
+        ]]></mx:Script>
+
+    <cofiguracoes:CadastroEmpresa empresa="{empresa}" alteracoesSalvas="close()" cancelada="close()"/>
+    
+
+</mx:TitleWindow>

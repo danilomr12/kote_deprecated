@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+        import mx.controls.LinkButton;
+        import mx.managers.PopUpManager;
+
+        private var btnClose:LinkButton = new LinkButton();
+
+        override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+            super.updateDisplayList(unscaledWidth, unscaledHeight);
+
+            btnClose.label = "x";
+            btnClose.toolTip = "Fechar";
+            btnClose.addEventListener(MouseEvent.CLICK, onClose);
+            btnClose.styleName = "closeButton";
+            btnClose.width = 18;
+            btnClose.height = 18;
+            btnClose.x = super.titleBar.width - (this.btnClose.width) - 10;
+            btnClose.y = 6;
+        }
+
+        override protected function createChildren():void {
+            super.createChildren();
+            super.titleBar.addChild(btnClose);
+        }
+
+        public function onClose():void {
+            PopUpManager.removePopUp(this)
+        }
+        ]]>
+	</mx:Script>
+</mx:Panel>

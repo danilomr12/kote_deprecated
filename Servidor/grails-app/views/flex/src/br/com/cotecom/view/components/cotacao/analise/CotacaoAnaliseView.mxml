@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+          xmlns:analise="br.com.cotecom.view.components.cotacao.analise.*"
+          xmlns:cotacao="br.com.cotecom.view.components.cotacao.*"
+          xmlns:application="br.com.cotecom.view.components.application.*"
+          width="100%" height="100%" headerHeight="10" footerColors="[#FFCA51, #FFCA51]"
+          layout="horizontal" verticalScrollPolicy="off"
+          creationComplete="{this.init()}"
+          currentState="{getEstadoAtual(analiseCotacao)}"
+          dropShadowEnabled="true" shadowDirection="left">
+
+    <mx:states>
+        <mx:State name="processandoEnvio">
+            <mx:SetProperty name="currentState" target="{analiseRespostas}" value="processandoEnvio"/>
+        </mx:State>
+        <mx:State name="preAnalise">
+            <mx:SetProperty name="currentState" target="{analiseRespostas}" value="respostasEnviadas"/>
+            <mx:AddChild
+                    relativeTo="{botoesBox}"
+                    position="lastChild"
+                    creationPolicy="all">
+
+                <mx:Button styleName="barButton"
+                           labelPlacement="bottom" height="100%"
+                           label="Analisar"
+                           icon="{Icons.ANALISE_24}"
+                           toolTip="Efetuar análise automática agora e permitir que eu altere a cotação"
+                           click="{confirmeAnaliseHandler(event)}"/>
+
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="emAnalise">
+            <mx:SetProperty name="currentState" target="{analiseRespostas}" value="respostasEnviadas"/>
+            <mx:AddChild
+                    relativeTo="{botoesBox}"
+                    position="lastChild"
+                    creationPolicy="all">
+
+                <mx:Button height="100%"
+                           label="Reanalisar"
+                           styleName="barButton"
+                           labelPlacement="bottom"
+                           icon="{Icons.ANALISE_24}"
+                           toolTip="Reanalisar preços ignorando minhas alterações"
+                           click="{dispatchAnaliseCotacao()}"/>
+
+            </mx:AddChild>
+            <mx:AddChild
+                    relativeTo="{botoesBox}"
+                    position="lastChild"
+                    creationPolicy="all">
+
+                <mx:Button height="100%"
+                           label="Salvar"
+                           styleName="barButton"
+                           labelPlacement="bottom"
+                           enabled="{analiseCotacao.alterada}"
+                           icon="{Icons.SAVE_24}"
+                           click="{dispatchSalveAnalise()}"/>
+            </mx:AddChild>
+            <mx:AddChild relativeTo="{botoesBox}"
+                         position="lastChild"
+                         creationPolicy="all">
+                <mx:Button height="100%"
+                           label="Pedidos"
+                           toolTip="Enviar Pedidos para Representantes"
+                           styleName="barButton"
+                           labelPlacement="bottom"
+                           icon="{Icons.SEND_24}"
+                           click="confirmaPedidosHandler()"/>
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="aguardandoPedidos">
+            <mx:AddChild relativeTo="{botoesBox}"
+                         position="lastChild"
+                         creationPolicy="all">
+                <mx:Button height="100%"
+                           label="Download Análise"
+                           toolTip="Download de planilha com análise da cotação e pedidos"
+                           styleName="barButton"
+                           labelPlacement="bottom"
+                           icon="{Icons.MORE_24}"
+                           click="downloadPlanilha(event)"/>
+            </mx:AddChild>
+            <!--<mx:AddChild relativeTo="{botoesBox}"
+                         position="lastChild"
+                         creationPolicy="all">
+                <mx:Button height="100%"
+                           label="Finalizar"
+                           toolTip="Finaliza a cotação, você ainda poderá visualizá-la e exportar a análise em excel"
+                           styleName="barButton"
+                           labelPlacement="bottom"
+                           includeInLayout="{!analiseCotacao.cotacao.isFinalizada()}"
+                           visible="{!analiseCotacao.cotacao.isFinalizada()}"
+                           icon="{Icons.FINALIZAR_24}"
+                           click="finalizeCotacao(event)"/>
+            </mx:AddChild>-->
+            <mx:AddChild relativeTo="{botoesBox}"
+                         position="lastChild"
+                         creationPolicy="all">
+                <mx:Button styleName="barButton"
+                           labelPlacement="bottom" height="100%"
+                           label="Ver resumo pedidos"
+                           toolTip="Visualiza graficamente detalhes dos pedidos enviados"
+                           icon="{Icons.MORE_24}"
+                           click="showDetalhesPedidos(event)"/>
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="finalizada">
+            <mx:AddChild relativeTo="{botoesBox}"
+                         position="lastChild"
+                         creationPolicy="all">
+                <mx:Button styleName="barButton"
+                           labelPlacement="bottom" height="100%"
+                           label="Download Análise"
+                           toolTip="Download de planilha com análise da cotação e pedidos"
+                           icon="{Icons.MORE_24}"
+                           click="downloadPlanilha(event)"/>
+            </mx:AddChild>
+            <mx:AddChild relativeTo="{botoesBox}"
+                         position="lastChild"
+                         creationPolicy="all">
+                <mx:Button styleName="barButton"
+                           labelPlacement="bottom" height="100%"
+                           label="Ver resumo pedidos"
+                           toolTip="Visualiza graficamente detalhes dos pedidos enviados"
+                           icon="{Icons.MORE_24}"
+                           click="showDetalhesPedidos(event)"/>
+            </mx:AddChild>
+        </mx:State>
+    </mx:states>
+
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.DownloadFileEvent;
+        import br.com.cotecom.control.events.SaveEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewCaixaDeEntradaEvent;
+        import br.com.cotecom.control.events.cotacao.CotacaoEvent;
+        import br.com.cotecom.control.events.cotacao.GeraPedidosEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.AnaliseRespostaDTO;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.model.utils.EstadoCotacao;
+        import br.com.cotecom.view.components.cotacao.analise.pedidos.GeraPedidosWizard;
+        import br.com.cotecom.view.components.cotacao.analise.pedidos.VisaoGeralPedidos;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.containers.TitleWindow;
+
+        import mx.controls.Alert;
+        import mx.core.Application;
+        import mx.core.IFlexDisplayObject;
+        import mx.events.CloseEvent;
+        import mx.events.DataGridEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        private var _analiseCotacao:AnaliseCotacaoDTO;
+        private var gerenciador:GerenciadorCotacao = GerenciadorCotacao.getInstance();
+
+        public function init():void {
+            this.addEventListener(AnaliseRespostasText.REFRESH_RESPOSTAS_EVENT, refreshValoresTotais);
+        }
+
+        public function set analiseCotacao(analise:AnaliseCotacaoDTO):void {
+            _analiseCotacao = analise;
+            getEstadoAtual(_analiseCotacao);
+            dispatchEvent(new Event("analiseCotacaoChanged"));
+        }
+
+        [Bindable(event="analiseCotacaoChanged")]
+        public function get analiseCotacao():AnaliseCotacaoDTO {
+            if (_analiseCotacao != null) {
+                if (_analiseCotacao.editavel) {
+                    //timer.stop();
+                }
+            }
+            return _analiseCotacao;
+        }
+
+        private function getEstadoAtual(analiseCotacao1:AnaliseCotacaoDTO):String {
+            if(!analiseCotacao1.cotacao)
+                return "processandoEnvio";
+            switch (analiseCotacao1.cotacao.codigoEstadoCotacao) {
+                case EstadoCotacao.EM_ANALISE:
+                    return "emAnalise";
+                    break;
+                case EstadoCotacao.AGUARDANDO_RESPOSTAS:
+                    return "preAnalise";
+                    break;
+                case EstadoCotacao.PRONTA_PARA_ANALISE:
+                    return "preAnalise";
+                    break;
+                case EstadoCotacao.AGUARDANDO_PEDIDOS:
+                    return "aguardandoPedidos";
+                    break;
+                case EstadoCotacao.FINALIZADA:
+                    return "finalizada";
+                    break;
+                default:
+                    return "processandoEnvio";
+            }
+        }
+
+        private function confirmeAnaliseHandler(event:Event):void {
+            if (analiseCotacao.respostasAguardadas.length > 0) {
+                var msgm:String = "O(s) representante(s):";
+                for each (var resposta:AnaliseRespostaDTO in analiseCotacao.respostasAguardadas) {
+                    msgm = msgm + "\n\n" + resposta.nomeRepresentante;
+                }
+                msgm = msgm + "\n\nainda não responderam a cotação. \n\nDeseja continuar com a análise e EXCLUIR " +
+                        "os representantes que ainda não iniciaram a cotação? \n" +
+                        "*Os que já começaram a preencher os preço \n mas não finalizaram serão aproveitados";
+                Alert.yesLabel = "Continuar";
+                Alert.noLabel = "Voltar";
+                Alert.show(msgm, "Atenção", 3, this, alertHandler);
+            } else {
+                dispatchAnaliseCotacao();
+            }
+
+        }
+
+        public function confirmaPedidosHandler():void {
+            var pedidosView:GeraPedidosWizard = new GeraPedidosWizard();
+            pedidosView.analise = this._analiseCotacao;
+            pedidosView.height = dataGridAnalise.height;
+            pedidosView.width = dataGridAnalise.width;
+            PopUpManager.addPopUp(pedidosView, Application.application as CompradorMain, true);
+            PopUpManager.centerPopUp(pedidosView);
+        }
+
+        private function gerarPedidos(event:CloseEvent):void {
+            if (event.detail == Alert.YES)
+                new GeraPedidosEvent(analiseCotacao).dispatch();
+        }
+
+        private function alertHandler(event:CloseEvent):void {
+            if (event.detail == Alert.YES)
+                dispatchAnaliseCotacao();
+        }
+
+        private function onEditEnd(evt:DataGridEvent):void {
+            refreshTotais();
+        }
+
+        private function dispatchSalveAnalise():void {
+            new SaveEvent(SaveEvent.ANALISE_COTACAO, 1).dispatch()
+        }
+
+        private function refreshValoresTotais(event:Event):void {
+            refreshTotais();
+        }
+
+        private function refreshTotais():void {
+            analiseRespostas.refreshValoresTotais();
+            valorTotalLabel.text = _analiseCotacao.valorTotal;
+            totalDeItensLabel.text = _analiseCotacao.totalDeItens + " itens ";
+        }
+
+        private function downloadPlanilha(event:MouseEvent):void {
+            var downloadEvent:DownloadFileEvent = new DownloadFileEvent(
+                    DownloadFileEvent.PLANILHA_ANALISE_COTACAO);
+            downloadEvent.params = analiseCotacao.idCotacao;
+            downloadEvent.dispatch();
+        }
+
+        private function dispatchAnaliseCotacao():void {
+            new CotacaoEvent(CotacaoEvent.ANALISE_COTACAO, analiseCotacao.idCotacao).dispatch();
+        }
+
+        private function finalizeCotacao(event:MouseEvent):void {
+            new CotacaoEvent(CotacaoEvent.FINALIZE_COTACAO, analiseCotacao.idCotacao).dispatch()
+        }
+
+        private function showDetalhesPedidos(event:MouseEvent):void {
+            var pedidosView:GeraPedidosWizard = new GeraPedidosWizard();
+            pedidosView.setEnviarPedidos(false);
+            pedidosView.analise = this._analiseCotacao;
+            pedidosView.height = dataGridAnalise.height;
+            pedidosView.width = dataGridAnalise.width;
+            PopUpManager.addPopUp(pedidosView, Application.application as CompradorMain, true);
+            PopUpManager.centerPopUp(pedidosView);
+        }
+
+        public static function closePopUp(event:CloseEvent):void {
+            var window:TitleWindow = event.currentTarget as TitleWindow;
+            PopUpManager.removePopUp(window);
+        }
+
+        ]]></mx:Script>
+
+    <mx:VBox id="leftSideBox" width="100%" height="100%">
+
+        <mx:HBox width="100%">
+            <mx:Image source="assets/botones/atras1.png" buttonMode="true"
+                      click="new ShowViewCaixaDeEntradaEvent().dispatch()"/>
+            <mx:LinkButton paddingLeft="2" label="CAIXA DE ENTRADA" fontSize="10"
+                           click="new ShowViewCaixaDeEntradaEvent().dispatch()"/>
+            <mx:Spacer width="100%"/>
+            <mx:Label text="{analiseCotacao.cotacao.titulo}"
+                      fontSize="{analiseCotacao.cotacao.titulo.length > 30? 12 : 14}"
+                      fontWeight="bold"/>
+            <mx:Spacer width="100%"/>
+            <cotacao:CotacaoStateMonitor codigoEstado="{analiseCotacao.cotacao.codigoEstadoCotacao}"/>
+        </mx:HBox>
+
+        <analise:AnaliseDataGrid id="dataGridAnalise" analise="{analiseCotacao}"
+                                 itemEditEnd="onEditEnd(event)" editable="{analiseCotacao.editavel}"
+                                 borderStyle="solid" dropShadowEnabled="true" shadowDirection="right"
+                                 width="100%" height="100%" x="0" y="0"/>
+        <mx:HBox width="100%">
+            <mx:Label text="Total: " fontSize="14" fontWeight="bold"/>
+            <mx:Label id="totalDeItensLabel" fontSize="16" text="{_analiseCotacao.totalDeItens + ' itens'}"/>
+            <mx:Label text="Faltas: " fontSize="14" fontWeight="bold"/>
+            <mx:Label id="faltasLabel" fontSize="16" color="blue" text="{_analiseCotacao.totalDeFaltas}"/>
+            <mx:Spacer width="100%"/>
+            <mx:Label text="Valor Total: " fontSize="14" fontWeight="bold"/>
+            <mx:Label id="valorTotalLabel" fontSize="16" color="blue" text="{_analiseCotacao.valorTotal}"/>
+        </mx:HBox>
+    </mx:VBox>
+
+    <analise:AnaliseRespostas id="analiseRespostas" width="240" analise="{this.analiseCotacao}"
+                              horizontalScrollPolicy="off" verticalScrollPolicy="off"/>
+
+    <application:FooterControlBar>
+        <mx:HBox id="botoesBox" height="100%" width="100%"/>
+    </application:FooterControlBar>
+
+</mx:Panel>
+

@@ -1,0 +1,55 @@
+/*
+////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (C) 2003-2006 Adobe Macromedia Software LLC and its licensors.
+// All Rights Reserved.
+// The following is Sample Code and is subject to all restrictions on such code
+// as contained in the End User License Agreement accompanying this product.
+// If you have received this file from a source other than Adobe,
+// then your use, modification, or distribution of it requires
+// the prior written permission of Adobe.
+//
+////////////////////////////////////////////////////////////////////////////////
+*/
+
+/*
+//----------------------------
+//  Global styles
+//----------------------------
+*/
+.global {
+    color:                  #000000;
+    fillAlphas:             1.00, 1.00; /* last pair are for OVER state */
+    fillColors: 		    #FFFFFF, #DDDDDD, #FFFFFF, #EEEEEE;
+}
+
+Application
+{
+	background-gradient-colors:		#dddddd, #bbbbbb;
+}
+
+HRule
+{
+    color:                  #666666;
+}
+
+Button {
+    borderColor:		    #767473;
+    fillAlphas: 		    .60, .60, .60, .60;
+    fillColors: 		    #888888, #F3F3F3, #9E9E9E, #FCFCFC;
+    highlightAlphas:	    .07, .45;
+}
+
+Panel {
+    highlightAlphas:        .5, .25;
+    headerColors:           #46bfbe, #2c9c9b;
+    borderAlpha:            1;
+    borderColor:            #46BFBE;
+    borderThicknessRight:   1;
+    borderThicknessBottom:  1;
+    paddingRight:			0;
+    paddingBottom:          0;
+    borderThicknessLeft:	0; 
+    borderThicknessRight:	0; 
+    borderThicknessTop:		0;
+}

@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         horizontalAlign="center"
+         height="100%" width="100%" show="refreshItens()">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+
+        import mx.charts.events.ChartItemEvent;
+        import mx.charts.series.items.PieSeriesItem;
+        import mx.effects.easing.Elastic;
+
+        [Bindable]
+        public var analise:AnaliseCotacaoDTO;
+
+        private function displayValorTotal(data:Object, field:String, index:Number, percentValue:Number):String {
+            var temp:String = (" " + percentValue).substr(0, 6);
+            return data.nomeRepresentante + ": " + '\n' + 'Participação:' + temp + '%' + '\n' + "Valor Total: " + data.valorTotalFormatado;
+        }
+
+        private function displayMixDeProdutos(data:Object, field:String, index:Number, percentValue:Number):String {
+            var temp:String = (" " + percentValue).substr(0, 6);
+            return data.nomeRepresentante + ": " + '\n' + 'Participação:' + temp + '%' + '\n' + "Mix de Produtos: " + data.mixDeProdutos;
+        }
+
+        private function changeChartToMix():void {
+            pieSerie.field = "mixDeProdutos";
+            pieSerie.labelFunction = displayMixDeProdutos;
+            chart.invalidateDisplayList();
+            mixLinkButton.setStyle('fontWeight', 'bold');
+            valorTotalLinkButton.setStyle('fontWeight', 'normal');
+        }
+
+        private function changeChartToValorTotal():void {
+            pieSerie.field = "valorTotal";
+            pieSerie.labelFunction = displayValorTotal;
+            chart.invalidateDisplayList();
+            mixLinkButton.setStyle('fontWeight', 'normal');
+            valorTotalLinkButton.setStyle('fontWeight', 'bold');
+        }
+
+        private function pieChart_itemClick(evt:ChartItemEvent):void {
+            var item:PieSeriesItem = evt.hitData.chartItem as PieSeriesItem;
+            var degrees:Number = radiansToDegrees(item.startAngle);
+            var arr:Array = [];
+            arr[item.index] = 0.2;
+            pieSerie.perWedgeExplodeRadius = arr;
+            pieSerie.startAngle -= degrees;
+
+            analise.respostas.refresh();
+        }
+
+        private function radiansToDegrees(radians:Number):Number {
+            return radians * (180 / Math.PI);
+        }
+
+        private function refreshItens():void {
+
+        }
+        ]]></mx:Script>
+
+    <mx:VBox>
+        <mx:LinkButton id="valorTotalLinkButton" fontWeight="bold" label="Valor Total" click="changeChartToValorTotal()"/>
+        <mx:LinkButton id="mixLinkButton" label="Mix de Produtos" click="changeChartToMix()"/>
+    </mx:VBox>
+
+    <mx:PieChart id="chart" height="100%" width="100%" paddingRight="5" paddingLeft="5" color="0x323232"
+                 showDataTips="true" dataProvider="{analise.respostas}" itemClick="pieChart_itemClick(event);">
+
+        <mx:series>
+            <mx:PieSeries id="pieSerie" labelPosition="callout" field="valorTotal" labelFunction="displayValorTotal">
+                <mx:showDataEffect>
+                    <mx:SeriesInterpolate duration="1000" easingFunction="{Elastic.easeOut}"/>
+                </mx:showDataEffect>
+                <mx:filters>
+                    <mx:DropShadowFilter />
+                </mx:filters>
+                <mx:calloutStroke>
+                    <mx:Stroke weight="0" color="0x888888" alpha="1.0"/>
+                </mx:calloutStroke>
+                <mx:radialStroke>
+                    <mx:Stroke weight="0" color="#FFFFFF" alpha="0.20"/>
+                </mx:radialStroke>
+                <mx:stroke>
+                    <mx:Stroke color="0" alpha="0.20" weight="2"/>
+                </mx:stroke>
+            </mx:PieSeries>
+        </mx:series>
+    </mx:PieChart>
+
+</mx:HBox>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="mx.controls.*"
+         creationComplete="init()"
+         width="100%" horizontalGap="10">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.Constants;
+        import br.com.cotecom.model.domain.Endereco;
+        import br.ederlima.CEP.ConsultaCep;
+        import br.ederlima.CEP.data.LocalItem;
+        import br.ederlima.CEP.events.ConsultaCepEvent;
+
+        import mx.events.ValidationResultEvent;
+
+        private var query:ConsultaCep = new ConsultaCep();
+        [Bindable]
+        private var mensagem:String;
+        [Bindable]
+        private var _endereco:Endereco;
+        [Bindable]
+        public var heading:String = "Endereço";
+
+        public function get endereco():Endereco {
+            this._endereco.cep = cepTextInput.text;
+            this._endereco.logradouro = logradouroTextArea.text;
+            this._endereco.estado = estadoComboBox.selectedItem as String;
+            this._endereco.numero = numeroTextInput.text;
+            this._endereco.complemento = complementoTextInput.text;
+            this._endereco.cidade = cidadeTextInput.text;
+            this._endereco.bairro = bairroTextInput.text;
+            return this._endereco;
+        }
+
+        public function set endereco(end:Endereco):void {
+            if (end == null)
+                end = new Endereco();
+            this._endereco = end;
+        }
+
+        private function formularioVazio():Boolean {
+            var result:Boolean = this.bairroTextInput.text == "" && this.cidadeTextInput.text == "";
+            result = this.complementoTextInput.text == "" && this.estadoComboBox.selectedIndex == -1 && this.logradouroTextArea.text == "";
+            result = this.cepTextInput.text == "" && this.numeroTextInput.text == "";
+            return result
+        }
+
+        private function consulteEndereco():void {
+            if (cepTextInput.text.length == 8) {
+                query.addEventListener(ConsultaCepEvent.RESPONSE, consulteCepResult);
+                query.addEventListener(ConsultaCepEvent.ERROR, consulteCepFault);
+                query.buscarLocal(cepTextInput.text);
+            }
+        }
+
+        private function consulteCepResult(event:ConsultaCepEvent):void {
+            query.removeEventListener(ConsultaCepEvent.RESPONSE, consulteCepResult);
+            query.removeEventListener(ConsultaCepEvent.ERROR, consulteCepFault);
+            var responseItem:LocalItem = event.data.response[0];
+            logradouroTextArea.text = responseItem.tipologradouro + " " + responseItem.logradouro;
+            bairroTextInput.text = responseItem.bairro;
+            cidadeTextInput.text = responseItem.cidade;
+            estadoComboBox.selectedItem = responseItem.uf;
+            focusManager.setFocus(numeroTextInput);
+        }
+
+        private function consulteCepFault(event:ConsultaCepEvent):void {
+            query.removeEventListener(ConsultaCepEvent.RESPONSE, consulteCepResult);
+            query.removeEventListener(ConsultaCepEvent.ERROR, consulteCepFault);
+            trace('erro:' + event.data.message)
+        }
+
+        protected function cepInicioTextInput_changeHandler(event:Event):void {
+            if (cepTextInput.text.length == 8)
+                consulteEndereco()
+        }
+
+        public function validateFields():Boolean {
+            if (formularioVazio())
+                return true;
+            var vResult1:ValidationResultEvent;
+            var vResult2:ValidationResultEvent;
+            var vResult3:ValidationResultEvent;
+            var vResult4:ValidationResultEvent;
+            vResult1 = validatorlogradouro.validate();
+            vResult2 = validatorBairro.validate();
+            vResult3 = validatorCidade.validate();
+            vResult4 = validatorEstado.validate();
+            return !(vResult1.type == ValidationResultEvent.INVALID ||
+                    vResult2.type == ValidationResultEvent.INVALID ||
+                    vResult3.type == ValidationResultEvent.INVALID ||
+                    vResult4.type == ValidationResultEvent.INVALID);
+        }
+
+        public function init():void {
+            if (this._endereco == null)
+                this._endereco = new Endereco();
+            limpeErrosDeValidacao();
+        }
+
+        public function limpeErrosDeValidacao():void {
+            cepTextInput.errorString = "";
+            logradouroTextArea.errorString = "";
+            bairroTextInput.errorString = "";
+            cidadeTextInput.errorString = "";
+            estadoComboBox.errorString = "";
+            numeroTextInput.errorString = "";
+            complementoTextInput.errorString = "";
+        }
+
+        private function getEstadoIndex():* {
+            if (_endereco && _endereco.estado)
+                return Constants.ESTADOS_BR.indexOf(_endereco.estado);
+            return -1;
+        }
+
+        private function limpeCombobox():void {
+            this.estadoComboBox.selectedIndex = -1;
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:Validator id="validatorlogradouro" source="{logradouroTextArea}" property="text" required="true"
+                  requiredFieldError="O campo 'Logradouro' é obrigatório"/>
+    <mx:Validator id="validatorBairro" source="{bairroTextInput}" property="text" required="true"
+                  requiredFieldError="O campo 'Bairro' é obrigatório"/>
+    <mx:Validator id="validatorCidade" source="{cidadeTextInput}" property="text" required="true"
+                  requiredFieldError="O campo 'Cidade' é obrigatório"/>
+    <mx:NumberValidator id="validatorEstado" source="{estadoComboBox}" property="selectedIndex" required="true"
+                        minValue="0" lowerThanMinError="O campo 'Estado' é obrigatório"/>
+
+    <mx:FormHeading label="{this.heading}"/>
+    <mx:FormItem label="CEP">
+        <mx:TextInput id="cepTextInput" width="160"
+                      maxChars="8" change="cepInicioTextInput_changeHandler(event)"
+                      text="{_endereco.cep}"/>
+    </mx:FormItem>
+    <mx:FormItem label="Logradouro">
+        <mx:TextArea id="logradouroTextArea" width="160"
+                     text="{_endereco.logradouro}" focusOut="limpeErrosDeValidacao()"/>
+    </mx:FormItem>
+    <mx:FormItem label="Bairro">
+        <mx:TextInput id="bairroTextInput" width="160"
+                      text="{_endereco.bairro}" focusOut="limpeErrosDeValidacao()"/>
+    </mx:FormItem>
+    <mx:FormItem label="Estado">
+        <mx:HBox width="160" horizontalGap="0">
+            <mx:ComboBox id="estadoComboBox" width="60"
+                         dataProvider="{Constants.SIGLAS_ESTADOS_BR}"
+                         selectedItem="{_endereco.estado}"
+                         focusOut="limpeErrosDeValidacao()"/>
+            <controls:LinkButton label="x" toolTip="Limpar estado selecionado" click="limpeCombobox()"/>
+            <mx:Label text="N.º"/>
+            <mx:TextInput id="numeroTextInput"
+                          text="{_endereco.numero}" width="100%"/>
+        </mx:HBox>
+    </mx:FormItem>
+    <mx:FormItem label="Cidade">
+        <mx:TextInput id="cidadeTextInput"
+                      text="{_endereco.cidade}"
+                      width="160"
+                      focusOut="limpeErrosDeValidacao()"/>
+    </mx:FormItem>
+    <mx:FormItem label="Complemento">
+        <mx:TextArea id="complementoTextInput" width="160"
+                     text="{_endereco.complemento}"/>
+    </mx:FormItem>
+</mx:Form>

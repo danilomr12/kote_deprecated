@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+  <testsuite errors="0" failures="0" id="0" name="ArrayCollectionsTest" package="br.com.cotecom.model.tests" tests="3" time="0"> 
+      <testcase classname="br.com.cotecom.model.tests.ArrayCollectionsTest" name="testGetEqualItem" time="0" />
+  
+      <testcase classname="br.com.cotecom.model.tests.ArrayCollectionsTest" name="testGetEqualIdItem" time="0" />
+  
+      <testcase classname="br.com.cotecom.model.tests.ArrayCollectionsTest" name="testArrayCollectionEquals" time="0" />
+ 
+  </testsuite>
+  <testsuite errors="0" failures="0" id="1" name="MotherCotacaoTest" package="br.com.cotecom.model.tests" tests="1" time="0"> 
+      <testcase classname="br.com.cotecom.model.tests.MotherCotacaoTest" name="testCotacaoMother" time="0" />
+ 
+  </testsuite>
+  <testsuite errors="0" failures="0" id="2" name="ResponderTest" package="br.com.cotecom.model.tests" tests="1" time="0"> 
+      <testcase classname="br.com.cotecom.model.tests.ResponderTest" name="testPopulateResponder" time="0" />
+ 
+  </testsuite>
+  <testsuite errors="0" failures="0" id="3" name="RespostaTest" package="br.com.cotecom.model.tests" tests="3" time="0"> 
+      <testcase classname="br.com.cotecom.model.tests.RespostaTest" name="testEqualsId" time="0" />
+  
+      <testcase classname="br.com.cotecom.model.tests.RespostaTest" name="testConfirmSavedItens" time="0" />
+  
+      <testcase classname="br.com.cotecom.model.tests.RespostaTest" name="testGetUnsavedItens" time="0" />
+ 
+  </testsuite>
+</testsuites>

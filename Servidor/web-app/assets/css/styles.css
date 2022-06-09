@@ -1,0 +1,148 @@
+﻿.global {
+    color: #170505;
+	background-color: #DCE1E7;
+	header-colors: #8C9AAA, #D1E3F2;
+	border-color: #8C9AAA;
+	border-alpha: 1;
+	border-thickness-left: 0;
+	border-thickness-right: 0;
+	border-thickness-bottom: 0;
+}
+
+Notification
+{
+	titleStyleName: myTitleStyle;
+	messageStyleName: myMessageStyle;
+	backgroundStyleName: notificationBackground;
+	closeButtonIcon: Embed('/assets/RedBall.png');
+	paddingTop: 5;
+	paddingBottom: 5;
+	paddingLeft: 5;
+	paddingRight: 5;
+	horizontalGap: 10;
+	verticalGap: 10;
+	/*creationCompleteEffect: myWipeD;
+	removedEffect: myWipeU;*/
+}
+
+.notificationBackground
+{
+	colorsConfiguration: 2,2;
+	positioning: percentage;
+	gradientType: linear,radial;
+	fillColors: #8C9AAA, #4B5D71, #132940, #D1E3F2;
+	fillAlphas:  1,1,1,0;
+	gradientRatio: 0,255,0,119;
+	angle: 90,0;
+	offsetX: 0,50;
+	offsetY: 0,-45;
+	spreadMethod: pad,pad;
+	interpolationMethod: rgb,linearRGB;
+	focalPointRatio: 0,0;
+	cornerRadius: 9;
+	borderThickness: 1;
+	borderColors: #132940, #D1E3F2;
+	borderAlphas: 1,1;
+	bordergradientRatio: 0,255;
+	borderAngle: -90;
+}
+
+.myTitleStyle
+{
+	ontSize: 11;
+	fontWeight: bold;
+	color: #FFFFFF;
+}
+
+.myMessageStyle
+{
+	fontStyle: bold;
+	backgroundAlpha: 1;
+	color: #FFFFFF;
+}
+/*132940, 4B5D71, 8C9AAA, D1E3F2, A9C6DE, 3F88BD*/
+ApplicationControlBar
+{
+	fillAlphas: 1.0, 1.0;
+	fillColors: #8C9AAA, #D1E3F2;
+	horizontalAlign: right;
+	horizontalGap: 0;
+}
+
+Application
+{
+	background-gradient-colors: #8C9AAA,#132940;
+	theme-color: #132940;
+	paddingTop: 0;
+	paddingBottom: 0;
+	paddingLeft: 0;
+	paddingRight: 0;
+}
+
+Panel
+{
+	background-color: #DCE1E7;
+	header-colors: #D1E3F2,#8C9AAA ;
+	border-color: #8C9AAA;
+	border-alpha: 1;
+	/*border-thickness-left: 0;
+	border-thickness-right: 0;
+	border-thickness-bottom: 0;*/
+	padding-bottom: 9;
+	padding-left: 9;
+	padding-right: 9;
+	padding-top: 9;
+}
+
+.infoDisplay
+{
+	background-alpha: .6;
+	background-color: #ffffff;
+	border-alpha: 1;
+	color: #132940;
+	border-thickness-left: 0;
+	border-thickness-right: 0;
+	border-thickness-bottom: 0;
+	border-thickness-top: 0;
+}
+
+Button
+{
+	fillColors: #8C9AAA, #D1E3F2;
+	highlight-alphas: .15,.2;
+}
+
+.hightButton
+{
+	color: #D1E3F2;
+	fillColors: #34526D, #5F85AC, #5F85AC, #9AC8E9;
+	fillAlphas: 0.9, 0.9, 1, 1;
+}
+
+.hightButton2
+{
+	color: #D1F2E3;
+	fillColors: #346D4D, #5FAC80, #5FAC80, #9AE9C3;
+	fillAlphas: 0.9, 0.9, 1, 1;
+}
+
+.fishEyeBar
+{
+	fillAlphas: 1.0, 1.0;
+	fillColors: #4B5D71, #8C9AAA;
+	highlight-alphas: 0,0;
+	horizontalAlign: right;
+	horizontalGap: 0;
+}
+.searchButton
+{
+	padding-left: 2;
+	padding-right: 2;
+}
+.fisheyeLabel
+{
+	font-size: 13;
+	font-weight: bold;
+	color: #D1E3F2;
+}
+	

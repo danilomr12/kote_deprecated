@@ -1,0 +1,72 @@
+/*
+////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (C) 2003-2006 Adobe Macromedia Software LLC and its licensors.
+// All Rights Reserved.
+// The following is Sample Code and is subject to all restrictions on such code
+// as contained in the End User License Agreement accompanying this product.
+// If you have received this file from a source other than Adobe,
+// then your use, modification, or distribution of it requires
+// the prior written permission of Adobe.
+//
+////////////////////////////////////////////////////////////////////////////////
+*/
+
+/*
+//----------------------------
+//  Global styles
+//----------------------------
+*/
+.global {
+    color:                  #170505;
+    fillAlphas:             1.00, 1.00; /* last pair are for OVER state */
+    fillColors: 		    #FFFFFF, #DDDDDD, #FFFFFF, #EEEEEE;
+}
+
+Application
+{
+    background-gradient-colors:		#C1C6CA, #6C767F;
+	theme-color:			#1C0E71;
+	padding-top:			200;
+}
+
+Button {
+    /*borderColor:		    #ffffff;*/
+    fillAlphas: 		    .60, .60, .60, .60;
+    fillColors: 		    #999999, #F3F3F3, #aeaeae, #FCFCFC;
+}
+
+ApplicationControlBar {
+    fillAlphas: 			.8, .8;
+    fillColors: 			#bbbbbb, #eeeeee;
+    cornerRadius: 			0;
+	shadowDistance:         4;
+	paddingLeft:            0;
+	paddingRight:           0;
+	paddingTop:             0;
+	paddingBottom:          0;
+	horizontalGap:          0;
+}
+
+.headerDG {
+    color: #0b333c;
+    fontWeight: bold;
+}
+
+DataGrid {
+	header-colors:			#cccccc, #FFFFFF;
+	alternating-item-colors:#E2E4E9, #F2F3F8;
+	background-alpha:		.95
+}
+.statusEmAnalise {
+    background-color: 		    #00ff00, #008800;
+}
+.statusAguardandoRespostas {
+    background-color: 		    #ffff00, #888800;
+}
+.statusPedidoPendente {
+    background-color: 		    #ff0000, #880000;
+}
+.statusRespondendo {
+    background-color: 		    #ffffff, #cccccc;
+}

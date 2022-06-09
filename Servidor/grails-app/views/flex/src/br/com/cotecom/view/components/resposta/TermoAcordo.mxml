@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                title="Bem vindo ao sistema de compras Kote!"
+                width="500" height="300"
+                creationComplete="init(event)" close="PopUpManager.removePopUp(this)">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.cotacao.CotacaoDTO;
+        import br.com.cotecom.model.domain.resposta.TelaResposta;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+
+        import mx.controls.Alert;
+        import mx.core.Application;
+        import mx.events.CloseEvent;
+        import mx.events.FlexEvent;
+        import mx.managers.PopUpManager;
+        import mx.utils.URLUtil;
+
+        [Bindable]
+        public var telaResposta:TelaResposta;
+        private var cotacao:CotacaoDTO;
+
+        [Bindable]
+        private var texto:String;
+
+        private function iniciePreenchimentoDeResposta(event:MouseEvent):void {
+            if (aceito.selected) {
+                GerenciadorResposta.getInstance().aceite();
+                PopUpManager.removePopUp(this)
+            } else {
+                Alert.show("Você deve aceitar os termos de participação para iniciar " +
+                        "o preenchimento de preços")
+            }
+        }
+
+        private function logout(event:MouseEvent):void {
+            var fullUrl:String = "http://"+URLUtil.getServerNameWithPort(Application.application.loaderInfo.url) ;
+            var url:URLRequest = new URLRequest(fullUrl + "/logout");
+            navigateToURL(url, "_self")
+        }
+
+        private function closeHandler(evt:CloseEvent):void {
+            if(evt.detail == Alert.YES)
+                GerenciadorResposta.getInstance().recuse();
+                PopUpManager.removePopUp(this)
+        }
+
+        private function recuseCotacao(event:MouseEvent):void {
+            Alert.noLabel = "Não";
+            Alert.yesLabel = "Sim";
+            Alert.show("Tem certeza que deseja recusar esta cotação? \nSe você clicar em 'sim' " +
+                    "não poderá mais repondê-la futuramente.", "", Alert.NO | Alert.YES, null, closeHandler, null, 4);
+        }
+
+        private function formateEnderecoEntrega():String {
+            var enderecoFormatado:String = "";
+            enderecoFormatado += cotacao.enderecoEntrega.logradouro;
+            if (cotacao.enderecoEntrega.numero)
+                enderecoFormatado += ", " + cotacao.enderecoEntrega.numero;
+            if (cotacao.enderecoEntrega.bairro) {
+                if (cotacao.enderecoEntrega.numero)
+                    enderecoFormatado += ", ";
+                enderecoFormatado += "\nSetor: " + cotacao.enderecoEntrega.bairro
+            }
+            if (cotacao.enderecoEntrega.cidade && cotacao.enderecoEntrega.estado) {
+                if (cotacao.enderecoEntrega.bairro)
+                    enderecoFormatado += ", ";
+                enderecoFormatado += cotacao.enderecoEntrega.cidade + " - " + cotacao.enderecoEntrega.estado
+            }
+            if (cotacao.enderecoEntrega.cep)
+                if (cotacao.enderecoEntrega.cidade)
+                    enderecoFormatado += ", ";
+            enderecoFormatado += "Cep: " + cotacao.enderecoEntrega.cep;
+            if (cotacao.enderecoEntrega.complemento) {
+                if (cotacao.enderecoEntrega.cep)
+                    enderecoFormatado += ", ";
+                enderecoFormatado += cotacao.enderecoEntrega.complemento
+            }
+            return enderecoFormatado
+
+        }
+
+
+        private function corrijaTexto(event:Event):void {
+            textAreaTextoTermoUso.text = texto
+        }
+
+
+        protected function init(event:FlexEvent):void {
+            cotacao = telaResposta.cotacao;
+            texto = "                                            Termo de Acordo\n\n" +
+                    "Olá " + telaResposta.representante.nome + ",\n" +
+                    "Você recebeu uma cotação de " + telaResposta.comprador.empresa.razaoSocial + ", \n\n" +
+                    "Os requisitos para participar desta cotação são os seguintes: \n" +
+                    "Os preços dos produtos aqui fornecidos devem ser baseados nos seguintes prazos\n" +
+                    "Prazo de Pagamento: " + cotacao.prazoPagamento + (cotacao.prazoPagamento == "À vista" ? "" : " dias") + ",\n" +
+                    "Data de entrega: " + dateFormatter.format(cotacao.dataEntrega) + ",\n" +
+                    "Data de validade: " + dateHourFormatter.format(cotacao.dataValidade) + "\n" +
+                    "Endereço de entrega: " + formateEnderecoEntrega() + "\n\n" +
+                    "Se você concorda com os termos acima descritos e deseja aceitar " +
+                    "participar da cotação marque a opção 'eu aceito os termos de participação' e clique em 'responder agora'." +
+                    "\nCaso não queira participar da cotação, clique em 'Recusar cotação' e será direcionado para o" +
+                    " portal Kote."
+
+        }
+        ]]>
+	</mx:Script>
+    <mx:TextArea id="textAreaTextoTermoUso" text="{texto}" change="corrijaTexto(event)"
+                 width="100%" height="100%"/>
+    <mx:RadioButtonGroup/>
+    <mx:RadioButton id="naoAceito" label="Não aceito os termos de participação"
+                    selected="true"
+                    paddingLeft="20"/>
+    <mx:RadioButton id="aceito" label="Aceito os termos de participação"
+                    paddingLeft="20"/>
+    <mx:HBox width="100%" horizontalAlign="center">
+        <mx:Button label="Responder agora" click="iniciePreenchimentoDeResposta(event)"/>
+        <mx:Button label="Sair e responder mais tarde" click="logout(event)"/>
+        <mx:LinkButton label="Recusar cotação" click="recuseCotacao(event)" color="blue"/>
+    </mx:HBox>
+    <mx:DateFormatter id="dateFormatter" formatString="DD/MM/YYY"/>
+    <mx:DateFormatter id="dateHourFormatter" formatString="DD/MM/YYY - HH:NN"/>
+</mx:TitleWindow>

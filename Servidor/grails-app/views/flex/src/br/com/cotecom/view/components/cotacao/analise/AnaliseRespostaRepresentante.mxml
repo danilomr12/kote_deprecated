@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:local="*"
+                width="220" layout="vertical" maxWidth="224"
+                headerHeight="0" paddingTop="7" paddingBottom="4" paddingLeft="10"
+                mouseOver="showEstado(event)"
+                mouseOut="hideEstado(event)">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.RefreshRespostasEvent;
+        import br.com.cotecom.control.events.aplicacao.ReenvieEmailCotacacaoEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewRespostaEvent;
+        import br.com.cotecom.model.domain.dtos.AnaliseRespostaDTO;
+        import br.com.cotecom.model.utils.EstadoResposta;
+        import br.com.cotecom.model.utils.EstadoResposta;
+
+        import com.adobe.cairngorm.control.CairngormEventDispatcher;
+
+        import mx.controls.Alert;
+        import mx.events.CloseEvent;
+        import mx.events.FlexEvent;
+
+        [Bindable]
+        public var resposta:AnaliseRespostaDTO;
+        [Bindable]
+        public var toggled:Boolean = false;
+
+        private function cancelarParaRepresentante():void {
+            Alert.show("A implementar");
+        }
+
+        public function getValorTotalOrEstadoResposta(resposta:AnaliseRespostaDTO):String {
+            CairngormEventDispatcher.getInstance().addEventListener(RefreshRespostasEvent.REFRESH_RESPOSTAS, refreshValorTotal);
+            if (resposta.estado == EstadoResposta.NOVA_COTACAO || resposta.estado == EstadoResposta.RESPONDENDO ||
+                    resposta.estado == EstadoResposta.PERDIDA || resposta.estado == EstadoResposta.CANCELADA ||
+                    resposta.estado == EstadoResposta.RECUSADA) {
+                return resposta.descricaoEstadoVisaoComprador;
+            } else {
+                return resposta.valorTotalFormatado;
+            }
+        }
+
+        public function refreshValorTotal():void {
+            lbValorTotal.text = this.getValorTotalOrEstadoResposta(this.resposta);
+        }
+
+        private function reenvieEmail(event:MouseEvent):void {
+            new ReenvieEmailCotacacaoEvent(resposta.id).dispatch();
+        }
+
+        private function confirmeCancelamentoResposta():void {
+            var msgm:String = "Deseja realmente cancelar a resposta? \n Assim você estará excluindo-a da análise de sua cotação";
+            Alert.yesLabel = "Sim";
+            Alert.noLabel = "Não";
+            Alert.show(msgm, "Atenção", 3, this, canceleResposta);
+        }
+
+        private function canceleResposta(event:CloseEvent):void {
+            if (event.detail == Alert.YES) {
+
+            }
+        }
+
+        private function confirmeRessuscitamentoDeResposta():void {
+            var msgm:String = "Deseja realmente reverter esta resposta para estado RESPONDENDO?";
+            Alert.yesLabel = "Sim";
+            Alert.noLabel = "Não";
+            Alert.show(msgm, "Atenção", 3, this, ressusciteResposta);
+        }
+
+        private function ressusciteResposta(event:CloseEvent):void {
+            if (event.detail == Alert.YES) {
+
+            }
+        }
+
+        private function showEstado(event:MouseEvent):void {
+            if (resposta.estado != EstadoResposta.NOVA_COTACAO && resposta.estado != EstadoResposta.RESPONDENDO &&
+                    resposta.estado != EstadoResposta.CANCELADA && resposta.estado != EstadoResposta.RECUSADA &&
+                    resposta.estado != EstadoResposta.PERDIDA){
+                estadoHBox.includeInLayout = true;
+                estadoHBox.visible = true;
+            }
+        }
+
+        private function hideEstado(event:MouseEvent):void {
+            estadoHBox.includeInLayout = false;
+            estadoHBox.visible = false;
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:HBox height="100%" width="100%">
+        <mx:Label id="nomeRepresentante" text="{resposta.nomeRepresentante}" fontSize="14" maxWidth="170"/>
+        <mx:Spacer width="100%"/>
+        <mx:Image source="assets/botones/close2.png" buttonMode="true" click="cancelarParaRepresentante()"
+                  toolTip="Excluir este representante da cotação"/>
+    </mx:HBox>
+
+    <mx:HBox width="100%">
+        <mx:Label id="lbValorTotal" text="{this.getValorTotalOrEstadoResposta(this.resposta)}"
+                  fontSize="16" fontWeight="bold"/>
+        <mx:Spacer width="100%"/>
+        <mx:Image buttonMode="true"
+                  click="confirmeRessuscitamentoDeResposta()"
+                  toolTip="Cancela resposta excluindo-a da análise da cotação"/>
+        <mx:Image buttonMode="true"
+                  click="confirmeCancelamentoResposta()"
+                  toolTip="Cancela resposta excluindo-a da análise da cotação"/>
+        <mx:Image source="assets/img/send16.png" buttonMode="true"
+                  click="reenvieEmail(event)"
+                  toolTip="Reenviar e-mail da cotação para este representante"/>
+        <mx:Image source="assets/img/table.png" buttonMode="true"
+                  click="{new ShowViewRespostaEvent(resposta.id).dispatch();}"
+                  toolTip="Ver resposta deste representante"/>
+    </mx:HBox>
+
+    <mx:HBox  id="estadoHBox" visible="false" includeInLayout="false">
+        <mx:Label text="{EstadoResposta.getDescricaoVisaoComprador(this.resposta.estado)}" fontWeight="bold"
+                fontSize="12"/>
+    </mx:HBox>
+</mx:TitleWindow>
+

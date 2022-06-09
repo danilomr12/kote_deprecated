@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         height="100%" width="100%">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseRespostaDTO;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.collections.ArrayCollection;
+        import mx.containers.GridRow;
+
+        public static const REFRESH_RESPOSTAS_EVENT:String = "refreshRespostasEvent";
+        public static const STATE_POP_UP:String = 'popUp';
+        public static const STATE_TOOL_TIP:String = 'toolTip';
+
+        [Bindable]
+        public var itemAnaliseCotacao:ItemAnaliseCotacaoDTO;
+        [Bindable]
+        private var analiseCotacao:AnaliseCotacaoDTO = GerenciadorCotacao.getInstance().cotacaoSelecionada.analise;
+
+        /*private function sortItensAnaliseFromSecondTillLastOne():void {
+         var numericDataSort:Sort = setSortFields();
+         var tempArray:ArrayCollection = moveItensFromSecondTillLastToTempArray();
+         orderTempArray(tempArray, numericDataSort);
+         moveBackOrderedItensToItemsAnaliseRespostas(tempArray);
+         }
+
+         private function moveBackOrderedItensToItemsAnaliseRespostas(tempArray:ArrayCollection):void {
+         for each(var item:ItemAnaliseRespostaDTO in tempArray) {
+         itemAnaliseCotacao.respostas.addItem(item)
+         }
+         tempArray.removeAll()
+         }
+
+         private function orderTempArray(tempArray:ArrayCollection, numericDataSort:Sort):void {
+         tempArray.sort = numericDataSort;
+         tempArray.refresh();
+         }
+
+         private function setSortFields():Sort {
+         var dataSortField:SortField = new SortField();
+         dataSortField.name = "precoAtribuido";
+         dataSortField.numeric = true;
+
+         var numericDataSort:Sort = new Sort();
+         numericDataSort.fields = [dataSortField];
+         return numericDataSort;
+         }
+         */
+
+        private function representanteLabelFunction(item:Object):String {
+            var itemAnalise:ItemAnaliseRespostaDTO = item as ItemAnaliseRespostaDTO;
+            return itemAnalise.descricaoRepresentante;
+        }
+
+        private function precoUnitarioLabelFunction(item:Object):String {
+            var itemAnalise:ItemAnaliseRespostaDTO = item as ItemAnaliseRespostaDTO;
+            return itemAnalise.precoUnitario;
+        }
+
+        private function precoembalagemLabelFunction(item:Object):String {
+            var itemAnalise:ItemAnaliseRespostaDTO = item as ItemAnaliseRespostaDTO;
+            return itemAnalise.precoEmbalagem;
+        }
+
+        private function change(event:Event):void {
+            var item:Object = event.target.data;
+            if (item == "nenhumaOpcao") {
+                itemAnaliseCotacao.naoComprar = !itemAnaliseCotacao.naoComprar;
+                //seleciona checkbox da primeira opção
+                (((grid.getChildAt(2) as GridRow).getChildAt(0) as GridItem).getChildAt(0) as CheckBox).selected =
+                        !itemAnaliseCotacao.naoComprar;
+            } else if (itemAnaliseCotacao.respostas.getItemIndex(item) != 0 && item.precoAtribuido != 0) {
+                itemAnaliseCotacao.respostas.removeItemAt(itemAnaliseCotacao.respostas.getItemIndex(item));
+                itemAnaliseCotacao.respostas.addItemAt(item, 0);
+                //seleciona checkbox da primeira opção
+                (((grid.getChildAt(2) as GridRow).getChildAt(0) as GridItem).getChildAt(0) as CheckBox).selected = true;
+                if (itemAnaliseCotacao.naoComprar = true) {
+                    itemAnaliseCotacao.naoComprar = false;
+                }
+            } else if (itemAnaliseCotacao.respostas.getItemIndex(item) == 0) {
+                (((grid.getChildAt(2) as GridRow).getChildAt(0) as GridItem).getChildAt(0) as CheckBox).selected =
+                        itemAnaliseCotacao.naoComprar;
+                itemAnaliseCotacao.naoComprar = !itemAnaliseCotacao.naoComprar;
+            }
+            analiseCotacao.setItemAsUnsaved(itemAnaliseCotacao.id)
+        }
+
+        private function verifiqueSeEstaSelecionado(itemIndex:int):Boolean {
+            return !(itemAnaliseCotacao.naoComprar || itemIndex != 0);
+        }
+
+        private function moveItensFromSecondTillLastToTempArray():ArrayCollection {
+            var tempArray:ArrayCollection = new ArrayCollection();
+            while (itemAnaliseCotacao.respostas.length > 1) {
+                tempArray.addItem(itemAnaliseCotacao.respostas.getItemAt(1));
+                itemAnaliseCotacao.respostas.removeItemAt(1);
+            }
+            return tempArray;
+        }
+
+        private function moveUp(event:Event):void {
+            var itemAnaliseResposta:Object = event.target.data;
+            var index:int = itemAnaliseCotacao.respostas.getItemIndex(itemAnaliseResposta);
+            itemAnaliseCotacao.respostas.removeItemAt(index);
+            //Um item foi removido, logo o tamanho agora eh uma unidade a menos
+            if (index == 0) {
+                itemAnaliseCotacao.respostas.addItem(itemAnaliseResposta);
+            } else {
+                itemAnaliseCotacao.respostas.addItemAt(itemAnaliseResposta, index - 1);
+            }
+            analiseCotacao.setItemAsUnsaved(itemAnaliseCotacao.id);
+        }
+
+        private function moveDown(event:Event):void {
+            var itemAnaliseResposta:Object = event.target.data;
+            var index:int = itemAnaliseCotacao.respostas.getItemIndex(itemAnaliseResposta);
+            itemAnaliseCotacao.respostas.removeItemAt(index);
+            //Um item foi removido, logo o tamanho agora eh uma unidade a menos
+            if (index == itemAnaliseCotacao.respostas.length) {
+                itemAnaliseCotacao.respostas.addItemAt(itemAnaliseResposta, 0);
+            } else {
+                itemAnaliseCotacao.respostas.addItemAt(itemAnaliseResposta, index + 1);
+            }
+            analiseCotacao.setItemAsUnsaved(itemAnaliseCotacao.id);
+        }
+
+        private function setPrecoEmbValue(event:Event):void {
+            var textInput:TextInput = event.currentTarget as TextInput;
+            var data:ItemAnaliseRespostaDTO = textInput.data as ItemAnaliseRespostaDTO;
+            textInput.text = textInput.text.replace(",", ".");
+            var value:Number = Number(textInput.text);
+            var gridItem:GridItem = event.currentTarget.parent;
+            var gridRow:GridRow = gridItem.parent as GridRow;
+            var labelEmbalagem:Label;
+            var labelUnitario:Label;
+
+            if (gridRow.getChildIndex(gridItem) == 3) {
+                labelEmbalagem = (gridItem.getChildAt(0) as Label);
+                if (data.precoEmb != value) {
+                    //Atualiza o itemAnaliseResposta
+                    data.precoEmb = value;
+
+                    //efetua refresh manual no label de preco embalagem
+                    labelEmbalagem.text = data.precoEmbalagem;
+
+                    //efetua refresh manual no label de preco unitario
+                    var gridItemCol4:GridItem = gridRow.getChildAt(4) as GridItem;
+                    (gridItemCol4.getChildAt(0) as Label).text = data.precoUnitario;
+
+                    //efetua refresh manual no textInput de preco unitario
+                    (gridItemCol4.getChildAt(1) as TextInput).text = String(data.precoUnit);
+                }
+
+            } else if (gridRow.getChildIndex(gridItem) == 4) {
+                labelUnitario = (gridItem.getChildAt(0) as Label);
+                if (data.precoUnit != value) {
+                    //Atualiza preco do itemAnaliseResposta
+                    data.precoUnit = value;
+
+                    //força refresh no label de preco de unitario
+                    labelUnitario.text = data.precoUnitario;
+
+                    //força refresh no label de preco embalagem
+                    var gridItemCol3:GridItem = gridRow.getChildAt(3) as GridItem;
+                    (gridItemCol3.getChildAt(0) as Label).text = data.precoEmbalagem;
+
+                    //força refresh no label de preco embalagem
+                    (gridItemCol3.getChildAt(1) as TextInput).text = String(data.precoEmb);
+                }
+            }
+
+            //mostra label de preco embalagem
+            if (labelEmbalagem) {
+                labelEmbalagem.visible = true;
+                labelEmbalagem.includeInLayout = true;
+            }
+            //mostra label dde preco unitario
+            if (labelUnitario) {
+                labelUnitario.visible = true;
+                labelUnitario.includeInLayout = true;
+            }
+            //oculta textInput
+            textInput.visible = false;
+            textInput.includeInLayout = false;
+        }
+
+        private function edit(event:MouseEvent):void {
+            var label:Label = event.currentTarget as Label;
+            label.visible = false;
+            label.includeInLayout = false;
+            var textInput:TextInput = label.parent.getChildAt(1) as TextInput;
+            textInput.visible = true;
+            textInput.includeInLayout = true;
+            focusManager.setFocus(textInput);
+            analiseCotacao.setItemAsUnsaved(itemAnaliseCotacao.id);
+        }
+
+        private function focusOut(event:Event):void {
+            var keyboardEvent:KeyboardEvent = event as KeyboardEvent;
+            if (keyboardEvent.keyCode == Keyboard.ENTER ||
+                    keyboardEvent.keyCode == Keyboard.UP ||
+                    keyboardEvent.keyCode == Keyboard.DOWN) {
+                setPrecoEmbValue(event)
+            }
+
+        }
+
+        private function getObs(currentItem:Object):String {
+            var itemAnalise:ItemAnaliseRespostaDTO = currentItem as ItemAnaliseRespostaDTO;
+            return itemAnalise.observacao;
+        }
+
+        private function getCorrectStyle(item:*):* {
+            return itemAnaliseCotacao.precoEstaDistuante(item as ItemAnaliseRespostaDTO) ? "distuante" : "naoDistuante";
+        }
+        ]]>
+    </mx:Script>
+    <mx:Style>
+        .distuante {
+            color:#ff7300;
+        }
+
+        .naoDistuante {
+            color:black;
+        }
+    </mx:Style>
+    <mx:states>
+        <mx:State name="{STATE_TOOL_TIP}">
+            <mx:SetProperty name="visible" target="{row1Col0}" value="false"/>
+            <mx:SetProperty name="visible" target="{row1Col1}" value="false"/>
+            <mx:SetProperty name="visible" target="{row1Col2}" value="false"/>
+            <mx:SetProperty name="visible" target="{lastRow}" value="false"/>
+            <mx:SetProperty name="visible" target="{row2Col0}" value="false"/>
+            <mx:SetProperty name="visible" target="{row2Col1}" value="false"/>
+            <mx:SetProperty name="visible" target="{row2Col2}" value="false"/>
+            <mx:SetProperty name="visible" target="{okHbox}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{okHbox}" value="false"/>
+        </mx:State>
+        <mx:State name="{STATE_POP_UP}">
+            <mx:SetProperty name="visible" target="{row1Col0}" value="true"/>
+            <mx:SetProperty name="visible" target="{row1Col1}" value="true"/>
+            <mx:SetProperty name="visible" target="{row1Col2}" value="true"/>
+            <mx:SetProperty name="visible" target="{row2Col0}" value="true"/>
+            <mx:SetProperty name="visible" target="{row2Col1}" value="true"/>
+            <mx:SetProperty name="visible" target="{row2Col2}" value="true"/>
+            <mx:SetProperty name="visible" target="{lastRow}" value="true"/>
+            <mx:SetProperty name="visible" target="{okHbox}" value="true"/>
+            <mx:SetProperty name="includeInLayout" target="{okHbox}" value="true"/>
+        </mx:State>
+    </mx:states>
+
+    <mx:Grid id="grid">
+        <mx:GridRow id="row0">
+            <mx:GridItem colSpan="6">
+                <mx:Label fontSize="13" text="{itemAnaliseCotacao.descProduto + ' - '+
+                          itemAnaliseCotacao.embalagem.toUpperCase()}"/>
+            </mx:GridItem>
+        </mx:GridRow>
+        <mx:GridRow id="row1">
+            <mx:GridItem id="row1Col0"/>
+            <mx:GridItem id="row1Col1"/>
+            <mx:GridItem id="row1Col2"/>
+            <mx:GridItem>
+                <mx:Label fontSize="12" fontWeight="bold" text="Embalagem"/>
+            </mx:GridItem>
+            <mx:GridItem>
+                <mx:Label fontSize="12" fontWeight="bold" text="Unitário"/>
+            </mx:GridItem>
+            <mx:GridItem>
+                <mx:Label fontSize="12" fontWeight="bold" text="Representante"/>
+            </mx:GridItem>
+            <mx:GridItem>
+                <mx:Label fontSize="12" fontWeight="bold" text="Obs"/>
+            </mx:GridItem>
+        </mx:GridRow>
+        <mx:Repeater id="radioRepeater"
+                     dataProvider="{itemAnaliseCotacao.respostas}">
+            <mx:GridRow>
+                <mx:GridItem id="row2Col0">
+                    <mx:CheckBox selected="{verifiqueSeEstaSelecionado(itemAnaliseCotacao.respostas.getItemIndex(
+                                 radioRepeater.currentItem))}"
+                                 styleName="checkBox2" data="{radioRepeater.currentItem}"
+                                 change="change(event)" toolTip="Selecionar este item como primeira opção"/>
+                </mx:GridItem>
+                <mx:GridItem id="row2Col1">
+                    <mx:LinkButton icon="{Icons.UP_16}" buttonMode="true"
+                                   click="moveUp(event)"
+                                   data="{radioRepeater.currentItem}"
+                                   toolTip="Mover para cima"/>
+                </mx:GridItem>
+                <mx:GridItem id="row2Col2">
+                    <mx:LinkButton icon="{Icons.DOWN_16}" buttonMode="true"
+                                   click="moveDown(event)"
+                                   data="{radioRepeater.currentItem}"
+                                   toolTip="Mover para baixo"/>
+                </mx:GridItem>
+                <mx:GridItem>
+                    <mx:Label fontSize="12" text="{precoembalagemLabelFunction(radioRepeater.currentItem)}"
+                              styleName="{getCorrectStyle(radioRepeater.currentItem)}"
+                              click="edit(event)" toolTip="Preço incorreto? Clique no preço para editar"/>
+                    <mx:TextInput fontSize="12" text="{radioRepeater.currentItem.precoAtribuido}" visible="false"
+                                  includeInLayout="false" data="{radioRepeater.currentItem}"
+                                  focusOut="setPrecoEmbValue(event)" keyUp="focusOut(event)"/>
+                </mx:GridItem>
+                <mx:GridItem>
+                    <mx:Label fontSize="12" text="{precoUnitarioLabelFunction(radioRepeater.currentItem)}"
+                              styleName="{getCorrectStyle(radioRepeater.currentItem)}"
+                              click="edit(event)" toolTip="Preço incorreto? Clique no preço para editar"/>
+                    <mx:TextInput fontSize="12" text="{radioRepeater.currentItem.precoUnit}" visible="false"
+                                  includeInLayout="false" data="{radioRepeater.currentItem}"
+                                  focusOut="setPrecoEmbValue(event)" keyUp="focusOut(event)"/>
+                </mx:GridItem>
+                <mx:GridItem>
+                    <mx:Label fontSize="12" text="{representanteLabelFunction(radioRepeater.currentItem)}"/>
+                </mx:GridItem>
+                <mx:GridItem>
+                    <mx:Label fontSize="12" text="{getObs(radioRepeater.currentItem)}"/>
+                </mx:GridItem>
+            </mx:GridRow>
+        </mx:Repeater>
+        <mx:GridRow id="lastRow">
+            <mx:GridItem colSpan="1">
+                <mx:CheckBox selected="{itemAnaliseCotacao.naoComprar}"
+                             styleName="checkBox2"
+                             data="nenhumaOpcao"
+                             change="change(event)"/>
+            </mx:GridItem>
+            <mx:GridItem colSpan="3">
+                <mx:Label fontSize="12" text="Não comprar este item"/>
+            </mx:GridItem>
+        </mx:GridRow>
+    </mx:Grid>
+    <mx:HBox id="okHbox" width="100%" includeInLayout="false" visible="false">
+        <mx:Spacer width="100%"/>
+        <mx:Button id="buttonOk" label="Confirmar" toolTip="Fechar janela" styleName="okButton"/>
+        <mx:Spacer width="100%"/>
+    </mx:HBox>
+</mx:VBox>

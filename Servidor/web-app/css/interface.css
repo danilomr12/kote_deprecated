@@ -1,0 +1,186 @@
+@charset "UTF-8";
+
+
+/*----------------------------------------------------
+[CONTEÚDO CSS]
+
+
+1. Body
+2. Topo
+3. Conteúdo
+  3.1 Login
+  3.2 Termos
+4. Contato
+5. Rodapé
+6. FontAwesome
+
+
+----------------------------------------------------*/
+
+
+/*----------------------------------------------------
+
+  [1.] Fundo Body
+----------------------------------------------------*/
+
+body {
+	background-image:url(../_img/fundo_top.jpg);
+	background-repeat: no-repeat;
+	background-position: top center;
+}
+
+a i {
+	font-size: 14px;
+}
+
+
+/*----------------------------------------------------
+
+  [2.] Topo
+----------------------------------------------------*/
+
+#topo {
+	margin-bottom: 120px; 
+}
+
+#logo_topo {
+	float: left;
+	margin: 10px 0 0 30px;
+}
+
+#login {
+	float: right;
+	margin-top: 25px;
+}
+
+#atrativos {
+	font-size:16px;
+	line-height: 25px;
+}
+
+#calltoaction p {
+	font-size:17px;
+	line-height: 25px;
+}
+
+#calltoaction a {
+	margin-right: 25px;
+}
+
+.infografico-calltoaction{
+	margin: 10px 0px;
+	float: right;
+}
+
+/*----------------------------------------------------
+
+  [3.] Conteúdo
+----------------------------------------------------*/
+
+.conteudo {
+	/**border-bottom: 2px solid #C7C7C9;*/
+	padding-bottom: 20px;
+}
+
+#conteudo .icones {
+	margin-top: -5px;
+}
+
+#conteudo img.slide {
+	margin: 0 auto 0 auto;
+}
+
+/*----------------------------------------------------
+  [3.1] Login
+----------------------------------------------------*/
+.account-container {
+	margin: 0 auto 50px auto;
+	width: 345px;
+	background-color: #f4f2e6;
+	padding: 20px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+}
+
+.login-social {
+	border-top: 1px dotted #CCC;
+	border-bottom: 1px dotted #CCC;
+	padding: 10px 0 15px 0;
+	margin: 30px 0 0 0;
+}
+
+.login-social .twitter {
+	float: left;
+	margin-right: 5px;
+}
+
+#password, #username, #new-password, #new-password2 {
+	width: 330px;
+	height: 25px;
+}
+
+/*----------------------------------------------------
+  [3.2] Termos
+----------------------------------------------------*/
+
+.box_termo {
+	background-color: #f4f2e6;
+	padding: 10px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+}
+
+/*----------------------------------------------------
+
+  [4.] Contato
+----------------------------------------------------*/
+
+
+.rod_nomes a {
+	color: #E54B46;
+}
+
+.rod_nomes a:hover {
+	color: #BE423E;
+}
+
+#mapa {
+	float: left;
+	margin-top: 8px;
+}
+
+
+
+/*----------------------------------------------------
+
+  [5.] Rodapé
+----------------------------------------------------*/
+
+.rodape {
+	padding: 5px 0 20px 0;
+}
+
+
+
+
+/*----------------------------------------------------
+
+  [6.] FontAwesome
+----------------------------------------------------*/
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../font/fontawesome-webfont.eot');
+  src: url('../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+     url('../font/fontawesome-webfont.woff') format('woff'),
+     url('../font/fontawesome-webfont.ttf') format('truetype'),
+     url('../font/fontawesome-webfont.svg#FontAwesome') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

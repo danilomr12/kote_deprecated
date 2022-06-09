@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+				layout="absolute" showCloseButton="true" close="close(event)"
+				title="Dados da Cotação">
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.cotacao.CotacaoDTO;
+
+        import mx.events.CloseEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var cotacao:CotacaoDTO;
+
+        private function formateEnderecoParte2():String {
+            var enderecoFormatado:String = "";
+            if (cotacao.enderecoEntrega.bairro) {
+                enderecoFormatado += "Setor: " + cotacao.enderecoEntrega.bairro;
+            }
+            if (cotacao.enderecoEntrega.cidade && cotacao.enderecoEntrega.estado) {
+                if (cotacao.enderecoEntrega.bairro)
+                    enderecoFormatado += ", ";
+                enderecoFormatado += cotacao.enderecoEntrega.cidade + " - " + cotacao.enderecoEntrega.estado;
+            }
+            return enderecoFormatado
+        }
+
+        private function formateEnderecoParte3():String {
+            var enderecoFormatado:String = ""
+            if (cotacao.enderecoEntrega.cep)
+                enderecoFormatado += "Cep: " + cotacao.enderecoEntrega.cep
+            if (cotacao.enderecoEntrega.complemento) {
+                if (cotacao.enderecoEntrega.cep)
+                    enderecoFormatado += ", "
+                enderecoFormatado += cotacao.enderecoEntrega.complemento
+            }
+            return enderecoFormatado
+        }
+
+        private function formateEnderecoParte1():String {
+            var enderecoFormatado:String = ""
+            enderecoFormatado += cotacao.enderecoEntrega.logradouro
+            if (cotacao.enderecoEntrega.numero)
+                enderecoFormatado += ", " + cotacao.enderecoEntrega.numero
+            return enderecoFormatado
+        }
+
+        private function close(event:CloseEvent):void {
+            PopUpManager.removePopUp(this)
+        }
+        ]]>
+	</mx:Script>
+	<mx:Form width="100%" height="100%">
+		<mx:FormHeading label="{cotacao.titulo}"/>
+		<mx:FormItem label="Validade:" fontWeight="bold">
+			<mx:Label text="{formatter.format(cotacao.dataValidade)}"
+					  fontWeight="normal" fontSize="10"/>
+		</mx:FormItem>
+		<mx:FormItem label="Data de entrega:" fontWeight="bold">
+			<mx:Label text="{dateFormatter.format(cotacao.dataEntrega)}"
+					  fontWeight="normal" fontSize="10"/>
+		</mx:FormItem>
+		<mx:FormItem label="Prazo de pagamento:" fontWeight="bold">
+			<mx:Label text="{cotacao.prazoPagamento}"
+					  fontWeight="normal" fontSize="10"/>
+		</mx:FormItem>
+		<mx:FormItem label="Endereço de entrega:" fontWeight="bold">
+			<mx:Label text="{formateEnderecoParte1()}"
+					  fontWeight="normal" fontSize="10"/>
+			<mx:Label text="{formateEnderecoParte2()}" 
+					  fontWeight="normal" fontSize="10"/>
+			<mx:Label text="{formateEnderecoParte3()}"
+					  fontWeight="normal" fontSize="10"/>
+		</mx:FormItem>
+	</mx:Form>
+	
+	<mx:DateFormatter id="dateFormatter" formatString="DD/MM/YYYY"/>
+	<mx:DateFormatter id="formatter" formatString="DD/MM/YYYY HH:NN"/>
+</mx:TitleWindow>

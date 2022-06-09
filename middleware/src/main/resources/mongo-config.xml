@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:context="http://www.springframework.org/schema/context"
+          xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+          xmlns:aop="http://www.springframework.org/schema/aop"
+          xmlns:p="http://www.springframework.org/schema/p"
+          xsi:schemaLocation=
+          "http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/cache
+          http://www.springframework.org/schema/cache/spring-cache.xsd
+          http://www.springframework.org/schema/aop
+          http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+    <!--xmlns:cache="http://www.springframework.org/schema/cache"-->
+    <context:annotation-config/>
+    <context:component-scan base-package="br.com.analise"/>
+
+    <!--
+      Including this aspectj-autoproxy element will cause spring to automatically
+      create proxies around any beans defined in this file that match the pointcuts
+      of any aspects defined in this file.
+    -->
+    <aop:aspectj-autoproxy/>
+    <!--<cache:annotation-driven />-->
+
+	<!-- Default bean name is 'mongo' -->
+	<!--<mongo:mongo host="localhost" port="27017"/>-->
+
+    <mongo:db-factory id="mongoDbFactory"
+            host="127.0.0.1"
+            port="27017"
+            dbname="compras"
+            username="kote"
+            password="kot3U$3R@COMPRAS"/>
+
+	<!-- Offers convenience methods and automatic mapping between MongoDB JSON documents and your domain classes. -->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <!--<constructor-arg ref="mongo"/>
+	  <constructor-arg name="databaseName" value="compras"/>-->
+	</bean>
+
+	<mongo:repositories base-package="br.com.analise.repository" />
+
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+	    <!-- does not necessarily have to be the same name as the bean to be exported -->
+	    <property name="serviceName" value="CompraService"/>
+	    <property name="service" ref="compraService"/>
+	    <property name="serviceInterface" value="br.com.analise.service.ICompraService"/>
+	    <!-- defaults to 1099 -->
+	    <property name="registryPort" value="1199"/>
+	</bean>
+
+	<!-- Ehcache library setup -->
+	<!--<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="ehcache.xml"/>
+-->
+    <!--
+      Declare the TimingAspect that we want to weave into the other beans
+      defined in this config file.
+    -->
+    <bean id="timingAspect" class="org.perf4j.log4j.aop.TimingAspect"/>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+</beans>

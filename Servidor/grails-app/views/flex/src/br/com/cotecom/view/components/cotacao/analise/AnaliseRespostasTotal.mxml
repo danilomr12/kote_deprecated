@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="horizontal"
+	styleName="analiseRespostasTotalPanel"
+	headerHeight="0"
+	paddingBottom="5"
+	paddingLeft="5"
+	paddingRight="5"
+	paddingTop="5">
+	
+	<mx:Style>
+	
+		.analiseRespostasTotalPanel {
+		   borderStyle: solid;
+		   roundedBottomCorners: true;
+		   cornerRadius: 13;
+		   backgroundAlpha:0.80;		   		   
+		   backgroundColor: #ffffcc;
+		   shadowDistance: 5;
+		   shadowDirection: right;
+		   dropShadowColor: #000000;
+		}
+
+	</mx:Style>
+	
+	<mx:Script>
+		<![CDATA[
+        [Bindable]
+        public var total:String;
+        ]]>
+	</mx:Script>
+	<mx:Label text="Total:" fontSize="13"/>
+	<mx:Label text="{total}" fontSize="13" color="#9A341C"/>
+	
+</mx:Panel>
+

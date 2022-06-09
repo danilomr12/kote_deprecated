@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 xmlns:busca="br.com.cotecom.view.components.busca.*"
+		 height="100%" width="100%"
+         creationComplete="inicializebusca()">
+
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SearchEvent;
+        import br.com.cotecom.control.events.fornecedores.CrieAtendimentoEvent;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.collections.ArrayCollection;
+        import mx.containers.TitleWindow;
+        import mx.core.Application;
+        import mx.events.CloseEvent;
+        import mx.managers.PopUpManager;
+
+        private function setPronptText():void {
+            busca.queryInput.prompt = "digite o nome do representante ou da empresa que deseja buscar..."
+        }
+
+        [Bindable]
+        public var representantesEncontrados:ArrayCollection = new ArrayCollection();
+
+        protected function adicioneRepresentanteAosAtendimentos(event:MouseEvent):void {
+            var representante:Usuario = event.target.data;
+            var crieAtendimentoEvent:CrieAtendimentoEvent = new CrieAtendimentoEvent(
+                    CrieAtendimentoEvent.EVENT_NAME, representante);
+            crieAtendimentoEvent.dispatch();
+            this.representantesEncontrados.removeItemAt(representantesEncontrados.getItemIndex(representante))
+        }
+
+        protected function mostreDetalhesDoRepresentante(event:MouseEvent):void {
+            var rep:Usuario = event.target.data;
+            var infoRepresentante:InfoRepresentante = new InfoRepresentante();
+            infoRepresentante.representante = rep;
+            var window:TitleWindow = new TitleWindow();
+            window.showCloseButton = true;
+            window.addChild(infoRepresentante);
+            window.addEventListener(CloseEvent.CLOSE, function ():void {
+                PopUpManager.removePopUp(window)
+            });
+            PopUpManager.addPopUp(window, Application.application as DisplayObject, true);
+            PopUpManager.centerPopUp(window);
+        }
+
+        private function getabel(currentItem:Usuario):String {
+            var result:String = currentItem.nome;
+            result += (currentItem.empresa && currentItem.empresa.nomeFantasia) ? ' - ' + currentItem.empresa.nomeFantasia : "";
+            return result
+        }
+
+        private function inicializebusca():void {
+            new SearchEvent(SearchEvent.REPRESENTANTE_SEM_ATENDIMENTO, "", representantesEncontrados).dispatch();
+        }
+        ]]>
+	</mx:Script>
+
+	<busca:Busca id="busca" alvo="{representantesEncontrados}" type="{SearchEvent.REPRESENTANTE_SEM_ATENDIMENTO}"
+                 toolTip="digite o nome do representante ou da empresa que deseja procurar!"
+            creationComplete="setPronptText()"/>
+	<mx:VBox width="100%" height="100%" minHeight="0" horizontalScrollPolicy="off">
+        <mx:Repeater id="representantesRepeater" dataProvider="{representantesEncontrados}" width="100%">
+            <mx:HBox width="100%">
+                <mx:LinkButton id="addButtonsArray"
+                               icon="{Icons.ADD_24}"
+                               data="{representantesRepeater.currentItem}"
+                               click="adicioneRepresentanteAosAtendimentos(event)"
+                               toolTip="Clique para adicionar o representante a sua lista de fornecedores"/>
+                <mx:LinkButton id="showButtonsArray"
+                               textDecoration="underline"
+                               label="{getabel(representantesRepeater.currentItem as Usuario)}"
+                               data="{representantesRepeater.currentItem}"
+                               click="mostreDetalhesDoRepresentante(event)"
+                               toolTip="Clique para ver detalhes do representante"/>
+            </mx:HBox>
+        </mx:Repeater>
+	</mx:VBox>
+</mx:VBox>

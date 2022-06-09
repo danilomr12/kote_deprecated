@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite errors="0" failures="0" name="br.com.cotecom.model.tests.ResponderTest" tests="1" time="0"> 
+  <testcase classname="br.com.cotecom.model.tests.ResponderTest" name="testPopulateResponder" time="0"/> 
+</testsuite>

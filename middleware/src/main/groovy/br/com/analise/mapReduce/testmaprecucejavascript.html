@@ -1,0 +1,124 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css" type="text/css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+</head>
+<body>
+<h1 id="qunit-header">
+    Functional Programming Samples</h1>
+<h2 id="qunit-banner">
+</h2>
+<div id="qunit-testrunner-toolbar">
+</div>
+<h2 id="qunit-userAgent">
+</h2>
+<ol id="qunit-tests">
+</ol>
+<div id="qunit-fixture">
+</div>
+<script type="text/javascript">
+
+    function computeMean(values) {
+        var total = 0;
+        for (var i = 0; i < values.length; i++)
+            total += values[i];
+        return total / values.length
+    }
+
+    function computeStdDeviation(values) {
+        var mean = computeMean(values);
+        var total = 0;
+        for (var i = 0; i < values.length; i++) {
+            var d = values[i] - mean;
+            total += (d * d);
+        }
+        return Math.sqrt(total / (values.length - 1));
+    }
+
+    var map = Array.prototype.map ? function (a, fn) { return a.map(fn); } : function (a, fn) {
+        var result = [];
+                for (var i = 0; i < a.length; i++) {
+                    if (i in a) result[i] = fn.call(null, a[i], i, a);
+                }
+                return result;
+            };
+
+    var reduce = Array.prototype.reduce ? function (a, fn, initial) {
+                if (arguments.length > 2)
+                    return a.reduce(fn, initial);
+                else
+                    return a.reduce(fn);
+            } : function (a, fn, initial) {
+                var i = 0;
+                var l = a.length;
+                var accum;
+
+                if (arguments.length > 2)
+                    accum = initial;
+                else {
+                    if (l == 0) throw TypeError();
+                    while (i < l) {
+                        if (i in a) {
+                            accum = a[i++];
+                            break;
+                        }
+                        else
+                            i++;
+                    }
+                    if (i == l) throw TypeError();
+                }
+
+                while (i < l) {
+                    if (i in a)
+                        accum = fn.call(undefined, accum, a[i], i, a);
+                    i++
+                }
+
+                return accum;
+            };
+
+    var computeSum = function (a, b) { return a + b; };
+    var computeSquare = function (v) { return v * v; };
+    var computeMeanF = function (values) { return reduce(values, computeSum) / values.length; };
+    var computeStdDeviationF = function (values) {
+        var mean = computeMeanF(values);
+        var deviations = map(values, function (v) { return v - mean; });
+        return Math.sqrt(reduce(map(deviations, computeSquare), computeSum) / (values.length - 1));
+    };
+
+    $(function () {
+
+        module("Non-functional");
+
+        test("computeMean", function () {
+            expect(3);
+            equal(computeMean([1, 1, 3, 5, 5]), 3, "Passing [1, 1, 3, 5, 5] returns 3.");
+            equal(computeMean([6, 6, 5, 7, 6]), 6, "Passing [6, 6, 5, 7, 6] returns 6.");
+            equal(computeMean([8, 9, 4, 3, 2]), 5.2, "Passing [8, 9, 4, 3, 2] returns 5,2.");
+        });
+
+        test("computeStdDeviation", function () {
+            expect(2);
+            equal(computeStdDeviation([1, 1, 3, 5, 5]), 2, "Passing [1, 1, 3, 5, 5] returns 2.");
+            equal(computeStdDeviation([6, 6, 6]), 0, "Passing [6, 6, 6] returns 0.");
+        });
+
+        module("Functional");
+
+        test("computeMeanF", function () {
+            expect(3);
+            equal(computeMeanF([1, 1, 3, 5, 5]), 3, "Passing [1, 1, 3, 5, 5] returns 3.");
+            equal(computeMeanF([6, 6, 5, 7, 6]), 6, "Passing [6, 6, 5, 7, 6] returns 6.");
+            equal(computeMeanF([8, 9, 4, 3, 2]), 5.2, "Passing [8, 9, 4, 3, 2] returns 5,2.");
+        });
+
+        test("computeStdDeviationF", function () {
+            expect(2);
+            equal(computeStdDeviationF([1, 1, 3, 5, 5]), 2, "Passing [1, 1, 3, 5, 5] returns 2.");
+            equal(computeStdDeviationF([6, 6, 6]), 0, "Passing [6, 6, 6] returns 0.");
+        });
+    });
+</script>
+</body>
+</html>

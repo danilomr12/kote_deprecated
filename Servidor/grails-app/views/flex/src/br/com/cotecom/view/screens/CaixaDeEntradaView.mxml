@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+          xmlns:components="br.com.cotecom.view.components.*"
+          xmlns:application="br.com.cotecom.view.components.application.*"
+          width="100%" height="100%"
+          headerHeight="10" paddingBottom="10"
+          layout="vertical"
+          footerColors="[#e64b47, #e64b47]"
+          dropShadowEnabled="true"
+          shadowDirection="left"
+          creationComplete="init()">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.services.comprador.GerenciadorCaixaDeEntrada;
+
+        [Bindable]
+        public var manager:GerenciadorCaixaDeEntrada = GerenciadorCaixaDeEntrada.getInstance();
+        public var model:Session = Session.getInstance();
+        public var gerenciadorCxEntrada:GerenciadorCaixaDeEntrada = GerenciadorCaixaDeEntrada.getInstance();
+
+        public function init():void {
+            showHandler()
+        }
+
+        private function hideHandler():void {
+            gerenciadorCxEntrada.pareMonitoramento();
+        }
+
+        private function showHandler():void {
+            if (model.applicationType == Session.COMPRADOR)
+                gerenciadorCxEntrada.monitoreNovasRespostas();
+        }
+
+        protected function busque(evt:KeyboardEvent):void {
+            if (evt.keyCode == Keyboard.ENTER)
+                model.caixaDeEntradaService.getAllItens();
+        }
+        ]]></mx:Script>
+
+    <components:EntradaDataGrid id="grid" dataProvider="{manager.inBox}" width="100%" height="100%"/>
+
+    <application:FooterControlBar>
+        <mx:Spacer width="100%"/>
+    </application:FooterControlBar>
+
+</mx:Panel>
+

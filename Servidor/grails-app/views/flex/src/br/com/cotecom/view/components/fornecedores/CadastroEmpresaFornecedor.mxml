@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:application="br.com.cotecom.view.components.application.*"
+                xmlns:utils="br.com.cotecom.model.utils.*"
+                horizontalAlign="center"
+                title=" "
+                showCloseButton="true"
+                xmlns:components="br.com.cotecom.view.components.*"
+                xmlns:contato="br.com.cotecom.view.components.contato.*"
+                close="close()">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SaveEvent;
+        import br.com.cotecom.model.domain.Endereco;
+        import br.com.cotecom.model.domain.dtos.usuarios.Empresa;
+
+        import mx.collections.ArrayCollection;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var empresa:Empresa;
+
+        protected function salveFornecedor(event:MouseEvent):void {
+            if (this.empresa == null)
+                this.empresa = new Empresa(Empresa.FORNECEDOR);
+            this.empresa.nomeFantasia = textInputNomeFantasia.text;
+            this.empresa.email = textInputEmail.text;
+            this.empresa.razaoSocial = textInputRazaoSocial.text;
+            this.empresa.cnpj = textInputCnpj.text;
+            this.empresa.telefones = telefonesForm.telefones;
+            if (enderecoForm.endereco) {
+                this.empresa.endereco = enderecoForm.endereco;
+            } else {
+                this.empresa.endereco = null;
+            }
+
+            new SaveEvent(SaveEvent.EMPRESA_FORNECEDOR, this.empresa).dispatch();
+            this.close();
+        }
+
+        protected function buttonCancelar_clickHandler(event:MouseEvent):void {
+            this.close();
+        }
+
+        protected function close():void {
+            PopUpManager.removePopUp(this)
+        }
+        ]]>
+    </mx:Script>
+    <mx:Validator id="nomeFantasiaValidator" source="{textInputNomeFantasia}" property="text"
+                  required="true" requiredFieldError="O campo 'Nome Fantasia' é obrigatório"/>
+    <mx:EmailValidator id="emailValidator" required="false" source="{textInputEmail}"
+                       missingUsernameError="Faltando nome de usuário" invalidCharError="Carácter inválido"
+                       invalidDomainError="Domínio inválido" invalidPeriodsInDomainError="Formato incorreto"
+                       property="text"/>
+    <utils:CnpjValidator id="cnpjValidator" source="{textInputCnpj}" property="text" required="false"/>
+    <mx:HBox width="100%" height="100%">
+        <mx:Form>
+            <mx:FormItem label="Nome Fantasia" width="100%">
+                <mx:TextInput id="textInputNomeFantasia" width="100%"
+                              text="{this.empresa.nomeFantasia}"/>
+            </mx:FormItem>
+            <mx:FormItem label="Razão Social" width="100%">
+                <mx:TextInput id="textInputRazaoSocial" width="100%"
+                              text="{this.empresa.razaoSocial}"/>
+            </mx:FormItem>
+            <mx:FormItem label="CNPJ" width="100%" toolTip="preencha sem pontos, barras e hífen">
+                <mx:TextInput id="textInputCnpj" width="100%"
+                              text="{this.empresa.cnpj}"/>
+            </mx:FormItem>
+            <mx:FormItem label="E-mail" width="100%">
+                <mx:TextInput id="textInputEmail" width="100%"
+                              text="{this.empresa.email}"/>
+            </mx:FormItem>
+            <contato:TelefonesForm id="telefonesForm" height="100%"
+                                   telefones="{this.empresa.telefones}"/>
+        </mx:Form>
+        <components:EnderecoForm id="enderecoForm"
+                                 endereco="{this.empresa.endereco}"/>
+    </mx:HBox>
+    <mx:HBox>
+        <mx:Button id="buttonCancelar"
+                   styleName="cancelButton"
+                   label="Cancelar"
+                   click="buttonCancelar_clickHandler(event)"/>
+        <mx:Button id="buttonSalvar"
+                   styleName="saveButton"
+                   label="Salvar"
+                   click="salveFornecedor(event)"/>
+    </mx:HBox>
+</mx:TitleWindow>

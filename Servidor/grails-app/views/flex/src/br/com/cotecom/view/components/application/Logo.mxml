@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<mx:Image xmlns:mx="http://www.adobe.com/2006/mxml"
+          top="45" width="150" left="10" source="assets/img/kote_logo.png">
+</mx:Image>

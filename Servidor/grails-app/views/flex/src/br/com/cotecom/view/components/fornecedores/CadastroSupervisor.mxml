@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:contato="br.com.cotecom.view.components.contato.*"
+                showCloseButton="true"
+                close="close()">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SaveEvent;
+        import br.com.cotecom.model.domain.dtos.usuarios.TipoUsuario;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+
+        import mx.core.Application;
+        import mx.core.IFlexDisplayObject;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var supervisor:Usuario = new Usuario(TipoUsuario.SUPERVISOR);
+
+        private function showWindow(window:IFlexDisplayObject):void {
+            PopUpManager.addPopUp(window, Application.application as DisplayObject, true);
+            PopUpManager.centerPopUp(window)
+        }
+
+        protected function close():void {
+            PopUpManager.removePopUp(this);
+        }
+
+        protected function salveSupervisor(event:MouseEvent):void {
+            this.supervisor.nome = nomeTextInput.text;
+            this.supervisor.email = emailTextImput.text;
+            this.supervisor.telefones = telefonesForm.telefones;
+            //telefones atualizados automaticamente
+            new SaveEvent(SaveEvent.SUPERVISOR, this.supervisor).dispatch();
+            close();
+        }
+
+        protected function cancelar(event:MouseEvent):void {
+            close();
+        }
+        ]]>
+	</mx:Script>
+    <mx:VBox width="100%" height="100%">
+        <mx:Form>
+            <mx:FormItem label="Nome" width="100%" id="nomeFormItem">
+                <mx:TextInput id="nomeTextInput" text="{supervisor.nome}" width="100%" />
+            </mx:FormItem>
+            <mx:FormItem label="E-mail" width="100%" id="emailFormItem">
+                <mx:TextInput id="emailTextImput" text="{supervisor.email}" width="100%" />
+            </mx:FormItem>
+            <contato:TelefonesForm id="telefonesForm"
+                                   telefones="{supervisor.telefones}"/>
+        </mx:Form>
+        <mx:HBox width="100%" horizontalAlign="center">
+            <mx:Button label="Cancelar"
+                       styleName="cancelButton"
+                       click="cancelar(event)"/>
+            <mx:Button label="Salvar"
+                       styleName="saveButton"
+                       click="salveSupervisor(event)"/>
+        </mx:HBox>
+    </mx:VBox>
+</mx:TitleWindow>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns="com.hillelcoren.components.*" xmlns:mx="http://www.adobe.com/2006/mxml" paddingLeft="10"
+         minWidth="200" width="300" horizontalGap="0"  cornerRadius="10" horizontalAlign="center"
+         verticalAlign="middle" click="setFocusEAtualizeRepresentantes(event)">
+
+    <mx:Metadata>
+        [Event(name="representanteSelecionadoEvent" , type="br.com.cotecom.control.events.RepresentanteEvent")]
+    </mx:Metadata>
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.RepresentanteEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.AnaliseRespostaDTO;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+        import br.com.cotecom.model.services.comprador.GerenciadorRepresentantes;
+
+        import com.hillelcoren.utils.StringUtils;
+
+        import mx.collections.ArrayCollection;
+        import mx.events.CollectionEvent;
+
+        public var session:Session = Session.getInstance();
+        [Bindable]
+        private var representantes:ArrayCollection = new ArrayCollection();
+        private var _analise:AnaliseCotacaoDTO;
+
+        public function set analise(analise:AnaliseCotacaoDTO):void {
+            this._analise = analise;
+            atualizeRepresentantes();
+        }
+
+        private function atualizeRepresentantes():void {
+            this.representantes = new ArrayCollection();
+            var gerenciadorRepresentantes:GerenciadorRepresentantes = GerenciadorRepresentantes.getInstance();
+            gerenciadorRepresentantes.representantesComAtendimento.filterFunction = null;
+            gerenciadorRepresentantes.representantesComAtendimento.refresh();
+            for each(var representanteComAtendimento:Usuario in gerenciadorRepresentantes.representantesComAtendimento) {
+                var naoAdicione:Boolean = false;
+                if (this._analise != null) {
+                    for each(var analiseResposta:AnaliseRespostaDTO in this._analise.respostas) {
+                        if (analiseResposta.representanteId == representanteComAtendimento.id)
+                            naoAdicione = true;
+                    }
+                } else {
+                    naoAdicione = true;
+                }
+                if (!naoAdicione)
+                    this.representantes.addItem(representanteComAtendimento.clone())
+            }
+        }
+
+        public function get representante():Usuario {
+            return autoComplete.selectedItem as Usuario;
+        }
+
+        private static function representantesLabelFunction(item:Object):String {
+            var rep:Usuario = item as Usuario;
+            return rep.nome + "<" + rep.email + ">"
+        }
+
+        private function representantesDropDownLabelFunction(item:Object):String {
+            var representante:Usuario = item as Usuario;
+            var label:String = representante.nome;
+            if (representante.empresa)
+                label += " &lt;" + representante.empresa.nomeFantasia + "&gt;";
+            var str:String = "";
+            var searchStr:String = autoComplete.searchText;
+
+            var start:int = label.search(new RegExp(searchStr, "gi"));
+
+            str = label.substring(0, start);
+            str = str + "<b><u>" + label.substr(start, searchStr.length) + "</u></b>";
+            str = str + label.substr(start + searchStr.length, label.length);
+
+            if (autoComplete.isItemSelected(representante)) {
+                str = "<font color='" + Consts.COLOR_TEXT_DISABLED + "'>" + str + "</font>";
+            }
+            return str;
+        }
+
+        private static function representantesFilterFunction(item:Object, searchStr:String):Boolean {
+            var representante:Usuario = item as Usuario;
+            if (StringUtils.anyWordBeginsWith(representante.nome, searchStr)) {
+                return true;
+            }
+            else if (representante.empresa && StringUtils.beginsWith(representante.empresa.nomeFantasia, searchStr)) {
+                return true;
+            }
+            return false;
+        }
+
+        private function representanteSelecionado(event:Event):void {
+            if (autoComplete.selectedItem != null) {
+                autoComplete.text = "";
+                dispatchEvent(new RepresentanteEvent(RepresentanteEvent.REPRESENTANTE_SELECIONADO_EVENT, representante));
+                autoComplete.selectedItem = null;
+                var index:int = 0;
+                for each(var rep:Usuario in this.representantes){
+                    if(rep.id == representante.id)
+                        this.representantes.removeItemAt(index);
+                    index++;
+                }
+            } else {
+                session.messageHandler.showTextMessage("Enviar Cotação", "Digite o nome do fornecedor para enviar");
+            }
+        }
+
+        private function setFocusEAtualizeRepresentantes(event:MouseEvent):void {
+            atualizeRepresentantes();
+            focusManager.setFocus(autoComplete.textInput.textInput)
+        }
+        ]]>
+	</mx:Script>
+
+    <AdvancedAutoComplete id="autoComplete"
+                          useListBuilder="true" dataProvider="{representantes}"
+                          allowMultipleSelection="false" allowEditingNewValues="false" showBrowseButton="false"
+                          selectedItemStyleName="facebook"  labelFunction="representantesLabelFunction" showRemoveIcon="true"
+                          dropDownLabelFunction="representantesDropDownLabelFunction" filterFunction="representantesFilterFunction"
+                          prompt="Adicionar Fornecedor"
+                          width="100%"/>
+
+    <mx:Button id="enviaParaRepresentante"
+               label="+" toolTip="Adicionar representante na cotação"
+               click="representanteSelecionado(event)" width="32" />
+
+</mx:HBox>

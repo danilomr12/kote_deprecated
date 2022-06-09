@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="com.hillelcoren.components.*" creationComplete="refresh(event)">
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.Constants;
+        import br.com.cotecom.model.domain.dtos.Produto;
+
+        import mx.collections.ArrayCollection;
+        import mx.events.ValidationResultEvent;
+
+        [Bindable]
+        private var _produto:Produto;
+        [Bindable]
+        private var categorias:ArrayCollection = new ArrayCollection(Constants.CATEGORIAS);
+        [Bindable]
+        private var embalagens:ArrayCollection = new ArrayCollection(Constants.EMBALAGENS);
+        [Bindable]
+        private var embCaixa:String;
+        [Bindable]
+        private var embUnidade:String;
+
+        public function get produto():Produto {
+            var prod:Produto = new Produto();
+            prod.descricao = descricaoTextInput.text;
+            prod.categoria = categoriaAutoComplete.selectedItem ? categoriaAutoComplete.selectedItem as String : categoriaAutoComplete.textInput.text;
+            prod.barCode = codBarrasTextInput.text;
+            prod.fabricante = fabricanteTextInput.text;
+            var embalagemCaixa:String = (embCaixaComboBox.selectedItem ? embCaixaComboBox.selectedItem as String : embCaixaComboBox.textInput.text);
+            var embalagemUnidade:String = (embUnidadeComboBox.selectedItem ? embUnidadeComboBox.selectedItem as String : embUnidadeComboBox.textInput.text);
+            prod.embalagem = embalagemCaixa + "/" + qtdEmbalagemNumStepper.value.toString() + "/" + embalagemUnidade;
+            prod.marca = marcaTextInput.text;
+            prod.peso = pesoNumericSteper.value;
+            prod.qtdMaster = embMasterNumericSteper.value;
+            prod.empresaId = Session.getInstance().user.empresa.id.toString();
+            if (_produto)
+                prod.id = _produto.id;
+            return prod
+        }
+
+        public function set produto(prod:Produto):void {
+            this._produto = prod;
+        }
+
+        public function validateFields():Boolean {
+            return !(validatorDescricao.validate().type == ValidationResultEvent.INVALID)
+        }
+
+        private function refresh(event:Event):void {
+            if (_produto && _produto.embalagem) {
+                embUnidade = _produto.embalagem.slice(_produto.embalagem.length - 2, _produto.embalagem.length);
+                embCaixa = _produto.embalagem.substr(0, 2);
+            }
+        }
+        ]]></mx:Script>
+    <mx:StringValidator id="validatorDescricao" required="true" source="{descricaoTextInput}"
+                        property="text" requiredFieldError="A descrição do produto é obrigatória"/>
+    <mx:FormItem label="Código de barras" id="formitem6" width="100%">
+        <mx:TextInput id="codBarrasTextInput" width="100%" maxChars="128"
+                      text="{_produto.barCode}"/>
+    </mx:FormItem>
+    <mx:FormItem label="Descrição" width="100%">
+        <mx:TextInput id="descricaoTextInput" width="100%" maxChars="255"
+                      text="{_produto.descricao}"/>
+    </mx:FormItem>
+    <mx:FormItem id="formitem2" label="Embalagem" width="100%">
+        <mx:HBox>
+            <components:AdvancedAutoComplete id="embCaixaComboBox" width="60" text="{embCaixa}"
+                                             useListBuilder="true" dataProvider="{embalagens}"
+                                             allowMultipleSelection="false" allowEditingNewValues="true" showBrowseButton="false"
+                                             selectedItemStyleName="none"
+                                             click="focusManager.setFocus(embCaixaComboBox.textInput.textInput)"/>
+            <mx:NumericStepper id="qtdEmbalagemNumStepper" value="{_produto.qtdEmbalagem}" width="100%" maxChars="4"
+                               maximum="99999"/>
+            <components:AdvancedAutoComplete id="embUnidadeComboBox" width="60" text="{embUnidade}"
+                                             useListBuilder="true" dataProvider="{embalagens}"
+                                             allowMultipleSelection="false" allowEditingNewValues="true" showBrowseButton="false"
+                                             selectedItemStyleName="none"
+                                             click="focusManager.setFocus(embUnidadeComboBox.textInput.textInput)"/>
+        </mx:HBox>
+    </mx:FormItem>
+    <mx:FormItem label="Embalagem Master" id="formitem7" width="100%">
+        <mx:NumericStepper id="embMasterNumericSteper" width="100%" maximum="1000000" minimum="1"
+                           stepSize="1" value="{_produto.qtdMaster}"/>
+    </mx:FormItem>
+    <mx:FormItem id="formitem1" label="Categoria" width="100%">
+        <components:AdvancedAutoComplete id="categoriaAutoComplete" width="100%" text="{_produto.categoria}"
+                                         useListBuilder="true" dataProvider="{categorias}"
+                                         allowMultipleSelection="false" allowEditingNewValues="true" showBrowseButton="false"
+                                         selectedItemStyleName="none"
+                                         click="focusManager.setFocus(categoriaAutoComplete.textInput.textInput)"/>
+    </mx:FormItem>
+    <mx:FormItem label="Marca" id="formitem4" width="100%">
+        <mx:TextInput id="marcaTextInput" width="100%" maxChars="128"
+                      text="{_produto.marca}"/>
+    </mx:FormItem>
+    <mx:FormItem label="Fabricante" id="formitem3" width="100%">
+        <mx:TextInput id="fabricanteTextInput" width="100%" maxChars="128"
+                      text="{_produto.fabricante}"/>
+    </mx:FormItem>
+    <mx:FormItem label="Peso(Kg)" id="formitem5" width="100%">
+        <mx:NumericStepper id="pesoNumericSteper" width="100%" maximum="1000000" minimum="0"
+                           stepSize="0.1" value="{_produto.peso}"/>
+    </mx:FormItem>
+    <mx:FormItem id="qtdField" width="100%" visible="false" includeInLayout="{qtdField.visible}" label="Quantidade">
+        <mx:NumericStepper id="quantidadeNumStepper" width="100%" maximum="1000000" minimum="1" value="1"
+                           stepSize="1"/>
+    </mx:FormItem>
+</mx:Form>

@@ -1,0 +1,24 @@
+relre:.gradle/
+relre:bin/
+relre:logs/
+relre:build/
+glob:webapp/target-eclipse/
+glob:webapp/target/
+syntax: glob
+Servidor/target-eclipse/
+Servidor/target/
+Servidor/.idea/
+.idea/*
+*.iml
+*.log
+Servidor/web-app/WEB-INF/flex/cache.dep
+middleware/lib/spring-tx-4.0.2.RELEASE.jar
+middleware/out/
+middleware/lib/aopalliance-1.0.jar
+middleware/lib/spring-beans-4.0.2.RELEASE.jar
+middleware/lib/spring-aop-4.0.2.RELEASE.jar
+middleware/lib/spring*
+out/
+middleware/lib/commons-logging-1.1.1.jar
+middleware/gradlew.bat
+middleware/gradlew

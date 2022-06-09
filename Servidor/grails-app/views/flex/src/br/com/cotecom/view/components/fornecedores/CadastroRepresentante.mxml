@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow
+        xmlns:mx="http://www.adobe.com/2006/mxml"
+        xmlns:application="br.com.cotecom.view.components.application.*"
+        xmlns:representante="br.com.cotecom.view.components.representante.*"
+        xmlns:contato="br.com.cotecom.view.components.contato.*"
+        title=" "
+        showCloseButton="true"
+        close="close()">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SaveEvent;
+        import br.com.cotecom.model.domain.dtos.usuarios.Empresa;
+        import br.com.cotecom.model.domain.dtos.usuarios.TipoUsuario;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+        import br.com.cotecom.model.services.resposta.GerenciadorFornecedores;
+        import mx.core.Application;
+        import mx.core.IFlexDisplayObject;
+        import mx.events.ListEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var gerenciadorFornecedores:GerenciadorFornecedores = GerenciadorFornecedores.getInstance();
+        [Bindable]
+        private var _representante:Usuario;
+        [Bindable]
+        private var buttonEditarEmpresaEnabled:Boolean = false;
+
+        [Bindable]
+        public function set representante(value:Usuario):void {
+            this._representante = value;
+            setSupervisoresSegundoRepresentante();
+        }
+
+        public function get representante():Usuario {
+            return this._representante;
+        }
+
+        public function excluaAtendimento():void {
+            close();
+        }
+
+        public function editeEmpresa(empresa:Empresa = null):void {
+            empresa = empresa ? empresa : this._representante.empresa;
+            var cadastroEmpresa:CadastroEmpresaFornecedor = new CadastroEmpresaFornecedor();
+            cadastroEmpresa.empresa = empresa;
+            showWindow(cadastroEmpresa);
+        }
+
+        public function editeSupervisor(supervisor:Usuario = null):void {
+            supervisor = supervisor ? supervisor : this.comboSupervisor.selectedItem as Usuario; //_representante.supervisor;
+            var cadastroSupervisor:CadastroSupervisor = new CadastroSupervisor();
+            cadastroSupervisor.supervisor = supervisor;
+            showWindow(cadastroSupervisor);
+        }
+
+        public function crieEmpresa():void {
+            editeEmpresa(new Empresa(Empresa.FORNECEDOR));
+        }
+
+        public function crieSupervisor():void {
+            var supervisor:Usuario = new Usuario(TipoUsuario.SUPERVISOR);
+            supervisor.empresa = this._representante.empresa;
+            this._representante.supervisor = supervisor;
+            editeSupervisor(supervisor);
+        }
+
+        private function setSupervisoresSegundoRepresentante():void {
+            gerenciadorFornecedores.supervisores.filterFunction = supervisoresFilterFunction;
+            gerenciadorFornecedores.supervisores.refresh();
+        }
+
+        private function supervisoresFilterFunction(sup:*):Boolean {
+            if (sup && sup.empresa && this._representante.empresa) {
+                return sup.empresa.id == this._representante.empresa.id;
+            }
+            return false
+        }
+
+        private function showWindow(window:IFlexDisplayObject):void {
+            PopUpManager.addPopUp(window, Application.application as DisplayObject, true);
+            PopUpManager.centerPopUp(window);
+        }
+
+        protected function close():void {
+            gerenciadorFornecedores.supervisores.filterFunction = null;
+            PopUpManager.removePopUp(this)
+        }
+
+        private function getEmpresaIndex():int {
+            if (this._representante.empresa && this._representante.empresa.id) {
+                buttonEditarEmpresaEnabled = true;
+                return gerenciadorFornecedores.empresas.getItemIndex(
+                        gerenciadorFornecedores.getEmpresaById(this._representante.empresa.id));
+            }
+            return -1;
+        }
+
+        private function getSupervisorIndex():int {
+            if (this._representante && this._representante.supervisor && this._representante.supervisor.id) {
+                return gerenciadorFornecedores.supervisores.getItemIndex(
+                        gerenciadorFornecedores.getSupervisorById(this._representante.supervisor.id));
+            }
+            return -1;
+        }
+
+        protected function salveRepresentante(event:MouseEvent):void {
+            atualizeRepresentante();
+            var saveEvent:SaveEvent = new SaveEvent(SaveEvent.REPRESENTANTE, this._representante);
+            saveEvent.dispatch();
+            close();
+        }
+
+        protected function atualizeRepresentante():void {
+            this._representante.nome = nomeTextInput.text;
+            this._representante.email = emailTextImput.text;
+            this._representante.empresa = this.comboEmpresa.selectedItem as Empresa;
+            this._representante.supervisor = this.comboSupervisor.selectedItem as Usuario;
+            //telefones são atualizados automaticamente
+        }
+
+        protected function comboEmpresa_changeHandler(event:ListEvent):void {
+            this._representante.empresa = comboEmpresa.selectedItem as Empresa;
+            if (this.comboEmpresa.selectedIndex > -1)
+                buttonEditarEmpresaEnabled = true;
+            setSupervisoresSegundoRepresentante();
+        }
+
+        protected function comboSupervisor_changeHandler(event:ListEvent):void {
+            this._representante.supervisor = comboSupervisor.selectedItem as Usuario;
+        }
+        ]]>
+	</mx:Script>
+    <mx:Validator id="empresaValidator" source="{comboEmpresa}" property="selectedItem"
+                  requiredFieldError="É obrigatório que o representante possua uma empresa"/>
+    <mx:StringValidator id="validatorNome" required="true" source="{nomeTextInput}"
+                        property="text" requiredFieldError="O nome do representante é obrigatório"/>
+    <mx:EmailValidator id="emailValidator" required="true" source="{emailTextImput}"
+                       missingUsernameError="Faltando nome de usuário" invalidCharError="Carácter inválido"
+                       invalidDomainError="Domínio inválido" invalidPeriodsInDomainError="Formato incorreto"
+                       property="text" requiredFieldError="É necessário que o representante possua um email"/>
+    <mx:VBox width="100%" height="100%">
+        <mx:Form>
+            <mx:FormItem label="Nome" width="100%" id="nomeFormItem" required="true">
+                <mx:TextInput id="nomeTextInput" text="{this._representante.nome}" width="100%" />
+            </mx:FormItem>
+
+            <mx:FormItem label="E-mail" width="100%" id="emailFormItem">
+                <mx:TextInput id="emailTextImput" text="{this._representante.email}" width="100%" />
+            </mx:FormItem>
+
+            <contato:TelefonesForm id="formitem3" telefones="{this._representante.telefones}"/>
+
+            <mx:FormItem label="Empresa" width="100%">
+                <mx:HBox width="100%">
+                    <mx:ComboBox id="comboEmpresa" width="100%" dataProvider="{gerenciadorFornecedores.empresas}" labelField="nomeFantasia"
+                                 selectedIndex="{getEmpresaIndex()}" change="comboEmpresa_changeHandler(event)"/>
+                    <mx:LinkButton id="buttonEditarEmpresa" width="90" label="Editar" click="editeEmpresa()"
+                                   enabled="{buttonEditarEmpresaEnabled}"/>
+                    <mx:LinkButton id="buttonCriarEmpresa" width="90" label="Nova" click="crieEmpresa()"/>
+                </mx:HBox>
+            </mx:FormItem>
+            <mx:FormItem label="Supervisor" width="100%">
+                <mx:HBox width="100%">
+                    <mx:ComboBox id="comboSupervisor" width="100%" dataProvider="{gerenciadorFornecedores.supervisores}"
+                                 labelField="nome" selectedIndex="{getSupervisorIndex()}" change="comboSupervisor_changeHandler(event)"/>
+                    <mx:LinkButton id="buttonEditarSupervisor" width="90" label="Editar" enabled="{comboSupervisor.selectedIndex != -1}"
+                                   click="editeSupervisor()"/>
+                    <mx:LinkButton id="buttonCriarSupervisor" width="90" label="Novo" click="crieSupervisor()"/>
+                </mx:HBox>
+                <mx:HBox id="hBoxButtonsAtendimento"
+                         width="100%">
+                    <mx:Button id="buttonRemoverAtendimento"
+                               styleName="cancelButton"
+                               label="Cancelar"
+                               width="100%"
+                               click="excluaAtendimento()"/>
+                    <mx:Button id="buttonSalvarAtendimento"
+                               styleName="saveButton"
+                               label="Salvar"
+                               width="100%"
+                               click="salveRepresentante(event)"/>
+                </mx:HBox>
+            </mx:FormItem>
+        </mx:Form>
+    </mx:VBox>
+</mx:TitleWindow>

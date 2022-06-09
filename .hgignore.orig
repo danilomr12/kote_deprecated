@@ -1,0 +1,16 @@
+<<<<<<< local
+syntax: glob
+Servidor/target/
+Servidor/projectFilesBackup/
+Servidor/stacktrace.log
+Servidor/logs/
+Servidor/.idea/
+Servidor/out
+=======
+relre:.gradle/
+relre:bin/
+relre:logs/
+relre:build/
+glob:webapp/target-eclipse/
+glob:webapp/target/
+>>>>>>> other

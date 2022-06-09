@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ViewStack xmlns:mx="http://www.adobe.com/2006/mxml"
+              xmlns:screens="br.com.cotecom.view.screens.*"
+              xmlns:analise="br.com.cotecom.view.components.cotacao.analise.*"
+              selectedIndex="0" show="show(event)" hide="hide(event)">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.services.comprador.GerenciadorCaixaDeEntrada;
+        import br.com.cotecom.model.services.comprador.GerenciadorCaixaDeEntrada;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+
+        import mx.events.FlexEvent;
+
+        [Bindable]
+        private var gerenciadorCaixaEntrada:GerenciadorCaixaDeEntrada = GerenciadorCaixaDeEntrada.getInstance();
+        [Bindable]
+        private var gerenciadorCotacao:GerenciadorCotacao = GerenciadorCotacao.getInstance();
+        private var session:Session = Session.getInstance();
+
+
+        private function hide(event:FlexEvent):void {
+            gerenciadorCaixaEntrada.pareMonitoramento();
+            gerenciadorCotacao.pareMonitoramento();
+        }
+
+        private function show(event:FlexEvent):void {
+            if (session.applicationType == Session.COMPRADOR)
+                gerenciadorCaixaEntrada.monitoreNovasRespostas();
+        }
+
+        private function hideCaixaEntrada(event:FlexEvent):void {
+            gerenciadorCaixaEntrada.pareMonitoramento();
+        }
+
+        private function showCaixaEntrada(event:FlexEvent):void {
+            if (session.applicationType == Session.COMPRADOR)
+                gerenciadorCaixaEntrada.monitoreNovasRespostas();
+        }
+
+        private function showAnalise(event:FlexEvent):void {
+            if (session.applicationType == Session.COMPRADOR)
+                gerenciadorCotacao.monitoreAnaliseSelecionada();
+        }
+
+        private function hideAnalise(event:FlexEvent):void {
+            gerenciadorCotacao.pareMonitoramento();
+        }
+        ]]>
+	</mx:Script>
+
+    <screens:CaixaDeEntradaView id="caixaEntrada" show="showCaixaEntrada(event)" hide="hideCaixaEntrada(event)"/>
+    <screens:CotacaoNovaView id="cotacaoRascunho" telaCotacaoDTO="{gerenciadorCotacao.telaCotacaoDTO}" />
+    <analise:CotacaoAnaliseView id="cotacaoEnviada" show="showAnalise(event)" hide="hideAnalise(event)"
+                                analiseCotacao="{gerenciadorCotacao.cotacaoSelecionada.analise}"/>
+    <screens:RespostaView id="resposta" telaResposta="{GerenciadorResposta.getInstance().telaResposta}"/>
+    <screens:Pedido id="pedido"/>
+
+</mx:ViewStack>

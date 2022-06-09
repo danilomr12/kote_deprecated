@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:application="br.com.cotecom.view.components.application.*"
+          width="100%" height="100%" headerHeight="10" paddingBottom="10"
+          layout="vertical" footerColors="[#FFCA51, #FFCA51]"
+          dropShadowEnabled="true" shadowDirection="left">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.control.events.LoadEvent;
+        import br.com.cotecom.model.domain.pedido.Pedido;
+        import br.com.cotecom.model.domain.resposta.Resposta;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.containers.ViewStack;
+        import mx.controls.AdvancedDataGrid;
+        import mx.controls.Alert;
+        import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
+        import mx.events.ListEvent;
+
+        [Bindable]
+        public var gerenciadorResposta:GerenciadorResposta = GerenciadorResposta.getInstance();
+
+        private function abraItem(event:Event):void {
+            if (event is ListEvent || (event is KeyboardEvent && KeyboardEvent(event).keyCode == Keyboard.ENTER)) {
+                var item:* = AdvancedDataGrid(event.target).selectedItem;
+                (this.parent as ViewStack).selectedIndex = 1;
+                if (item is Resposta) {
+                    var resposta:Resposta = item as Resposta;
+                    new LoadEvent(LoadEvent.RESPOSTA, resposta.id).dispatch();
+                } else if (item is Pedido) {
+                    (this.parent as ViewStack).selectedIndex = 2;
+                    var pedido:Pedido = item as Pedido;
+                    new LoadEvent(LoadEvent.PEDIDO, pedido.id).dispatch();
+                }
+            }
+        }
+
+        public static function getStatus(item:Object, column:AdvancedDataGridColumn):String {
+            var statusStringVisaoRepresentante:String;
+            if (item is Resposta) {
+                statusStringVisaoRepresentante = (item as Resposta).statusStringVisaoRepresentante();
+            } else {
+                statusStringVisaoRepresentante = (item as Pedido).faturado ? "Faturado" : "Não faturado"
+            }
+            return statusStringVisaoRepresentante;
+        }
+
+        private function loadCaixaDeEntrada(event:MouseEvent):void {
+            new LoadEvent(LoadEvent.RESPOSTAS).dispatch()
+        }
+
+        private function abraRespostaSelecionada(event:MouseEvent):void {
+            if (grid.selectedItem != null) {
+                (this.parent as ViewStack).selectedIndex = 1;
+                var resposta:Resposta = grid.selectedItem as Resposta;
+                new LoadEvent(LoadEvent.RESPOSTA, resposta.id).dispatch()
+            } else {
+                Alert.show("Selecione primeiro uma resposta", "Alerta")
+            }
+        }
+
+        public function totalItens(item:Object, column:AdvancedDataGridColumn):String {
+            return ""
+        }
+        ]]></mx:Script>
+
+
+    <mx:AdvancedDataGrid id="grid" width="100%" height="100%"
+                         verticalGridLines="false"
+                         sortExpertMode="false"
+                         horizontalGridLines="true"
+                         showHeaders="true" textAlign="center"
+                         iconField="icon"
+                         sortableColumns="true"
+                         keyUp="abraItem(event)"
+                         doubleClickEnabled="true"
+                         itemDoubleClick="abraItem(event)">
+        <mx:dataProvider>
+            <mx:HierarchicalData source="{gerenciadorResposta.respostas}"
+                                 childrenField="pedidosDTOs"/>
+        </mx:dataProvider>
+        <mx:columns>
+            <mx:AdvancedDataGridColumn headerText="Cliente" dataField="clienteRazaoSocial"
+                                       width="300" sortable="true" sortDescending="true"/>
+            <mx:AdvancedDataGridColumn headerText="Estado" labelFunction="getStatus" width="110"/>
+            <mx:AdvancedDataGridColumn headerText="Data Criação" dataField="dataCriacaoFormatada" width="150"/>
+            <mx:AdvancedDataGridColumn headerText="Data Salva" dataField="dataSalvaFormatada" width="150"/>
+            <mx:AdvancedDataGridColumn headerText="Data Validade" dataField="dataValidadeFormatada" width="150"/>
+
+        </mx:columns>
+    </mx:AdvancedDataGrid>
+
+    <application:FooterControlBar>
+        <mx:Button label="Atualizar"
+                   height="100%"
+                   toolTip="Atualizar Caixa de entrada"
+                   icon="{Icons.REFRESH_24}"
+                   click="loadCaixaDeEntrada(event)"
+                   styleName="barButton"
+ labelPlacement="bottom"/>
+        <mx:Button label="Abrir"
+                   height="100%"
+                   toolTip="Abrir resposta selecionada"
+                   icon="{Icons.ABRIR_24}"
+                   click="abraRespostaSelecionada(event)"
+                   styleName="barButton"
+ labelPlacement="bottom"/>
+        <mx:Spacer width="100%"/>
+    </application:FooterControlBar>
+
+    <mx:DateFormatter id="dateFormatter" formatString="DD/MM/YYYY"/>
+    <mx:DateFormatter id="formatter" formatString="DD/MM/YYYY HH:NN"/>
+</mx:Panel>

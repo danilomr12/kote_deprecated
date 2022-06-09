@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	title=" ">
+
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.usuario.LoginEvent;
+        import br.com.cotecom.model.services.comprador.GerenciadorAplicacao;
+
+        protected function doLogin_clickHandler(event:MouseEvent):void {
+            var loginEvent:LoginEvent = new LoginEvent(LoginEvent.EVENT_NAME);
+            loginEvent.user = email.text;
+            loginEvent.pass = senha.text;
+            loginEvent.popup = this;
+            loginEvent.dispatch();
+        }
+
+        private function sair(event:MouseEvent):void {
+            GerenciadorAplicacao.getInstance().logout();
+        }
+        ]]>
+	</mx:Script>
+
+	<mx:VBox>
+		<mx:Label text="Sua Sessão Expirou!" fontSize="16"/>
+		<mx:Label text="Faça login novamente para voltar a acessar o Kote." />
+		<mx:Form width="100%">
+			<mx:FormItem label="Email:" width="100%">
+				<mx:TextInput id="email" width="100%" enter="doLogin_clickHandler(null)"/>
+			</mx:FormItem>
+			<mx:FormItem label="Senha:" width="100%">
+				<mx:TextInput id="senha" width="100%" displayAsPassword="true" enter="doLogin_clickHandler(null)"/>
+			</mx:FormItem>
+		</mx:Form>
+		<mx:HBox width="100%" horizontalAlign="center">
+			<mx:Button label="Continuar" id="doLogin" click="doLogin_clickHandler(event)"/>
+			<mx:LinkButton label="Sair do Kote" click="sair(event)"/>
+		</mx:HBox>
+		<mx:LinkButton label="Alguma dúvida? Consulte nossa Política de Privacidade" width="100%" textAlign="center"/>
+	</mx:VBox>
+</mx:TitleWindow>

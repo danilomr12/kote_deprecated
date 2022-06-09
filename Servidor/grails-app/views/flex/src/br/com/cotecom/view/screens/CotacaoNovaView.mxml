@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+          xmlns:cotacao="br.com.cotecom.view.components.cotacao.*"
+          xmlns:novacotacao="br.com.cotecom.view.components.novacotacao.*"
+          xmlns:application="br.com.cotecom.view.components.application.*"
+          width="100%" height="100%" headerHeight="10"
+          layout="horizontal" footerColors="[#FFCA51, #FFCA51]"
+          dropShadowEnabled="true" shadowDirection="left" creationComplete="initializeHandler()"
+          show="showHandler()">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.RemoveEvent;
+        import br.com.cotecom.control.events.SaveEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.dtos.usuarios.TipoUsuario;
+        import br.com.cotecom.model.domain.tela.TelaCotacaoDTO;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.view.util.Icons;
+
+        import com.Notification;
+
+        import mx.controls.Alert;
+        import mx.core.Application;
+        import mx.events.CloseEvent;
+
+        import mx.events.FlexEvent;
+
+        [Bindable]
+        public var telaCotacaoDTO:TelaCotacaoDTO;
+        [Bindable]
+        private var model:Session = Session.getInstance();
+
+        public function salveCotacao(event:Event):void {
+            telaCotacaoDTO.cotacaoDTO.titulo = formularioEnvioCotacao.textInputTitulo ?
+                    formularioEnvioCotacao.textInputTitulo.text : "";
+            telaCotacaoDTO.cotacaoDTO.mensagem = formularioEnvioCotacao.menssagemFornecedores ?
+                    formularioEnvioCotacao.menssagemFornecedores.text : "";
+            telaCotacaoDTO.cotacaoDTO.prazoPagamento = formularioEnvioCotacao.prazoPagamentoComboBox ?
+                    formularioEnvioCotacao.prazoPagamentoComboBox.selectedItem as String : "";
+            telaCotacaoDTO.cotacaoDTO.dataEntrega = formularioEnvioCotacao.dataEntregaDataField ?
+                    formularioEnvioCotacao.dataEntregaDataField.selectedDate : null;
+            telaCotacaoDTO.cotacaoDTO.dataValidade = formularioEnvioCotacao.validadeDateField ?
+                    formularioEnvioCotacao.validadeDateField.selectedDate : null;
+            telaCotacaoDTO.cotacaoDTO.enderecoEntrega = formularioEnvioCotacao.enderecoForm ?
+                    formularioEnvioCotacao.enderecoForm.endereco : null;
+            telaCotacaoDTO.cotacaoDTO.compradorId = model.user.id;
+
+            var saveEvent:SaveEvent = new SaveEvent(SaveEvent.COTACAO, telaCotacaoDTO);
+            saveEvent.dispatch();
+        }
+
+        public function descarteCotacao(event:MouseEvent):void {
+            if (telaCotacaoDTO.cotacaoDTO.id != null) {
+                var msgm:String = "Tem certeza que deseja descartar a cotação? Apos descartar você nao poderá mais visualizá-la em sua caixa de entrada.";
+                Alert.yesLabel = "Descartar";
+                Alert.noLabel = "Cancelar";
+                Alert.show(msgm, "Atenção", 3, Application.application as Sprite, alertHandler);
+
+            } else {
+                GerenciadorCotacao.getInstance().limpeTelaNovaCotacao();
+                Notification.show("Cotação descartada", "Cotação", 3000,
+                        Notification.NOTIFICATION_POSITION_TOP_CENTER, Icons.SUCESSFUL_24)
+            }
+        }
+
+        private function alertHandler(event:CloseEvent):void {
+            if (event.detail == Alert.YES)
+                new RemoveEvent(RemoveEvent.COTACAO, telaCotacaoDTO.cotacaoDTO).dispatch();
+        }
+
+        private var session:Session = Session.getInstance();
+
+        public function envieCotacao(event:MouseEvent):void {
+            mudeAcordionViewCabecalho();
+            formularioEnvioCotacao.envieCotacao(event);
+        }
+
+        private function mudeAcordionViewCabecalho():void {
+            this.acordion.selectedChild = formularioEnvioCotacao;
+            focusManager.setFocus(this.formularioEnvioCotacao.autoComplete.textInput.textInput);
+        }
+
+        public function limpeTela():void {
+            this.buscaProdutosPanel.limpeTela();
+            if (this.formularioEnvioCotacao)
+                this.formularioEnvioCotacao.limpeFormulario()
+        }
+
+        private function mudeAcordionViewBuscaProdutos():void {
+            buscaProdutosPanel.busca.search();
+            buscaProdutosPanel.setFocusBusca();
+            acordion.selectedChild = buscaProdutosPanel
+        }
+
+        private function mudeAcordionViewVisualizacaoItensCotacao():void {
+            this.acordion.selectedChild = itensCotacaoPanel;
+        }
+
+        private function initializeHandler():void {
+            buscaProdutosPanel.busca.search();
+        }
+
+        private function showBuscaProdutosHandler(event:FlexEvent):void {
+            buscaProdutosPanel.busca.search();
+            buscaProdutosPanel.setFocusBusca();
+        }
+
+        private function showCabecalhoCotacaoHandler(event:FlexEvent):void {
+            focusManager.setFocus(this.formularioEnvioCotacao.autoComplete.textInput.textInput);
+        }
+
+        private function showHandler():void {
+            if (model.user.tipo != TipoUsuario.COMPRADOR) {
+                if (acordion.getChildByName("formularioEnvioCotacao") != null) {
+                    acordion.removeChild(formularioEnvioCotacao);
+                }
+            }
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:Accordion id="acordion" width="100%" height="100%">
+
+        <cotacao:FormularioEnvioCotacao id="formularioEnvioCotacao" width="100%"
+                                        label="Cabeçalho da cotaçao"
+                                        telaCotacao="{this.telaCotacaoDTO}"
+                                        show="showCabecalhoCotacaoHandler(event)"/>
+
+        <cotacao:BuscaEAdicionaProdutos id="buscaProdutosPanel"
+                                        label="Adicionar Produtos"
+                                        show="showBuscaProdutosHandler(event)"
+                                        cotacao="{this.telaCotacaoDTO.cotacaoDTO}"
+                                        height="100%"/>
+
+        <novacotacao:ItensCotacaoPanel id="itensCotacaoPanel"
+                                       width="100%" height="100%"
+                                       label="Itens da cotação - {telaCotacaoDTO.itensCotacaoDTO.length} itens adicionados"
+                                       cotacao="{telaCotacaoDTO.cotacaoDTO}"
+                                       itensDaCotacao="{telaCotacaoDTO.itensCotacaoDTO}" />
+    </mx:Accordion>
+
+
+    <application:FooterControlBar>
+
+
+        <mx:Button styleName="barButton"
+ labelPlacement="bottom"
+                   label="Cabeçalho"
+                   icon="{Icons.EDIT_COTACAO_24}"
+                   toolTip="Edita cabeçalho da cotação, título, prazo de pagamento, representantes a enviar, ..."
+                   enabled="{acordion.selectedChild != formularioEnvioCotacao}"
+                   visible="{Session.COMPRADOR == model.applicationType}"
+                   includeInLayout="{Session.COMPRADOR == model.applicationType}"
+                   click="mudeAcordionViewCabecalho()"
+                   height="100%"/>
+
+        <mx:Button styleName="barButton"
+ labelPlacement="bottom"
+                   label="Buscar produtos"
+                   icon="{Icons.SEARCH_24}"
+                   toolTip="Busca produtos para adicionar à cotação"
+                   enabled="{acordion.selectedChild != buscaProdutosPanel}"
+                   click="mudeAcordionViewBuscaProdutos();"
+                   height="100%"/>
+
+        <mx:Button styleName="barButton"
+ labelPlacement="bottom"
+                   label="Ver itens"
+                   icon="{Icons.EDIT_COTACAO_24}"
+                   toolTip="Visualiza itens já adicionados à cotação"
+                   enabled="{acordion.selectedChild != itensCotacaoPanel}"
+                   click="mudeAcordionViewVisualizacaoItensCotacao();"
+                   height="100%"/>
+
+        <mx:Spacer width="30"/>
+
+        <mx:Button styleName="barButton"
+ labelPlacement="bottom"
+                   label="Adicionar itens"
+                   icon="{Icons.ADD_COTACAO_24}"
+                   toolTip="Selecione os produtos encontrados na busca
+				   acima preenchendo suas quantidades requeridas e os adicione clicando aqui"
+                   click="buscaProdutosPanel.adicioneProdutosACotacao(event)"
+                   height="100%"/>
+
+        <mx:Button styleName="barButton"
+ labelPlacement="bottom"
+                   label="Novo produto"
+                   icon="{Icons.ADD_PRODUTO_24}"
+                   toolTip="Não encontrou o produto desejado? Clique aqui criá-lo agora!"
+                   click="buscaProdutosPanel.addNewProduto(event)"
+                   height="100%"/>
+
+        <mx:Spacer width="30"/>
+
+        <mx:Button id="botaoSalvar"
+                   label="Salvar"
+                   toolTip="Salvar cotação e permanecer editando"
+                   icon="{Icons.SAVE_24}"
+                   click="salveCotacao(event)"
+                   visible="{model.user.tipo == TipoUsuario.COMPRADOR}"
+                   includeInLayout="{model.user.tipo == TipoUsuario.COMPRADOR}"
+                   styleName="barButton"
+ labelPlacement="bottom"
+                   height="100%"/>
+
+        <mx:Button styleName="barButton"
+ labelPlacement="bottom"
+                   id="botaoDescartar"
+                   label="Descartar"
+                   toolTip="Descartar esta cotação e voltar para caixa de entrada"
+                   icon="{Icons.DELETE_24}"
+                   height="100%"
+                   click="descarteCotacao(event)"/>
+
+        <mx:Button styleName="barButton"
+ labelPlacement="bottom"
+                   id="botaoEnviar"
+                   label="Enviar"
+                   toolTip="Enviar cotação aos fornecedores"
+                   icon="{Icons.SEND_24}"
+                   click="envieCotacao(event)"
+                   visible="{model.user.tipo == TipoUsuario.COMPRADOR}"
+                   includeInLayout="{model.user.tipo == TipoUsuario.COMPRADOR}"
+                   height="100%"/>
+
+    </application:FooterControlBar>
+
+</mx:Panel>

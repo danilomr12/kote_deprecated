@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         toolTip="true"
+         toolTipCreate="createRespostasToolTip(event)"
+         doubleClick="onClick(event)"
+         width="100%" height="100%"
+         currentState="semObs">
+
+    <mx:Script>
+        <![CDATA[
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseRespostaDTO;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.collections.ArrayCollection;
+        import mx.containers.TitleWindow;
+        import mx.controls.Alert;
+        import mx.controls.Button;
+        import mx.core.Application;
+        import mx.events.CloseEvent;
+        import mx.events.ToolTipEvent;
+        import mx.managers.PopUpManager;
+
+        public static const REFRESH_RESPOSTAS_EVENT:String = "refreshRespostasEvent";
+        private const NORMAL_COLOR:uint = 0x000000; // Black
+        private const ALERT_COLOR:uint = 0xff7300; // Orange
+
+
+        [Bindable]
+        public var itemAnaliseCotacao:ItemAnaliseCotacaoDTO;
+        [Bindable]
+        public var editavel:Boolean;
+        public var analiseRespostasTitleWindow:TitleWindow;
+
+        override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+            super.updateDisplayList(unscaledWidth, unscaledHeight);
+
+            if (itemAnaliseCotacao.respostas.length != 0) {
+                var itemRespostaMelhorPreco:ItemAnaliseRespostaDTO = itemAnaliseCotacao.respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+
+                if (itemRespostaMelhorPreco == null) {
+                    this.currentState = "semObs";
+                } else if (itemRespostaMelhorPreco.observacao != null &&
+                        itemRespostaMelhorPreco.observacao != "" &&
+                        !itemAnaliseCotacao.naoComprar) {
+                    this.currentState = "comObs";
+                } else {
+                    this.currentState = "semObs";
+                }
+                if (itemAnaliseCotacao.possuiPrecoDistuante) {
+                    textLabel.setStyle("color", ALERT_COLOR)
+                } else {
+                    textLabel.setStyle("color", NORMAL_COLOR)
+                }
+            }
+        }
+
+        private function lbfMelhorResposta(item:Object):String {
+            var analiseItem:ItemAnaliseCotacaoDTO = item as ItemAnaliseCotacaoDTO;
+            if (analiseItem.respostas.length > 0 && analiseItem.primeiraOpcao != null) {
+                var itemRespostaMelhorPreco:ItemAnaliseRespostaDTO = analiseItem.respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+                if (analiseItem.naoComprar) {
+                    this.currentState = "semObs";
+                    return "Não comprar este item"
+                } else {
+                    return itemRespostaMelhorPreco.precoEmbalagem + " (" + itemRespostaMelhorPreco.descricaoRepresentante + ")";
+                }
+            } else {
+                this.currentState = "semObs";
+                return "Sem respostas";
+            }
+        }
+
+        private function onClick(event:MouseEvent):void {
+            if (this.editavel) {
+                var pop:AnaliseRespostasPanel = new AnaliseRespostasPanel();
+                analiseRespostasTitleWindow = new TitleWindow();
+                analiseRespostasTitleWindow.showCloseButton = true;
+                analiseRespostasTitleWindow.title = "Ordene de acordo com sua prioridade de compra:";
+                analiseRespostasTitleWindow.addChild(pop);
+                pop.itemAnaliseCotacao = itemAnaliseCotacao;
+                pop.currentState = AnaliseRespostasPanel.STATE_POP_UP;
+                focusManager.setFocus(pop.buttonOk);
+                PopUpManager.addPopUp(analiseRespostasTitleWindow, Application.application as DisplayObject, true);
+                /* analiseRespostasTitleWindow.addEventListener(MouseEvent.CLICK, closeRespostas);*/
+                /*analiseRespostasTitleWindow.addEventListener(FocusEvent.MOUSE_FOCUS_CHANGE, closeRespostas);*/
+                analiseRespostasTitleWindow.addEventListener(KeyboardEvent.KEY_UP, closeRespostas);
+                analiseRespostasTitleWindow.addEventListener(Event.CLOSE, closeRespostas);
+                pop.buttonOk.addEventListener(MouseEvent.CLICK, closeRespostas);
+                PopUpManager.centerPopUp(analiseRespostasTitleWindow);
+            }
+        }
+
+        private function closeRespostas(event:Event):void {
+            if (event is CloseEvent ||
+                    (event is KeyboardEvent && (event as KeyboardEvent).keyCode == Keyboard.ESCAPE) ||
+                    event is MouseEvent && (event as MouseEvent).currentTarget is Button) {
+                PopUpManager.removePopUp(analiseRespostasTitleWindow);
+                var temp:ArrayCollection = itemAnaliseCotacao.respostas;
+                itemAnaliseCotacao.respostas = new ArrayCollection();
+                itemAnaliseCotacao.respostas = temp;
+                dispatchEvent(new Event(REFRESH_RESPOSTAS_EVENT, true));
+            }
+        }
+
+        private function createRespostasToolTip(event:ToolTipEvent):void {
+            var respToolTip:AnaliseRespostasToolTip = new AnaliseRespostasToolTip();
+            respToolTip.itemAnaliseCotacao = itemAnaliseCotacao;
+            event.toolTip = respToolTip;
+        }
+
+        private function visualizeObs(data:Object):void {
+            var itemRespostaMelhorPreco:ItemAnaliseRespostaDTO = itemAnaliseCotacao.respostas.getItemAt(0) as ItemAnaliseRespostaDTO;
+            Alert.show(itemRespostaMelhorPreco.observacao, "Observação")
+        }
+        ]]>
+    </mx:Script>
+
+    <mx:states>
+        <mx:State name="comObs">
+            <mx:SetProperty target="{linkButton}" name="visible" value="true"/>
+            <mx:SetProperty target="{linkButton}" name="includeInLayout" value="true"/>
+            <mx:SetStyle target="{this}" name="backgroundAlpha" value="0.5"/>
+            <mx:SetProperty target="{this}" name="buttonMode" value="true"/>
+        </mx:State>
+        <mx:State name="semObs">
+            <mx:SetProperty target="{linkButton}" name="visible" value="false"/>
+            <mx:SetProperty target="{linkButton}" name="includeInLayout" value="false"/>
+            <mx:SetStyle target="{this}" name="backgroundAlpha" value="0"/>
+            <mx:SetProperty target="{this}" name="buttonMode" value="false"/>
+        </mx:State>
+    </mx:states>
+
+    <mx:LinkButton id="linkButton" click="visualizeObs(data)" height="20" icon="{Icons.WARNING_24}" visible="false"
+                   includeInLayout="false" toolTip="Clique para visualizar a observação deixada pelo representante"/>
+    <mx:Label id="textLabel" text="{lbfMelhorResposta(data)}"/>
+</mx:HBox>

@@ -1,0 +1,2116 @@
+06/06 19:43:28 INFO [cache] No existing dependency information.
+08/06 21:38:45 INFO [cache] No existing dependency information.
+09/06 11:33:29 INFO [cache] No existing dependency information.
+09/06 12:04:37 INFO [cache] No existing dependency information.
+09/06 12:09:51 INFO [cache] No existing dependency information.
+15/06 18:23:41 INFO [cache] No existing dependency information.
+15/06 18:40:16 INFO [cache] No existing dependency information.
+15/06 18:53:39 INFO [cache] No existing dependency information.
+15/06 18:57:26 INFO [cache] No existing dependency information.
+15/06 19:09:37 INFO [cache] No existing dependency information.
+15/06 19:33:26 INFO [cache] No existing dependency information.
+17/06 08:49:09 INFO [cache] No existing dependency information.
+18/06 17:39:13 INFO [cache] No existing dependency information.
+18/06 19:19:59 INFO [cache] No existing dependency information.
+18/06 21:33:03 INFO [cache] No existing dependency information.
+19/06 12:10:17 INFO [cache] No existing dependency information.
+19/06 15:29:11 INFO [cache] No existing dependency information.
+19/06 16:22:15 INFO [cache] No existing dependency information.
+19/06 16:51:58 INFO [cache] No existing dependency information.
+19/06 18:43:58 INFO [cache] No existing dependency information.
+20/06 23:49:36 ERROR File not found: /media/disk1/DMR/projetos/Kote2.0/Servidor/web-app/flex/RespostaMain.swf
+java.io.FileNotFoundException: File not found: /media/disk1/DMR/projetos/Kote2.0/Servidor/web-app/flex/RespostaMain.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+21/06 00:02:29 INFO [cache] No existing dependency information.
+21/06 15:03:20 INFO [cache] No existing dependency information.
+21/06 19:50:47 INFO [cache] No existing dependency information.
+22/06 16:11:45 INFO [cache] No existing dependency information.
+25/06 15:04:17 INFO [cache] No existing dependency information.
+25/06 15:14:46 INFO [cache] No existing dependency information.
+25/06 15:21:26 INFO [cache] No existing dependency information.
+25/06 15:57:46 INFO [cache] No existing dependency information.
+25/06 16:21:15 INFO [cache] No existing dependency information.
+25/06 16:49:18 INFO [cache] No existing dependency information.
+25/06 17:02:33 INFO [cache] No existing dependency information.
+25/06 18:43:32 INFO [cache] No existing dependency information.
+25/06 20:16:14 INFO [cache] No existing dependency information.
+25/06 20:23:57 INFO [cache] No existing dependency information.
+26/06 14:26:21 INFO [cache] No existing dependency information.
+26/06 14:56:34 INFO [cache] No existing dependency information.
+27/06 11:51:15 INFO [cache] No existing dependency information.
+27/06 15:15:06 INFO [cache] No existing dependency information.
+28/06 15:46:35 INFO [cache] No existing dependency information.
+03/07 16:23:32 INFO [cache] No existing dependency information.
+03/07 17:14:13 INFO [cache] No existing dependency information.
+03/07 17:52:10 INFO [cache] No existing dependency information.
+03/07 18:26:36 INFO [cache] No existing dependency information.
+03/07 18:51:46 INFO [cache] No existing dependency information.
+04/07 11:33:40 INFO [cache] No existing dependency information.
+04/07 12:32:46 INFO [cache] No existing dependency information.
+04/07 12:36:17 INFO [cache] No existing dependency information.
+04/07 14:40:41 INFO [cache] No existing dependency information.
+04/07 15:32:15 INFO [cache] No existing dependency information.
+04/07 16:39:57 INFO [cache] No existing dependency information.
+04/07 16:57:57 INFO [cache] No existing dependency information.
+04/07 17:49:59 INFO [cache] No existing dependency information.
+05/07 14:32:04 INFO [cache] No existing dependency information.
+05/07 14:57:12 INFO [cache] No existing dependency information.
+10/07 14:18:06 INFO [cache] No existing dependency information.
+10/07 14:38:05 INFO [cache] No existing dependency information.
+10/07 15:15:59 INFO [cache] No existing dependency information.
+10/07 15:33:52 INFO [cache] No existing dependency information.
+10/07 18:24:20 INFO [cache] No existing dependency information.
+10/07 18:50:51 INFO [cache] No existing dependency information.
+11/07 12:07:30 INFO [cache] No existing dependency information.
+11/07 14:49:42 INFO [cache] No existing dependency information.
+11/07 16:31:28 INFO [cache] No existing dependency information.
+11/07 16:50:26 INFO [cache] No existing dependency information.
+11/07 17:23:15 INFO [cache] No existing dependency information.
+11/07 17:32:11 INFO [cache] No existing dependency information.
+11/07 18:04:59 INFO [cache] No existing dependency information.
+17/07 14:13:40 INFO [cache] No existing dependency information.
+17/07 15:22:31 INFO [cache] No existing dependency information.
+17/07 15:25:19 INFO [cache] No existing dependency information.
+17/07 15:53:19 INFO [cache] No existing dependency information.
+17/07 16:12:36 INFO [cache] No existing dependency information.
+17/07 16:49:34 INFO [cache] No existing dependency information.
+17/07 20:31:22 INFO [cache] No existing dependency information.
+18/07 00:31:25 INFO [cache] No existing dependency information.
+21/07 10:29:49 INFO [cache] No existing dependency information.
+23/07 18:54:28 INFO [cache] No existing dependency information.
+23/07 22:36:28 INFO [cache] No existing dependency information.
+06/08 18:33:12 INFO [cache] No existing dependency information.
+07/08 10:40:33 INFO [cache] No existing dependency information.
+07/08 10:42:42 INFO [cache] No existing dependency information.
+07/08 11:47:32 INFO [cache] No existing dependency information.
+07/08 11:56:55 INFO [cache] No existing dependency information.
+07/08 12:04:01 INFO [cache] No existing dependency information.
+07/08 12:09:52 INFO [cache] No existing dependency information.
+07/08 12:17:43 INFO [cache] No existing dependency information.
+07/08 18:22:33 INFO [cache] No existing dependency information.
+07/08 18:28:19 INFO [cache] No existing dependency information.
+07/08 18:36:52 INFO [cache] No existing dependency information.
+07/08 18:59:56 INFO [cache] No existing dependency information.
+07/08 22:03:21 INFO [cache] No existing dependency information.
+04/10 18:23:08 INFO [cache] No existing dependency information.
+04/10 18:33:19 INFO [cache] No existing dependency information.
+05/10 00:32:49 INFO [cache] No existing dependency information.
+05/10 09:59:48 INFO [cache] No existing dependency information.
+07/10 11:28:47 INFO [cache] No existing dependency information.
+07/10 15:36:16 INFO [cache] No existing dependency information.
+07/10 16:00:02 INFO [cache] No existing dependency information.
+07/10 16:36:25 INFO [cache] No existing dependency information.
+07/10 16:54:45 INFO [cache] No existing dependency information.
+07/10 17:48:38 INFO [cache] No existing dependency information.
+07/10 18:18:30 INFO [cache] No existing dependency information.
+07/10 18:59:59 INFO [cache] No existing dependency information.
+08/10 10:59:34 INFO [cache] No existing dependency information.
+08/10 15:43:07 INFO [cache] No existing dependency information.
+08/10 15:48:15 INFO [cache] No existing dependency information.
+08/10 15:56:29 INFO [cache] No existing dependency information.
+08/10 16:50:27 INFO [cache] No existing dependency information.
+08/10 17:57:59 INFO [cache] No existing dependency information.
+08/10 21:35:47 INFO [cache] No existing dependency information.
+09/10 09:56:00 INFO [cache] No existing dependency information.
+09/10 10:19:20 INFO [cache] No existing dependency information.
+09/10 11:17:36 INFO [cache] No existing dependency information.
+09/10 12:07:11 INFO [cache] No existing dependency information.
+09/10 21:45:24 INFO [cache] No existing dependency information.
+07/11 18:21:07 INFO [cache] No existing dependency information.
+07/11 18:31:39 INFO [cache] No existing dependency information.
+10/11 15:13:21 INFO [cache] No existing dependency information.
+10/11 17:16:34 INFO [cache] No existing dependency information.
+11/11 12:42:45 INFO [cache] No existing dependency information.
+11/11 14:13:06 INFO [cache] No existing dependency information.
+11/11 15:22:56 INFO [cache] No existing dependency information.
+11/11 15:29:19 INFO [cache] No existing dependency information.
+11/11 16:36:33 INFO [cache] No existing dependency information.
+11/11 16:49:25 INFO [cache] No existing dependency information.
+11/11 17:03:29 INFO [cache] No existing dependency information.
+11/11 17:51:28 INFO [cache] No existing dependency information.
+12/11 09:41:42 INFO [cache] No existing dependency information.
+12/11 15:32:06 INFO [cache] No existing dependency information.
+12/11 16:37:15 INFO [cache] No existing dependency information.
+12/11 17:15:18 INFO [cache] No existing dependency information.
+12/11 17:28:29 INFO [cache] No existing dependency information.
+12/11 20:27:16 INFO [cache] No existing dependency information.
+12/11 20:35:42 INFO [cache] No existing dependency information.
+12/11 20:44:52 INFO [cache] No existing dependency information.
+12/11 20:52:54 INFO [cache] No existing dependency information.
+12/11 21:44:21 INFO [cache] No existing dependency information.
+12/11 22:04:40 INFO [cache] No existing dependency information.
+12/11 22:10:45 INFO [cache] No existing dependency information.
+12/11 22:54:21 INFO [cache] No existing dependency information.
+13/11 00:23:03 INFO [cache] No existing dependency information.
+13/11 01:00:36 INFO [cache] No existing dependency information.
+13/11 14:14:08 INFO [cache] No existing dependency information.
+13/11 14:28:22 INFO [cache] No existing dependency information.
+13/11 14:55:04 INFO [cache] No existing dependency information.
+13/11 16:06:46 INFO [cache] No existing dependency information.
+21/11 11:08:19 INFO [cache] No existing dependency information.
+21/11 18:24:28 INFO [cache] No existing dependency information.
+21/11 18:38:37 INFO [cache] No existing dependency information.
+21/11 18:43:40 INFO [cache] No existing dependency information.
+21/11 18:44:48 INFO [cache] No existing dependency information.
+21/11 18:45:50 INFO [cache] No existing dependency information.
+22/11 14:27:59 INFO [cache] No existing dependency information.
+22/11 14:31:12 INFO [cache] No existing dependency information.
+22/11 17:27:00 INFO [cache] No existing dependency information.
+22/11 18:05:18 INFO [cache] No existing dependency information.
+22/11 18:15:43 INFO [cache] No existing dependency information.
+26/11 16:30:57 INFO [cache] No existing dependency information.
+26/11 16:43:55 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+26/11 16:44:25 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+26/11 16:44:37 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+27/11 12:18:24 INFO [cache] No existing dependency information.
+27/11 12:25:26 INFO [cache] No existing dependency information.
+27/11 19:15:10 INFO [cache] No existing dependency information.
+27/11 19:38:20 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Estoquista.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Estoquista.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+27/11 19:38:48 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Estoquista.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Estoquista.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+27/11 21:02:34 INFO [cache] No existing dependency information.
+28/11 11:48:54 INFO [cache] No existing dependency information.
+28/11 11:54:00 INFO [cache] No existing dependency information.
+29/11 15:19:30 INFO [cache] No existing dependency information.
+29/11 15:54:13 INFO [cache] No existing dependency information.
+29/11 16:07:58 INFO [cache] No existing dependency information.
+29/11 17:18:47 INFO [cache] No existing dependency information.
+29/11 17:30:05 INFO [cache] No existing dependency information.
+29/11 18:16:09 INFO [cache] No existing dependency information.
+29/11 20:38:44 INFO [cache] No existing dependency information.
+29/11 20:52:08 INFO [cache] No existing dependency information.
+30/11 16:52:19 INFO [cache] No existing dependency information.
+03/12 15:43:35 INFO [cache] No existing dependency information.
+03/12 18:28:02 INFO [cache] No existing dependency information.
+03/12 23:05:47 INFO [cache] No existing dependency information.
+03/12 23:08:50 INFO [cache] No existing dependency information.
+03/12 23:10:25 INFO [cache] No existing dependency information.
+03/12 23:21:02 INFO [cache] No existing dependency information.
+04/12 11:03:23 INFO [cache] No existing dependency information.
+04/12 11:29:31 INFO [cache] No existing dependency information.
+04/12 12:14:37 INFO [cache] No existing dependency information.
+04/12 12:31:43 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+04/12 12:40:36 INFO [cache] No existing dependency information.
+04/12 13:04:58 INFO [cache] No existing dependency information.
+04/12 17:02:35 INFO [cache] No existing dependency information.
+04/12 19:23:01 INFO [cache] No existing dependency information.
+05/12 15:11:13 INFO [cache] No existing dependency information.
+05/12 15:31:40 INFO [cache] No existing dependency information.
+05/12 17:29:09 INFO [cache] No existing dependency information.
+05/12 18:43:43 INFO [cache] No existing dependency information.
+05/12 18:53:46 INFO [cache] No existing dependency information.
+06/12 10:53:20 INFO [cache] No existing dependency information.
+06/12 11:00:28 INFO [cache] No existing dependency information.
+06/12 12:01:41 INFO [cache] No existing dependency information.
+06/12 16:22:32 INFO [cache] No existing dependency information.
+08/12 10:58:51 INFO [cache] No existing dependency information.
+09/12 11:18:41 INFO [cache] No existing dependency information.
+09/12 12:08:31 INFO [cache] No existing dependency information.
+09/12 12:21:15 INFO [cache] No existing dependency information.
+09/12 13:09:11 INFO [cache] No existing dependency information.
+09/12 15:35:03 INFO [cache] No existing dependency information.
+09/12 16:39:00 INFO [cache] No existing dependency information.
+09/12 22:38:18 INFO [cache] No existing dependency information.
+09/12 23:58:47 INFO [cache] No existing dependency information.
+10/12 00:41:47 INFO [cache] No existing dependency information.
+10/12 00:49:35 INFO [cache] No existing dependency information.
+10/12 00:54:45 INFO [cache] No existing dependency information.
+10/12 01:10:51 INFO [cache] No existing dependency information.
+10/12 01:39:13 INFO [cache] No existing dependency information.
+10/12 23:14:17 INFO [cache] No existing dependency information.
+11/12 00:14:20 INFO [cache] No existing dependency information.
+11/12 00:18:32 INFO [cache] No existing dependency information.
+11/12 01:10:28 INFO [cache] No existing dependency information.
+11/12 01:36:05 INFO [cache] No existing dependency information.
+11/12 14:07:04 INFO [cache] No existing dependency information.
+11/12 14:52:53 INFO [cache] No existing dependency information.
+11/12 15:08:32 INFO [cache] No existing dependency information.
+11/12 15:14:30 INFO [cache] No existing dependency information.
+11/12 15:24:42 INFO [cache] No existing dependency information.
+11/12 15:34:56 INFO [cache] No existing dependency information.
+11/12 18:54:23 INFO [cache] No existing dependency information.
+11/12 19:29:56 INFO [cache] No existing dependency information.
+12/12 18:26:48 INFO [cache] No existing dependency information.
+12/12 18:46:55 INFO [cache] No existing dependency information.
+12/12 19:01:39 INFO [cache] No existing dependency information.
+12/12 19:39:15 INFO [cache] No existing dependency information.
+12/12 19:44:21 INFO [cache] No existing dependency information.
+12/12 19:53:52 INFO [cache] No existing dependency information.
+12/12 20:32:21 INFO [cache] No existing dependency information.
+12/12 20:42:58 INFO [cache] No existing dependency information.
+12/12 20:47:49 INFO [cache] No existing dependency information.
+12/12 21:17:24 INFO [cache] No existing dependency information.
+12/12 21:28:05 INFO [cache] No existing dependency information.
+13/12 14:41:35 INFO [cache] No existing dependency information.
+13/12 15:41:11 INFO [cache] No existing dependency information.
+13/12 19:14:44 INFO [cache] No existing dependency information.
+13/12 20:17:19 INFO [cache] No existing dependency information.
+13/12 20:20:56 INFO [cache] No existing dependency information.
+14/12 14:38:14 INFO [cache] No existing dependency information.
+14/12 15:13:26 INFO [cache] No existing dependency information.
+14/12 15:34:59 INFO [cache] No existing dependency information.
+14/12 15:44:57 INFO [cache] No existing dependency information.
+14/12 16:02:37 INFO [cache] No existing dependency information.
+14/12 16:15:58 INFO [cache] No existing dependency information.
+14/12 16:18:25 INFO [cache] No existing dependency information.
+14/12 16:39:34 INFO [cache] No existing dependency information.
+14/12 17:18:25 INFO [cache] No existing dependency information.
+17/12 14:25:26 INFO [cache] No existing dependency information.
+17/12 14:27:45 INFO [cache] No existing dependency information.
+17/12 19:22:36 INFO [cache] No existing dependency information.
+17/12 22:04:10 INFO [cache] No existing dependency information.
+18/12 10:27:14 INFO [cache] No existing dependency information.
+18/12 10:50:18 INFO [cache] No existing dependency information.
+18/12 14:54:16 INFO [cache] No existing dependency information.
+18/12 21:40:39 INFO [cache] No existing dependency information.
+22/12 16:21:37 INFO [cache] No existing dependency information.
+07/01 13:53:44 INFO [cache] No existing dependency information.
+07/01 15:40:40 INFO [cache] No existing dependency information.
+07/01 16:25:57 INFO [cache] No existing dependency information.
+07/01 16:37:34 INFO [cache] No existing dependency information.
+07/01 16:45:01 INFO [cache] No existing dependency information.
+07/01 18:44:35 INFO [cache] No existing dependency information.
+07/01 19:06:02 INFO [cache] No existing dependency information.
+07/01 19:24:20 INFO [cache] No existing dependency information.
+07/01 19:35:51 INFO [cache] No existing dependency information.
+07/01 19:38:08 INFO [cache] No existing dependency information.
+07/01 19:39:26 INFO [cache] No existing dependency information.
+07/01 19:54:50 INFO [cache] No existing dependency information.
+07/01 21:00:03 INFO [cache] No existing dependency information.
+07/01 21:04:58 INFO [cache] No existing dependency information.
+07/01 21:24:50 INFO [cache] No existing dependency information.
+07/01 21:42:29 INFO [cache] No existing dependency information.
+07/01 21:44:58 INFO [cache] No existing dependency information.
+07/01 22:01:45 INFO [cache] No existing dependency information.
+07/01 22:11:18 INFO [cache] No existing dependency information.
+07/01 22:21:26 INFO [cache] No existing dependency information.
+07/01 23:26:55 INFO [cache] No existing dependency information.
+07/01 23:45:11 INFO [cache] No existing dependency information.
+08/01 00:00:27 INFO [cache] No existing dependency information.
+08/01 00:05:10 INFO [cache] No existing dependency information.
+08/01 00:12:32 INFO [cache] No existing dependency information.
+08/01 11:08:05 INFO [cache] No existing dependency information.
+08/01 12:03:56 INFO [cache] No existing dependency information.
+08/01 18:40:57 INFO [cache] No existing dependency information.
+14/01 14:19:20 INFO [cache] No existing dependency information.
+14/01 16:22:21 INFO [cache] No existing dependency information.
+06/03 19:11:21 INFO [cache] No existing dependency information.
+13/03 15:08:18 INFO [cache] No existing dependency information.
+13/03 15:20:26 INFO [cache] No existing dependency information.
+13/03 15:23:34 INFO [cache] No existing dependency information.
+13/03 15:24:54 INFO [cache] No existing dependency information.
+13/03 15:37:18 INFO [cache] No existing dependency information.
+13/03 16:06:05 INFO [cache] No existing dependency information.
+24/03 01:26:54 INFO [cache] No existing dependency information.
+07/06 10:54:17 INFO [cache] No existing dependency information.
+22/08 16:36:47 INFO [cache] No existing dependency information.
+22/08 16:48:28 INFO [cache] No existing dependency information.
+22/08 17:04:55 INFO [cache] No existing dependency information.
+22/08 17:15:13 INFO [cache] No existing dependency information.
+22/08 17:39:27 INFO [cache] No existing dependency information.
+22/08 18:38:58 INFO [cache] No existing dependency information.
+26/08 15:03:01 INFO [cache] No existing dependency information.
+26/08 15:15:14 INFO [cache] No existing dependency information.
+26/08 16:36:15 INFO [cache] No existing dependency information.
+26/08 17:29:02 INFO [cache] No existing dependency information.
+26/08 17:52:06 INFO [cache] No existing dependency information.
+26/08 18:52:09 INFO [cache] No existing dependency information.
+28/08 14:43:23 INFO [cache] No existing dependency information.
+03/09 10:51:44 INFO [cache] No existing dependency information.
+03/09 16:39:23 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+03/09 16:39:35 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+03/09 16:39:43 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+19/09 11:19:30 INFO [cache] No existing dependency information.
+19/09 11:31:41 INFO [cache] No existing dependency information.
+19/09 15:07:21 INFO [cache] No existing dependency information.
+20/09 13:44:24 INFO [cache] No existing dependency information.
+20/09 13:51:13 INFO [cache] No existing dependency information.
+20/09 13:58:14 INFO [cache] No existing dependency information.
+20/09 14:11:35 INFO [cache] No existing dependency information.
+20/09 14:32:20 INFO [cache] No existing dependency information.
+20/09 14:45:56 INFO [cache] No existing dependency information.
+20/09 14:48:59 INFO [cache] No existing dependency information.
+20/09 15:03:50 INFO [cache] No existing dependency information.
+23/09 11:02:29 INFO [cache] No existing dependency information.
+23/09 11:38:50 INFO [cache] No existing dependency information.
+23/09 14:35:42 INFO [cache] No existing dependency information.
+23/09 15:40:23 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+23/09 15:48:07 INFO [cache] No existing dependency information.
+23/09 15:52:57 INFO [cache] No existing dependency information.
+23/09 15:54:06 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+23/09 16:14:55 INFO [cache] No existing dependency information.
+23/09 16:44:46 INFO [cache] No existing dependency information.
+23/09 16:46:52 INFO [cache] No existing dependency information.
+23/09 18:40:27 INFO [cache] No existing dependency information.
+23/09 19:02:50 INFO [cache] No existing dependency information.
+23/09 19:12:09 INFO [cache] No existing dependency information.
+23/09 19:17:20 INFO [cache] No existing dependency information.
+23/09 20:20:24 INFO [cache] No existing dependency information.
+23/09 23:26:33 INFO [cache] No existing dependency information.
+23/09 23:43:16 INFO [cache] No existing dependency information.
+23/09 23:54:18 INFO [cache] No existing dependency information.
+24/09 08:50:43 INFO [cache] No existing dependency information.
+24/09 09:11:29 INFO [cache] No existing dependency information.
+24/09 09:15:10 INFO [cache] No existing dependency information.
+24/09 09:31:01 INFO [cache] No existing dependency information.
+24/09 09:38:52 INFO [cache] No existing dependency information.
+24/09 09:52:09 INFO [cache] No existing dependency information.
+24/09 09:55:02 INFO [cache] No existing dependency information.
+24/09 09:57:10 INFO [cache] No existing dependency information.
+24/09 10:19:58 INFO [cache] No existing dependency information.
+24/09 10:22:40 INFO [cache] No existing dependency information.
+24/09 10:33:41 INFO [cache] No existing dependency information.
+24/09 10:45:26 INFO [cache] No existing dependency information.
+24/09 10:47:23 INFO [cache] No existing dependency information.
+24/09 11:12:25 INFO [cache] No existing dependency information.
+05/02 20:32:53 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+05/02 20:33:09 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+12/03 11:27:39 INFO [cache] No existing dependency information.
+12/03 15:25:49 INFO [cache] No existing dependency information.
+12/03 15:51:43 INFO [cache] No existing dependency information.
+12/03 16:06:43 INFO [cache] No existing dependency information.
+12/03 16:11:34 INFO [cache] No existing dependency information.
+12/03 19:25:32 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+12/03 19:26:58 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+12/03 19:28:15 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+12/03 19:28:17 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+12/03 19:28:32 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:343)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:355)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:149)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+12/03 21:13:53 INFO [cache] No existing dependency information.
+12/03 21:23:44 INFO [cache] No existing dependency information.
+12/03 21:24:12 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:369)
+	at org.springframework.security.web.authentication.switchuser.SwitchUserFilter.doFilter(SwitchUserFilter.java:178)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:168)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+13/03 09:10:11 INFO [cache] No existing dependency information.
+13/03 10:11:24 INFO [cache] No existing dependency information.
+13/03 10:16:50 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Representante.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:369)
+	at org.springframework.security.web.authentication.switchuser.SwitchUserFilter.doFilter(SwitchUserFilter.java:178)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:168)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+13/03 10:41:05 ERROR File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+java.io.FileNotFoundException: File not found: C:\Projetos\kote\Servidor\web-app\flex\Comprador.swf
+	at flex.webtier.server.j2ee.PathValidator.checkFileExists(PathValidator.java:38)
+	at flex.webtier.server.j2ee.PrecompileFilter.invoke(PrecompileFilter.java:53)
+	at flex.webtier.server.j2ee.BrowserCacheFilter.invoke(BrowserCacheFilter.java:41)
+	at flex.webtier.server.j2ee.RecompileFilter.invoke(RecompileFilter.java:37)
+	at flex.webtier.server.j2ee.SwfServlet.handlePrecompiledSwfRequest(SwfServlet.java:177)
+	at flex.webtier.server.j2ee.SwfServlet.doGet(SwfServlet.java:137)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+	at flex.bootstrap.BootstrapServlet.service(BootstrapServlet.java:114)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.processFilterChain(UrlMappingsFilter.java:287)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:205)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:245)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:134)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.filter.GrailsReloadServletFilter.doFilterInternal(GrailsReloadServletFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:369)
+	at org.springframework.security.web.authentication.switchuser.SwitchUserFilter.doFilter(SwitchUserFilter.java:178)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:168)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:157)
+	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:131)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:237)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:167)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:233)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:293)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:849)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:583)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:454)
+	at java.lang.Thread.run(Thread.java:722)
+
+13/03 11:53:49 INFO [cache] No existing dependency information.
+13/03 12:16:03 INFO [cache] No existing dependency information.
+17/03 18:18:31 INFO [cache] No existing dependency information.
+18/03 14:04:51 INFO [cache] No existing dependency information.
+18/03 14:14:13 INFO [cache] No existing dependency information.
+18/03 14:33:42 INFO [cache] No existing dependency information.
+18/03 15:08:19 INFO [cache] No existing dependency information.
+19/03 09:20:07 INFO [cache] No existing dependency information.
+19/03 10:27:34 INFO [cache] No existing dependency information.
+19/03 10:58:18 INFO [cache] No existing dependency information.
+19/03 11:21:42 INFO [cache] No existing dependency information.
+19/03 11:29:40 INFO [cache] No existing dependency information.
+19/03 11:33:23 INFO [cache] No existing dependency information.

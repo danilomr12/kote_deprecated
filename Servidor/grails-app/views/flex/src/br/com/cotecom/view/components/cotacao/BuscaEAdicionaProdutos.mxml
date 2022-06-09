@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         height="100%"
+         width="100%"
+         paddingBottom="8"
+         initialize="initializeHandler(event)"
+         xmlns:busca="br.com.cotecom.view.components.busca.*">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SearchEvent;
+        import br.com.cotecom.control.events.cotacao.AdicioneItemCotacaoEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.cotacao.CotacaoDTO;
+        import br.com.cotecom.model.domain.cotacao.ItemCotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.Produto;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.view.components.produto.NewProdutoPopUp;
+
+        import mx.collections.ArrayCollection;
+        import mx.core.Application;
+        import mx.events.CollectionEvent;
+        import mx.events.DataGridEvent;
+        import mx.events.FlexEvent;
+        import mx.events.ListEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var cotacao:CotacaoDTO;
+        [Bindable]
+        public var model:Session;
+        [Bindable]
+        public var resultadoBusca:ArrayCollection = new ArrayCollection();
+        [Bindable]
+        public var itensCotacaoEncontrados:ArrayCollection = new ArrayCollection();
+        [Bindable]
+        public var gerenciadorCotacao:GerenciadorCotacao = GerenciadorCotacao.getInstance();
+
+        protected function initializeHandler(event:FlexEvent):void {
+            model = Session.getInstance();
+            gerenciadorCotacao = GerenciadorCotacao.getInstance();
+            busca.queryInput.addEventListener(KeyboardEvent.KEY_DOWN, busca_keyDownHandler);
+            resultadoBusca.addEventListener(CollectionEvent.COLLECTION_CHANGE, crieItensCotacaoDTO)
+        }
+
+        protected function crieItensCotacaoDTO(evt:CollectionEvent):void {
+            for each(var produto:Produto in resultadoBusca) {
+                if (!possuiProduto(itensCotacaoEncontrados, produto)) {
+                    itensCotacaoEncontrados.addItem(new ItemCotacaoDTO(gerenciadorCotacao.telaCotacaoDTO.cotacaoDTO.id, 0, false,
+                            produto.id, produto.descricao, produto.embalagem, produto.categoria, produto.qtdMaster));
+                }
+            }
+            resultadoBusca.removeAll();
+        }
+
+        private function possuiProduto(lista:ArrayCollection, produto:Produto):Boolean {
+            for each(var item:ItemCotacaoDTO in lista) {
+                if (item.produtoId == produto.id)
+                    return true;
+            }
+            return false;
+        }
+
+        protected function adicioneItem(event:ListEvent):void {
+            /* criacaoCotacaoDTO = gerenciadorCotacao.telaCotacaoDTO;
+             var tempItem:ItemCotacaoDTOOld = new ItemCotacaoDTOOld(criacaoCotacaoDTO.cotacaoDTO.id, event.itemRenderer.data as Produto, 1)
+             criacaoCotacaoDTO.itensCotacaoDTO.addItem(tempItem)
+             gerenciadorCatalogo.produtosEncontrados.removeItemAt(dg.selectedIndex) */
+        }
+
+        protected function busca_keyDownHandler(event:KeyboardEvent):void {
+            if (event.keyCode == Keyboard.TAB || event.keyCode == Keyboard.DOWN)
+                focusManager.setFocus(dg);
+            else if (event.keyCode == Keyboard.ENTER) {
+                itensCotacaoEncontrados.removeAll();
+            }
+        }
+
+        protected function dg_keyDownHandler(event:KeyboardEvent):void {
+            /* 	if(event.keyCode == Keyboard.ENTER){
+             criacaoCotacaoDTO = gerenciadorCotacao.telaCotacaoDTO;
+             for each(var item:int in dg.selectedIndices){
+             var selectedProduto:Produto = gerenciadorCatalogo.produtosEncontrados.getItemAt(item) as Produto
+             var tempItem:ItemCotacaoDTO = new ItemCotacaoDTO(criacaoCotacaoDTO.cotacaoDTO.id, selectedProduto, 1)
+             criacaoCotacaoDTO.itensCotacaoDTO.addItem(tempItem)
+             }
+             var selectedItens:ArrayCollection = new ArrayCollection(dg.selectedItems)
+
+             for each(var item2:* in selectedItens){
+             var prodIdx:int = gerenciadorCatalogo.produtosEncontrados.getItemIndex(item2)
+             gerenciadorCatalogo.produtosEncontrados.removeItemAt(prodIdx)
+             }
+             }
+             */
+        }
+
+        protected function dg_itemEditEndHandler(event:DataGridEvent):void {
+            /* 	criacaoCotacaoDTO = gerenciadorCotacao.telaCotacaoDTO;
+             var selectedProduto:Produto = dg.selectedItem as Produto
+             var tempItem:ItemCotacaoDTOOld = new ItemCotacaoDTOOld(criacaoCotacaoDTO.cotacaoDTO.id, selectedProduto, 1)
+             criacaoCotacaoDTO.itensCotacaoDTO.addItem(tempItem)
+             var prodIdx:int = gerenciadorCatalogo.produtosEncontrados.getItemIndex(selectedProduto)
+             gerenciadorCatalogo.produtosEncontrados.removeItemAt(prodIdx) */
+        }
+
+        public function addNewProduto(event:MouseEvent):void {
+            var popUpNewItemCotacao:NewProdutoPopUp = new NewProdutoPopUp();
+            popUpNewItemCotacao.currentState = NewProdutoPopUp.STATE_ITEM_COTACAO;
+            PopUpManager.addPopUp(popUpNewItemCotacao, Application.application as DisplayObject);
+            PopUpManager.centerPopUp(popUpNewItemCotacao);
+        }
+
+        public function adicioneProdutosACotacao(event:MouseEvent):void {
+            var listaTemporaria:ArrayCollection = new ArrayCollection();
+
+            for each(var item:ItemCotacaoDTO in itensCotacaoEncontrados) {
+                if (item.quantidade > 0) {
+                    item.cotacaoId = cotacao.id;
+                    listaTemporaria.addItem(item);
+                }
+            }
+            if (listaTemporaria.length >= 1) {
+                new AdicioneItemCotacaoEvent(listaTemporaria).dispatch();
+                for each(var tempItem:ItemCotacaoDTO in listaTemporaria) {
+                    itensCotacaoEncontrados.removeItemAt(itensCotacaoEncontrados.getItemIndex(tempItem));
+                }
+            }
+        }
+
+        public function setFocusBusca():void {
+            focusManager.setFocus(busca.queryInput.textInput);
+        }
+
+        public function limpeTela():void {
+            this.busca.queryInput.text = "";
+            this.itensCotacaoEncontrados = new ArrayCollection();
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:ApplicationControlBar width="100%">
+        <busca:Busca width="300" id="busca" alvo="{resultadoBusca}" type="{SearchEvent.PRODUTO}"/>
+        <mx:Spacer width="100%"/>
+        <mx:CheckBox id="barCodeCkbox" selected="false"/>
+        <mx:Label text="Código Barras"/>
+        <mx:CheckBox id="descCkbox" selected="true"/>
+        <mx:Label text="Descrição"/>
+        <mx:CheckBox id="catCkbox" selected="true"/>
+        <mx:Label text="Categoria"/>
+        <mx:CheckBox id="embCkbox" selected="true"/>
+        <mx:Label text="Embalagem"/>
+        <mx:CheckBox id="embMasterCkbox" selected="true"/>
+        <mx:Label text="E.M." toolTip="Embalagem Master"/>
+        <!--<mx:CheckBox id="marcaCkBox" selected="false"/>
+        <mx:Label text="Marca"/>
+        <mx:CheckBox id="fabCkbox" selected="false"/>
+        <mx:Label text="Fabricante"/>
+        <mx:CheckBox id="pesoCkbox" selected="false"/>
+        <mx:Label text="Peso"/>-->
+        <mx:Spacer width="100%"/>
+    </mx:ApplicationControlBar>
+    <mx:HBox width="100%" height="100%">
+        <mx:DataGrid id="dg" width="100%" height="100%" allowMultipleSelection="true"
+                     dataProvider= "{itensCotacaoEncontrados}"
+                     dragEnabled="false" dropEnabled="false" dragMoveEnabled="false"
+                     itemDoubleClick="adicioneItem(event)" keyDown="dg_keyDownHandler(event)"
+                     itemEditEnd="dg_itemEditEndHandler(event)" editable="true" doubleClickEnabled="false"
+                     toolTip="Preencha as quantidades dos produtos e clique no botão adicionar itens">
+            <mx:columns>
+                <mx:DataGridColumn width="25" editable="false">
+                    <mx:itemRenderer>
+                        <mx:Component>
+                            <mx:HBox width="100%" horizontalAlign="center">
+                                <mx:CheckBox enabled="false" selected="{(data as ItemCotacaoDTO).quantidade!=0}" styleName="checkBox2">
+                                    <mx:Script>
+											<![CDATA[
+                                        import br.com.cotecom.model.domain.cotacao.ItemCotacaoDTO;
+                                        ]]>
+										</mx:Script>
+                                </mx:CheckBox>
+                            </mx:HBox>
+                        </mx:Component>
+                    </mx:itemRenderer>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn headerText="Quantidade" dataField="quantidade" width="80" editable="true"
+                                   editorDataField="value" itemEditor="br.com.cotecom.view.components.cotacao.ItemCotacaoNumericStepper"/>
+                <mx:DataGridColumn id="codeColumn" headerText="Código de Barras" dataField="barCode" width="120"
+                                   visible="{barCodeCkbox.selected}"/>
+                <mx:DataGridColumn headerText="Descrição" dataField="descricao" width="350" visible="{descCkbox.selected}"
+                                   editable="false" textAlign="left"/>
+                <mx:DataGridColumn headerText="Categoria" dataField="categoria" width="100" visible="{catCkbox.selected}"
+                                   editable="false" textAlign="left"/>
+                <mx:DataGridColumn headerText="Embalagem" dataField="embalagem" width="100" visible="{embCkbox.selected}"
+                                   editable="false" textAlign="left"/>
+                <mx:DataGridColumn headerText="Embalagem Master" dataField="qtdMaster" width="100" editable="false"
+                                   visible="{embMasterCkbox.selected}" textAlign="left"/>
+                <!--<mx:DataGridColumn headerText="Fabricante" dataField="fabricante" editable="false"
+                                   visible="{fabCkbox.selected}" textAlign="left"/>
+                <mx:DataGridColumn headerText="Marca" dataField="marca" editable="false"
+                                   visible="{marcaCkBox.selected}" textAlign="left"/>
+                <mx:DataGridColumn headerText="Peso" dataField="peso" width="45" editable="false"
+                                   visible="{pesoCkbox.selected}" textAlign="left"/>-->
+            </mx:columns>
+        </mx:DataGrid>
+    </mx:HBox>
+
+</mx:VBox>

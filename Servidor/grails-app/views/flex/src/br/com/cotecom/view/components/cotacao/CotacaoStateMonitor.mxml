@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.utils.EstadoCotacao;
+
+        [Bindable]
+        public var codigoEstado:int;
+
+        private function shouldSelect(codigoEstado:int):int {
+            switch (codigoEstado) {
+                case EstadoCotacao.AGUARDANDO_RESPOSTAS:
+                    return 0;
+                case EstadoCotacao.EM_ANALISE:
+                    return 1;
+                case EstadoCotacao.PRONTA_PARA_ANALISE:
+                    return 1;
+                case EstadoCotacao.PRONTA_PARA_ENVIO_PEDIDOS:
+                    return 2;
+                case EstadoCotacao.AGUARDANDO_PEDIDOS:
+                    return 2;
+                case EstadoCotacao.FINALIZADA:
+                    return 3;
+                default:
+                    return 0;
+            }
+
+        }
+        ]]></mx:Script>
+
+    <mx:ToggleButtonBar id="buttonBar" selectedIndex="{shouldSelect(codigoEstado)}">
+        <mx:dataProvider>
+            <mx:Array>
+                <mx:String>Cotando</mx:String>
+                <mx:String>Analisando</mx:String>
+                <mx:String>Gerando Pedidos</mx:String>
+                <mx:String>Finalizada</mx:String>
+            </mx:Array>
+        </mx:dataProvider>
+
+    </mx:ToggleButtonBar>
+
+    <mx:Box width="100%" height="100%" toolTip="Estado em que a cotação se encontra" click="{}"/>
+
+
+</mx:Canvas>

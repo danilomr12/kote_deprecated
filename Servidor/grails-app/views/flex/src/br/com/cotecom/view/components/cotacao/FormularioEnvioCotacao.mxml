@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         xmlns:components="com.hillelcoren.components.*"
+         xmlns:components1="br.com.cotecom.view.components.*"
+         width="100%" height="100%"
+         verticalGap="0"
+         paddingRight="16"
+         horizontalAlign="center">
+
+    <mx:Binding source="gerenciadorRepresentantes.representantesComAtendimento" destination="representantes"/>
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.cotacao.SendCotacaoEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.Constants;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+        import br.com.cotecom.model.domain.tela.TelaCotacaoDTO;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.model.services.comprador.GerenciadorRepresentantes;
+
+        import com.hillelcoren.utils.StringUtils;
+
+        import mx.collections.ArrayCollection;
+        import mx.controls.Alert;
+        import mx.controls.dataGridClasses.DataGridColumn;
+        import mx.events.FlexEvent;
+        import mx.events.ValidationResultEvent;
+
+        [Bindable]
+        private var gerenciadorRepresentantes:GerenciadorRepresentantes = GerenciadorRepresentantes.getInstance();
+        [Bindable]
+        private var representantes:ArrayCollection = new ArrayCollection();
+        [Bindable]
+        private var gerenciadorCotacao:GerenciadorCotacao = GerenciadorCotacao.getInstance();
+        [Bindable]
+        public var telaCotacao:TelaCotacaoDTO;
+        [Bindable]
+        private var prazos:ArrayCollection = new ArrayCollection(['À vista', '7', '14', '21', '28', '30', '35',
+            '60', '90', '7/14/28', '14/21/28', '21/28/35', '30/60', '30/60/90', '30/60/90/120']);
+        [Bindable]
+        private var model:Session = Session.getInstance();
+
+        public function dropDownLabelFunction(item:Object):String {
+            var representante:Usuario = item as Usuario;
+            var nomeFantasiaFornecedor:String = representante.empresa != null ? representante.empresa.nomeFantasia : "Sem Fornecedor";
+            var label:String = representante.nome + " &lt;" + nomeFantasiaFornecedor + "&gt;";
+            var str:String = "";
+            var searchStr:String = autoComplete.searchText;
+
+            var start:int = label.search(new RegExp(searchStr, "gi"));
+
+            str = label.substring(0, start);
+            str = str + "<b><u>" + label.substr(start, searchStr.length) + "</u></b>";
+            str = str +
+                    label.substr(start + searchStr.length, label.length);
+
+            if (autoComplete.isItemSelected(representante)) {
+                str = "<font color='" + Consts.COLOR_TEXT_DISABLED + "'>" + str + "</font>";
+            }
+            return str;
+        }
+
+        private function filterFunction(item:Object, searchStr:String):Boolean {
+            if (StringUtils.anyWordBeginsWith(item.nome, searchStr)) {
+                return true;
+            }
+            else
+            if (item.empresa) {
+                if (StringUtils.beginsWith(item.empresa.nomeFantasia, searchStr)) {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        public function setFilter():void {
+            var array:ArrayCollection = new ArrayCollection();
+            array.filterFunction = filterFunction;
+            array.refresh()
+
+        }
+
+        public function getIdsRepresentantesSelecionados():ArrayCollection {
+            var lista:ArrayCollection = new ArrayCollection();
+            for each(var item:Usuario in autoComplete.selectedItems) {
+                lista.addItem(item.id);
+            }
+            return lista;
+        }
+
+        private function selectedItemsLabelFunction(item:Object):String {
+            var rep:Usuario = item as Usuario;
+            var nomeFantasia:String = rep.empresa ? rep.empresa.nomeFantasia : "Sem Fornecedor";
+            return rep.nome + "<" + nomeFantasia + ">"
+        }
+
+        public function validateFields():Boolean {
+            var vResult1:ValidationResultEvent;
+            var vResult2:ValidationResultEvent;
+            var vResult3:ValidationResultEvent;
+            var vResult4:ValidationResultEvent;
+            var vResult5:ValidationResultEvent;
+            vResult1 = validatorTitulo.validate();
+            vResult2 = validatorDataEntrega.validate();
+            if(vResult2.type == ValidationResultEvent.INVALID)
+                Alert.show("É necessário uma data de entrega para enviar a cotação");
+            vResult3 = validatorDataValidade.validate();
+            if(vResult3.type == ValidationResultEvent.INVALID)
+                Alert.show("É necessário uma data de validade para enviar a cotação");
+            vResult4 = validatorPrazoPagamento.validate();
+            if(vResult2.type == ValidationResultEvent.INVALID)
+                Alert.show("É necessário um prazo de pagamento para enviar a cotação");
+            vResult5 = validatorRepresentantesAEnviar.validate();
+            if(vResult2.type == ValidationResultEvent.INVALID)
+                Alert.show("É necessário escolher ao menos um representante para enviar a cotação");
+
+            return !(vResult1.type == ValidationResultEvent.INVALID ||
+                    vResult2.type == ValidationResultEvent.INVALID ||
+                    vResult3.type == ValidationResultEvent.INVALID ||
+                    vResult4.type == ValidationResultEvent.INVALID ||
+                    vResult5.type == ValidationResultEvent.INVALID ||
+                    !enderecoForm.validateFields());
+        }
+
+        private function empresaLabelFunction(item:Object, columm:DataGridColumn):String {
+            return (item as Usuario).empresa.nomeFantasia;
+        }
+
+        public function limpeFormulario():void {
+            if (this.enderecoForm)
+                this.enderecoForm.limpeErrosDeValidacao();
+            if (this.autoComplete) {
+                this.autoComplete.searchText = null;
+                this.autoComplete.selectedItems.removeAll();
+            }
+        }
+
+        public function envieCotacao(event:MouseEvent):void {
+            if (this.validateFields()) {
+                if (getDestinatariosInvalidos().length > 0) {
+                    Alert.show("O(s) representante(s): " + getDestinatariosInvalidos().toString() + "selecionados são inválidos")
+                } else if (this.autoComplete.selectedItems.length <= 0) {
+                    Alert.show("Selecione ao menos um representante", "Falha ao enviar cotação")
+                } else if (getRepresentantesSelecionadosQueJaPossuemResposta().length > 0) {
+                    Alert.show("A cotacao já foi enviada para o(s) representante(s):" +
+                            getRepresentantesSelecionadosQueJaPossuemResposta().toString(), "Falha ao enviar cotação")
+                } else if (telaCotacao.itensCotacaoDTO.length <= 0) {
+                    Alert.show("A cotacao não possui itens", "Falha ao enviar cotação")
+                } else {
+                    telaCotacao.cotacaoDTO.titulo = this.textInputTitulo.text;
+                    telaCotacao.cotacaoDTO.mensagem = this.menssagemFornecedores.text;
+                    telaCotacao.cotacaoDTO.prazoPagamento = this.prazoPagamentoComboBox.text;
+                    telaCotacao.cotacaoDTO.dataEntrega = this.dataEntregaDataField.selectedDate;
+                    telaCotacao.cotacaoDTO.enderecoEntrega = this.enderecoForm.endereco;
+                    telaCotacao.cotacaoDTO.dataValidade = this.validadeDateField.selectedDate;
+                    telaCotacao.cotacaoDTO.compradorId = model.user.id;
+                    telaCotacao.representantesId = this.getIdsRepresentantesSelecionados();
+                    var sendCotacaoEvent:SendCotacaoEvent = new SendCotacaoEvent(telaCotacao);
+                    sendCotacaoEvent.dispatch();
+                }
+                dispatchEvent(new Event("saveButtonClickEvent", true));
+            }
+        }
+
+        private function getDestinatariosInvalidos():ArrayCollection {
+            var list:ArrayCollection = new ArrayCollection();
+            for each(var rep:Object in this.autoComplete.selectedItems) {
+                var type:String = getQualifiedClassName(rep);
+                if (type != "br.com.cotecom.model.domain.dtos.usuarios::Usuario")
+                    list.addItem(rep)
+            }
+            return list;
+        }
+
+        private function getRepresentantesSelecionadosQueJaPossuemResposta():ArrayCollection {
+            var list:ArrayCollection = new ArrayCollection();
+            for each(var rep:Usuario in this.autoComplete.selectedItems) {
+                for each(var i:String in telaCotacao.representantesId) {
+                    if (i == rep.id)
+                        list.addItem(rep)
+                }
+            }
+            return list
+        }
+
+
+        protected function voltarButton_clickHandler(event:MouseEvent):void {
+            dispatchEvent(new Event("saveButtonClickEvent", true));
+        }
+
+        ]]>
+	</mx:Script>
+    <mx:Metadata>
+        [Event(name="saveButtonClickEvent", type="flash.events.Event")]
+    </mx:Metadata>
+    <mx:Validator id="validatorTitulo" source="{textInputTitulo}" property="text" required="true"
+                  requiredFieldError="O campo 'Titulo' é obrigatório"
+                  trigger="{textInputTitulo}" triggerEvent="change"/>
+    <mx:Validator id="validatorDataValidade" source="{validadeDateField}" property="selectedDate"
+                  required="true" requiredFieldError="O campo 'Data de validade' é obrigatório"
+                  trigger="{validadeDateField}" triggerEvent="focusOut"/>
+    <mx:Validator id="validatorDataEntrega" source="{dataEntregaDataField}" property="selectedDate"
+                  required="true" requiredFieldError="O campo 'Data de entrega' é obrigatório"
+                  trigger="{dataEntregaDataField}" triggerEvent="focusOut"/>
+    <mx:Validator id="validatorPrazoPagamento" source="{prazoPagamentoComboBox}" property="text"
+                  required="true" requiredFieldError="O campo 'Prazo de pagamento' é obrigatório"
+                  trigger="{prazoPagamentoComboBox}" triggerEvent="change"/>
+    <mx:Validator id="validatorRepresentantesAEnviar" source="{autoComplete}" property="selectedItems"
+                  required="true" requiredFieldError="Selecione ao menos um representante para enviar a cotação!"
+                  trigger="{autoComplete}" triggerEvent="change"/>
+
+    <mx:Form width="100%" horizontalGap="10" paddingLeft="83" paddingTop="5" paddingBottom="0" verticalGap="0">
+        <mx:FormItem label="Para" width="100%" height="100%">
+            <components:AdvancedAutoComplete id="autoComplete" minHeight="70" height="100%" width="100%"
+                                             useListBuilder="true" dataProvider="{representantes}"
+                                             allowMultipleSelection="true" allowEditingNewValues="true" showBrowseButton="false"
+                                             selectedItemStyleName="underline"  labelFunction="selectedItemsLabelFunction" showRemoveIcon="true"
+                                             dropDownLabelFunction="dropDownLabelFunction" filterFunction="filterFunction"
+                                             prompt="Selecione os fornecedores para enviar a cotação"
+                                             click="focusManager.setFocus(autoComplete.textInput.textInput)"/>
+        </mx:FormItem>
+    </mx:Form>
+    <mx:HBox height="100%" width="100%" verticalGap="0">
+        <mx:VBox height="100%" verticalGap="0">
+            <mx:Form verticalGap="2">
+
+                <mx:FormItem label="Prazo de pagamento" >
+                    <mx:ComboBox id="prazoPagamentoComboBox" editable="true" width="160"
+                                 dataProvider="{prazos}"/>
+                </mx:FormItem>
+
+                <mx:FormItem label="Validade da cotação" >
+                    <mx:DateField id="validadeDateField" width="160"
+                                  dayNames="{Constants.DIAS_SEMANA}"
+                                  monthNames="{Constants.MESES_ANO}"
+                                  selectedDate="{telaCotacao.cotacaoDTO.dataValidade}"
+                                  toolTip="Selecione o prazo máximo para os fornecedores responderem a cotação"
+                                  formatString="DD/MM/YY" />
+                </mx:FormItem>
+
+                <mx:FormItem label="Data de entrega" >
+                    <mx:DateField id="dataEntregaDataField" width="160"
+                                  dayNames="{Constants.DIAS_SEMANA}"
+                                  monthNames="{Constants.MESES_ANO}"
+                                  selectedDate="{telaCotacao.cotacaoDTO.dataEntrega}"
+                                  toolTip="Selecione a data para que a mecadoria solicitada seja entregue"
+                                  formatString="DD/MM/YY" />
+                </mx:FormItem>
+            </mx:Form>
+
+            <components1:EnderecoForm id="enderecoForm" horizontalGap="5" paddingLeft="42" verticalGap="2" paddingTop="0"
+                                      heading="Endereço de entrega"
+                                      endereco="{telaCotacao.cotacaoDTO.enderecoEntrega}">
+            </components1:EnderecoForm>
+        </mx:VBox>
+        <mx:VBox width="100%" height="95%">
+            <mx:Form verticalGap="5" width="100%" height="100%">
+                <mx:FormItem label="Título" width="100%">
+                    <mx:TextInput id="textInputTitulo" width="100%"
+                                  text="{telaCotacao.cotacaoDTO.titulo}"/>
+                </mx:FormItem>
+                <mx:FormItem label="Mensagem" width="100%" height="100%" toolTip="Mensagem do comprador que será enviada por e-mail aos representantes">
+                    <mx:TextArea id="menssagemFornecedores"
+                                 width="100%" height="100%"
+                                 text="{telaCotacao.cotacaoDTO.mensagem}"/>
+                </mx:FormItem>
+            </mx:Form>
+        </mx:VBox>
+    </mx:HBox>
+
+</mx:VBox>

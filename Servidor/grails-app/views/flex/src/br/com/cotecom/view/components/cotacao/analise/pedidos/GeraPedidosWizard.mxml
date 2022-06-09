@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:pedidos="br.com.cotecom.view.components.cotacao.analise.pedidos.*"
+                title="Enviando Pedidos"
+                horizontalAlign="center"
+                close="close()" showCloseButton="true"
+                creationComplete="refreshData()">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.control.events.cotacao.GeraPedidosEvent;
+        import br.com.cotecom.model.domain.cotacao.CotacaoDTO;
+        import br.com.cotecom.model.domain.dtos.AnaliseCotacaoDTO;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.model.utils.EstadoCotacao;
+
+        import mx.controls.Alert;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var analise:AnaliseCotacaoDTO;
+        private var enviarPedidos:Boolean = true;
+
+        private function refresh():void {
+            analise.itensAnaliseCotacao.filterFunction = null;
+            analise.itensAnaliseCotacao.refresh();
+            var enviar:Boolean = wizardViews.selectedIndex == 2 && enviarPedidos;
+            enviarPedidosButton.visible = enviar;
+            enviarPedidosButton.includeInLayout = enviar;
+        }
+
+        private function close():void {
+            PopUpManager.removePopUp(this);
+            refresh();
+        }
+
+        private function refreshData():void {
+            verificaPrecosView.refresh();
+        }
+
+        private function enviePedidos(event:MouseEvent):void {
+            var cotacaoDTO:CotacaoDTO = GerenciadorCotacao.getInstance().cotacaoSelecionada;
+            switch (cotacaoDTO.codigoEstadoCotacao) {
+                case EstadoCotacao.EM_ANALISE:
+                    new GeraPedidosEvent(analise).dispatch();
+                    break;
+                case EstadoCotacao.AGUARDANDO_PEDIDOS:
+                    Alert.show("Os pedidos dessa cotação já foram enviados aos fornecedores!");
+                    break;
+            }
+            this.close();
+        }
+
+        public function setEnviarPedidos(enviarPedidos:Boolean):void {
+            this.enviarPedidos = enviarPedidos;
+
+        }
+        ]]></mx:Script>
+
+    <mx:Canvas>
+        <mx:ToggleButtonBar dataProvider="{wizardViews}" selectedIndex="{wizardViews.selectedIndex}"/>
+        <mx:VBox width="100%" height="100%" click="{}"/>
+    </mx:Canvas>
+
+    <mx:ViewStack id="wizardViews" height="100%" width="100%" change="refresh()">
+        <pedidos:VerificaPrecosView id="verificaPrecosView" label="Verificando Preços" analise="{analise}" width="100%" height="100%"/>
+        <pedidos:ConfirmaPedidosView id="confirmaPedidosView" label="Confirmando Pedidos" analise="{analise}" height="100%" width="100%"/>
+        <pedidos:VisaoGeralPedidos id="visaoGeralView" label="Visão Geral" analise="{analise}" height="100%" width="100%"/>
+    </mx:ViewStack>
+
+    <mx:HBox width="100%" >
+        <mx:LinkButton label="Voltar para Análise" click="close()"/>
+        <mx:Spacer width="100%"/>
+        <mx:Button label="Voltar" visible="{wizardViews.selectedIndex != 0}" click="wizardViews.selectedIndex = wizardViews.selectedIndex - 1"/>
+        <mx:Button label="Avançar" visible="{wizardViews.selectedIndex != 2}" 
+                   click="wizardViews.selectedIndex = wizardViews.selectedIndex + 1"/>
+        <mx:Button id="enviarPedidosButton" label="Enviar Pedidos" visible="false" includeInLayout="false"
+                   click="enviePedidos(event)"/>
+    </mx:HBox>
+
+</mx:TitleWindow>

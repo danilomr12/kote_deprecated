@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:components="com.hillelcoren.components.*"
+                xmlns:produto="br.com.cotecom.view.components.produto.*"
+                showCloseButton="true"
+                close="close()"
+                creationComplete="focusManager.setFocus(produtoForm.codBarrasTextInput)"
+                currentState="produto">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.dtos.Produto;
+        import br.com.cotecom.model.services.comprador.GerenciadorCatalogo;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+
+        import mx.managers.PopUpManager;
+
+        private var gerenciadorCatalogo:GerenciadorCatalogo = GerenciadorCatalogo.getInstance();
+        public static const STATE_PRODUTO:String = "produto";
+        public static const STATE_ITEM_COTACAO:String = "itemCotacao";
+        public static const STATE_PRODUTO_ALTERNATIVO_ITEM_RESPOSTA:String = "produtoDeItemResposta";
+        [Bindable]
+        private var _produto:Produto;
+
+        private function close():void {
+            PopUpManager.removePopUp(this);
+        }
+
+        protected function salvar(event:MouseEvent):void {
+            if (produtoForm.validateFields()) {
+                if (this.currentState == STATE_PRODUTO) {
+                    gerenciadorCatalogo.salveProduto(produtoForm.produto)
+                } else if (this.currentState == STATE_ITEM_COTACAO) {
+                    var gerenciadorCotacao:GerenciadorCotacao = GerenciadorCotacao.getInstance();
+                    gerenciadorCotacao.adicioneNovoProdutoACotacao(produtoForm.produto, produtoForm.quantidadeNumStepper.value,
+                            gerenciadorCotacao.telaCotacaoDTO.itensCotacaoDTO);
+                }
+                close()
+            }
+        }
+
+        public function set produto(prod:Produto):void {
+            this._produto = prod;
+        }
+
+        public function get produto():Produto {
+            return this.produtoForm.produto;
+        }
+        ]]>
+	</mx:Script>
+    <mx:states>
+        <mx:State name="produto">
+            <mx:SetProperty target="{produtoForm.qtdField}" name="visible" value="false"/>
+        </mx:State>
+        <mx:State name="itemCotacao">
+            <mx:SetProperty target="{produtoForm.qtdField}" name="visible" value="true"/>
+        </mx:State>
+        <mx:State name="produtoDeItemResposta">
+            <mx:SetProperty target="{produtoForm.qtdField}" name="visible" value="false"/>
+        </mx:State>
+    </mx:states>
+
+    <mx:VBox>
+        <produto:ProdutoForm id="produtoForm" produto="{_produto}"/>
+        <mx:HBox width="100%" horizontalCenter="0" horizontalAlign="center">
+            <mx:Button click="close()"
+                       id="cancelButton"
+                       styleName="cancelButton"
+                       label="Cancelar"/>
+            <mx:Button click="salvar(event)"
+                       id="salvarButton"
+                       styleName="saveButton"
+                       label="Salvar"/>
+        </mx:HBox>
+    </mx:VBox>
+</mx:TitleWindow>

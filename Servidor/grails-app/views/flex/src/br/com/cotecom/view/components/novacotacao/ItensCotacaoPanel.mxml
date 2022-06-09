@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         xmlns:components="com.hillelcoren.components.*">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.SaveEvent;
+        import br.com.cotecom.control.events.cotacao.RemovaItemCotacaoEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.cotacao.CotacaoDTO;
+        import br.com.cotecom.model.domain.cotacao.ItemCotacaoDTO;
+
+        import mx.collections.ArrayCollection;
+        import mx.collections.IList;
+        import mx.controls.Alert;
+        import mx.events.DataGridEvent;
+        import mx.events.DragEvent;
+
+        [Bindable]
+        public var itensDaCotacao:ArrayCollection = new ArrayCollection();
+        [Bindable]
+        public var cotacao:CotacaoDTO = new CotacaoDTO();
+        [Bindable]
+        private var model:Session = Session.getInstance();
+
+        private function dragDropHandler(event:DragEvent):void {
+            if (event.dragSource.hasFormat("items")) {
+                // Explicitly handle the dragDrop event.
+                event.preventDefault();
+
+                // Since you are explicitly handling the dragDrop event,
+                // call hideDropFeedback(event) to have the drop target
+                // hide the drop indicator.
+                // The drop indicator is created
+                // automatically for the list controls by the built- in
+                // event handler for the dragOver event.
+                event.currentTarget.hideDropFeedback(event);
+
+                // Get drop target.
+                var dropTarget:DataGrid =
+                        DataGrid(event.currentTarget);
+
+                var itemsArray:Array = event.dragSource.dataForFormat('items') as Array;
+
+                for each(var item:Object in itemsArray) {
+
+                    var type:String = getQualifiedClassName(item);
+                    if (type == "br.com.cotecom.model.domain.cotacao::ItemCotacaoDTO") {
+                        var tempItem:ItemCotacaoDTO = item as ItemCotacaoDTO;
+
+                        // Get the drop location in the destination.
+                        if (hasItem(IList(dropTarget.dataProvider), item)) {
+                            Alert.show("A cotação já possui o produto que você está tentando adicionar " + item.toString()
+                                    , "Você não pode adicionar este item!")
+                        } else {
+                            var dropLoc:int = dropTarget.calculateDropIndex(event);
+                            IList(dropTarget.dataProvider).addItemAt(tempItem, 0);
+                            /* addItemAt(tempItem, dropLoc); */
+                        }
+                    }
+                }
+            }
+        }
+
+        public function removeItem(item:Object):void {
+            //itensDaCotacao.removeItemAt(dataGridDeProdutos.selectedIndex);
+            new RemovaItemCotacaoEvent(item as ItemCotacaoDTO).dispatch();
+        }
+
+        private function hasItem(list:IList, item:Object):Boolean {
+            for each(var it:ItemCotacaoDTO in list) {
+                if (it.produtoId == item.produtoId)
+                    return true;
+            }
+            return false;
+        }
+
+        protected function onItemEditEnd(event:DataGridEvent):void {
+            var item:ItemCotacaoDTO = (event.target as DataGrid).dataProvider[event.rowIndex];
+            var textInput:String = event.target.itemEditorInstance.value;
+            if (item.quantidade != Number(textInput)) {
+                item.quantidade = Number(textInput);
+                item.saved = false;
+                new SaveEvent(SaveEvent.ITEM_COTACAO, item).dispatch();
+            }
+        }
+
+        public function filterFuntion(item:Object):Boolean {
+            var item2:ItemCotacaoDTO = item as ItemCotacaoDTO;
+
+            if (item2.categoria && item2.categoria.match(new RegExp(filtro.text, 'i')))
+                return true;
+            else if (item2.embalagem && item2.embalagem.match(new RegExp(filtro.text, 'i')))
+                return true;
+            else if (item2.descricao && item2.descricao.match(new RegExp(filtro.text, 'i')))
+                return true;
+            else if (item2.quantidade.toString() && item2.quantidade.toString().match(new RegExp(filtro.text, 'i')))
+                return true;
+            return false
+        }
+
+        public function setFilter():void {
+            if (this.itensDaCotacao != null) {
+                this.itensDaCotacao.filterFunction = filterFuntion;
+                this.itensDaCotacao.refresh();
+            }
+        }
+
+        public function filtro_keyDownHandler(event:KeyboardEvent):void {
+            if (event.keyCode == Keyboard.TAB || event.keyCode == Keyboard.DOWN)
+                focusManager.setFocus(dataGridDeProdutos);
+        }
+
+        private function setFocusInThis():void {
+            focusManager.setFocus(filtro.textInput)
+        }
+        ]]>
+	</mx:Script>
+    <mx:ApplicationControlBar width="100%" horizontalAlign="right">
+        <mx:Spacer width="100%"/>
+        <mx:CheckBox id="barCodeCkbox" selected="false"/>
+        <mx:Label text="Código Barras"/>
+        <mx:CheckBox id="descCkbox" selected="true"/>
+        <mx:Label text="Descrição"/>
+        <mx:CheckBox id="catCkbox" selected="true"/>
+        <mx:Label text="Categoria"/>
+        <mx:CheckBox id="embCkbox" selected="true"/>
+        <mx:Label text="Embalagem"/>
+        <mx:CheckBox id="embMasterCkbox" selected="true"/>
+        <mx:Label text="E.M." toolTip="Embalagem Master"/>
+<!--
+        <mx:CheckBox id="marcaCkBox" selected="false"/>
+        <mx:Label text="Marca"/>
+        <mx:CheckBox id="fabCkbox" selected="false"/>
+        <mx:Label text="Fabricante"/>
+        <mx:CheckBox id="pesoCkbox" selected="false"/>
+        <mx:Label text="Peso"/>
+-->
+        <mx:Spacer width="100%"/>
+        <components:PromptTextInput id="filtro" prompt="Filtro..." width="300" click="setFocusInThis()"
+                                    change="setFilter()" keyDown="filtro_keyDownHandler(event)"/>
+        <mx:Button styleName="filterButton" click="setFilter()" width="25"/>
+
+    </mx:ApplicationControlBar>
+    <mx:DataGrid width="100%" height="100%" id="dataGridDeProdutos" dropEnabled="true" dragEnabled="false" dragMoveEnabled="true"
+                 dataProvider="{itensDaCotacao}" dragDrop="dragDropHandler(event)" editable="true" itemEditEnd="onItemEditEnd(event)">
+        <mx:columns>
+            <mx:DataGridColumn editable="false" width="30" textAlign="center">
+                <mx:itemRenderer>
+                    <mx:Component>
+                        <mx:Image source="{Icons.CLOSE_16}" buttonMode="true" click="outerDocument.removeItem(data)"
+                                  toolTip="remover item" horizontalAlign="center">
+                            <mx:Script><![CDATA[
+                                import br.com.cotecom.view.util.Icons;
+                                ]]></mx:Script>
+                        </mx:Image>
+                    </mx:Component>
+                </mx:itemRenderer>
+            </mx:DataGridColumn>
+            <mx:DataGridColumn headerText="Quantidade" dataField="quantidade" width="80" editable="true"
+                               editorDataField="value">
+                <mx:itemEditor>
+                    <mx:Component>
+                        <mx:NumericStepper minimum="1" maximum="1000000000" cornerRadius="0"/>
+                    </mx:Component>
+                </mx:itemEditor>
+            </mx:DataGridColumn>
+            <mx:DataGridColumn id="codeColumn" headerText="Código de Barras" dataField="barCode" width="120"
+                               visible="{barCodeCkbox.selected}"/>
+            <mx:DataGridColumn headerText="Descrição" dataField="descricao" width="350" visible="{descCkbox.selected}"
+                               editable="false" textAlign="left"/>
+            <mx:DataGridColumn headerText="Categoria" dataField="categoria" width="100" visible="{catCkbox.selected}"
+                               editable="false" textAlign="left"/>
+            <mx:DataGridColumn headerText="Embalagem" dataField="embalagem" width="100" visible="{embCkbox.selected}"
+                               editable="false" textAlign="left"/>
+            <mx:DataGridColumn headerText="Embalagem Master" dataField="qtdMaster" width="100" editable="false"
+                               visible="{embMasterCkbox.selected}" textAlign="left"/>
+<!--
+            <mx:DataGridColumn headerText="Fabricante" dataField="fabricante" editable="false"
+                               visible="{fabCkbox.selected}" textAlign="left"/>
+            <mx:DataGridColumn headerText="Marca" dataField="marca" editable="false"
+                               visible="{marcaCkBox.selected}" textAlign="left"/>
+            <mx:DataGridColumn headerText="Peso" dataField="peso" width="45" editable="false"
+                               visible="{pesoCkbox.selected}" textAlign="left"/>
+-->
+        </mx:columns>
+    </mx:DataGrid>
+</mx:VBox>

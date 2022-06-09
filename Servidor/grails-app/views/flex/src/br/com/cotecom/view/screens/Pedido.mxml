@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+           xmlns:components="br.com.cotecom.view.components.*">
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.aplicacao.ShowViewCaixaDeEntradaEvent;
+        import br.com.cotecom.view.util.Icons;
+        ]]>
+	</mx:Script>
+    <components:View>
+        <mx:HBox width="100%">
+            <mx:LinkButton label="Caixa de entrada"
+                           click="new ShowViewCaixaDeEntradaEvent().dispatch()"/>
+            <mx:Label text=">"/>
+            <mx:LinkButton label="Cotação:"/> <!--todo: pegar cotacao atraves do gerenciador
+			e mostrar titulo no botao-->
+            <mx:Label text=">"/>
+            <mx:ComboBox text="Respostas"/>   <!--todo: pegar respostas irmãs atraves do gerenciador
+			e mostrar nome da empresa/representante como labelfield no combobox-->
+            <mx:Label text=">"/>
+            <mx:LinkButton label="Pedido:...." enabled="false"/>
+        </mx:HBox>
+
+        <mx:LinkButton label="Coloque A tela de pedido AQUI!" width="100%" height="100%"
+                       verticalCenter="0"
+                       horizontalCenter="0"/>
+
+        <components:buttonBar>
+            <mx:HBox>
+                <mx:Button styleName="barButton"
+                           labelPlacement="bottom"
+                           label="Adicione aqui os botões"
+                           icon="{Icons.ADD_24}"/>
+            </mx:HBox>
+        </components:buttonBar>
+    </components:View>
+</mx:Canvas>

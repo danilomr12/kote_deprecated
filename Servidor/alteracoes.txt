@@ -1,0 +1,9 @@
+############################################################################
+Este arquivo deve ser editado adicionando alterações que podem ter
+grande impacto no projeto devido ao controle de versão. Ex.: refatorações
+de packages.
+###########################################################################
+
+Data/hora(dd/mm/aa-hh:mm)   Autor           Descrição da alteração
+
+

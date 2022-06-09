@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+		 width="100%">
+	
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.aplicacao.ShowViewCaixaDeEntradaEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewCotacaoEnviadaEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewCotacaoRascunhoEvent;
+        import br.com.cotecom.control.events.aplicacao.ShowViewRespostaEvent;
+        import br.com.cotecom.model.domain.resposta.TelaResposta;
+        import br.com.cotecom.model.services.comprador.GerenciadorCaixaDeEntrada;
+        import br.com.cotecom.model.utils.EstadoCotacao;
+
+        import mx.collections.ArrayCollection;
+        import mx.events.ListEvent;
+
+        [Bindable]
+        private var _telaResposta:TelaResposta;
+        [Bindable]
+        private var _respostas:ArrayCollection;
+        [Bindable]
+        public var gerenciadorCaixaEntrada:GerenciadorCaixaDeEntrada = GerenciadorCaixaDeEntrada.getInstance();
+        private var linkButtonLabel:String = "<< voltar para Caixa de entrada"
+
+        public function set telaResposta(tela:TelaResposta):void {
+            this._telaResposta = tela;
+            if (_telaResposta != null) {
+                this._respostas = gerenciadorCaixaEntrada.getRespostasDaMesmaCotacao(telaResposta.resposta.id);
+                if (getRespostaSelectedIndex() != -1)
+                    this.respostasCBox.selectedIndex = getRespostaSelectedIndex();
+            }
+            var event:Event = new Event("respostasChanged");
+            dispatchEvent(event);
+        }
+
+        [Bindable(event="respostasChanged")]
+        public function get telaResposta():TelaResposta {
+            return this._telaResposta;
+        }
+
+        protected function mudeResposta(event:ListEvent):void {
+            var showViewResposta:ShowViewRespostaEvent =
+                    new ShowViewRespostaEvent(respostasCBox.selectedItem.id)
+            showViewResposta.dispatch()
+        }
+
+        protected function abraCotacao(event:MouseEvent):void {
+            var estadoCotacao:int = _telaResposta.cotacao.codigoEstadoCotacao;
+            if (estadoCotacao == EstadoCotacao.RASCUNHO) {
+                new ShowViewCotacaoRascunhoEvent(_telaResposta.cotacao.id).dispatch();
+            } else {
+                new ShowViewCotacaoEnviadaEvent(_telaResposta.cotacao.id,
+                        _telaResposta.cotacao.codigoEstadoCotacao).dispatch();
+            }
+        }
+
+        protected function getRespostaSelectedIndex():int {
+            for (var i:int = 0; i <= _respostas.length - 1; i++) {
+                if (_respostas.getItemAt(i).id == telaResposta.resposta.id)
+                    return i;
+            }
+            return -1;
+        }
+        ]]>
+	</mx:Script>
+	<mx:HBox verticalAlign="middle">
+		<mx:LinkButton label="{linkButtonLabel}" click="new ShowViewCaixaDeEntradaEvent().dispatch()"/>
+		<mx:Label text=">>"/>
+		<mx:LinkButton label="Cotação: {_telaResposta.cotacao.titulo}"
+					   click="abraCotacao(event)"/>
+		<mx:Label id="respostaSeta" text=">>"/>
+		<mx:Label id="respostaLabel" text="Resposta:"/>
+		<mx:ComboBox id="respostasCBox" 
+					 dataProvider="{_respostas}" 
+					 labelField="empresa"
+					 change="mudeResposta(event)"/>
+	</mx:HBox>
+</mx:HBox>

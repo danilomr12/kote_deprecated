@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="create()">
+	<mx:Script>
+		<![CDATA[
+			//import com.allurent.coverage.runtime.CoverageManager;
+			
+			import br.com.cotecom.model.tests.MotherCotacaoTest;
+			import br.com.cotecom.model.tests.ResponderTest;
+			import br.com.cotecom.model.tests.RespostaTest;
+			import br.com.cotecom.model.tests.ArrayCollectionsTest;
+			import br.com.cotecom.test.FlexUnitTests;
+			
+			import flexunit.framework.Test;
+			import flexunit.framework.TestSuite;
+			import flexunit.junit.JUnitTestRunner;
+			
+		    import com.gorillalogic.flexmonkey.ui.FlexMonkey;
+		    
+		    public function create():void {
+				var antRunner:JUnitTestRunner = new JUnitTestRunner();
+				var testSuite:TestSuite = new TestSuite();
+				
+				testSuite.addTestSuite( ArrayCollectionsTest );
+				testSuite.addTestSuite( RespostaTest );
+				testSuite.addTestSuite( ResponderTest );
+				testSuite.addTestSuite( MotherCotacaoTest );
+				
+				antRunner.run(testSuite, onTestComplete);
+		    }
+		    
+		    private function onTestComplete() : void {
+		    					
+				var waitTimer:Timer = new Timer(2000,1);
+				waitTimer.addEventListener(TimerEvent.TIMER, closeDown);	   
+				waitTimer.start();
+		
+			}
+			
+			private function closeDown(event:TimerEvent):void {
+				
+				callLater(exitCoverageManager);
+				
+			}
+			
+			private function exitCoverageManager():void {
+				
+				//CoverageManager.exit();
+				fscommand("quit");
+		
+			}
+		]]>
+	</mx:Script>
+</mx:Application>

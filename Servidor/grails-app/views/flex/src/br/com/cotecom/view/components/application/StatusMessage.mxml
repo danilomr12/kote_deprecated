@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Label xmlns:mx="http://www.adobe.com/2006/mxml" text="{model.statusMessage}">
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.Session;
+
+        [Bindable]
+        public var model:Session = Session.getInstance();
+        ]]>
+	</mx:Script>
+</mx:Label>

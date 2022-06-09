@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite errors="0" failures="0" name="br.com.cotecom.model.tests.ArrayCollectionsTest" tests="3" time="0"> 
+  <testcase classname="br.com.cotecom.model.tests.ArrayCollectionsTest" name="testGetEqualItem" time="0"/>  
+  <testcase classname="br.com.cotecom.model.tests.ArrayCollectionsTest" name="testGetEqualIdItem" time="0"/>  
+  <testcase classname="br.com.cotecom.model.tests.ArrayCollectionsTest" name="testArrayCollectionEquals" time="0"/> 
+</testsuite>

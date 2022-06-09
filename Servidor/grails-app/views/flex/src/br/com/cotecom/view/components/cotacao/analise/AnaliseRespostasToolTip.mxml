@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+	implements="mx.core.IToolTip"
+    title="Clique duas vezes no item para editar"
+	xmlns:analise="br.com.cotecom.view.components.cotacao.analise.*">
+	
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.dtos.ItemAnaliseCotacaoDTO;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+
+        private const NAO_EDITAVEL:String = "Outros preços";
+        private const EDITAVEL:String = "Clique duas vezes no item para editar";
+        public const STATE_EDITAVEL:String = "editavel";
+        public const STATE_NAO_EDITAVEL:String = "naoEditavel";
+        private const TOOL_TIP:String = "toolTip";
+
+        public var _text:String;
+        [Bindable]
+        private var _itemAnalise:ItemAnaliseCotacaoDTO;
+
+        private var gerenciadorCotacao:GerenciadorCotacao = GerenciadorCotacao.getInstance();
+        [Bindable]
+        public function set itemAnaliseCotacao(item:ItemAnaliseCotacaoDTO):void {
+            this._itemAnalise = item;
+            if (gerenciadorCotacao.cotacaoSelecionada.isEditavel()) {
+                this.currentState = STATE_EDITAVEL
+            } else {
+                this.currentState = STATE_NAO_EDITAVEL
+            }
+        }
+        [Bindable]
+        public function get itemAnaliseCotacao():ItemAnaliseCotacaoDTO {
+            return this._itemAnalise;
+        }
+
+        public function get text():String {
+            return _text;
+        }
+
+        public function set text(value:String):void {
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:states>
+        <mx:State name="{STATE_NAO_EDITAVEL}">
+            <mx:SetProperty target="{this}" name="title" value="{NAO_EDITAVEL}"/>
+        </mx:State>
+        <mx:State name="{STATE_EDITAVEL}">
+            <mx:SetProperty target="{this}" name="title" value="{EDITAVEL}"/>
+        </mx:State>
+    </mx:states>
+	<analise:AnaliseRespostasPanel currentState="{TOOL_TIP}" itemAnaliseCotacao="{itemAnaliseCotacao}"/>
+</mx:Panel>

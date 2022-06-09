@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:cofiguracoes="br.com.cotecom.view.components.cofiguracoes.*"
+                xmlns:contato="br.com.cotecom.view.components.contato.*"
+                xmlns:cotacao="br.com.cotecom.view.components.cotacao.*"
+                horizontalAlign="right"
+                title="Enviar cotação"
+                showCloseButton="true"
+                close="close()"
+                headerHeight="30"
+                paddingBottom="15" paddingLeft="15" paddingRight="15" paddingTop="30">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+
+        import mx.managers.PopUpManager;
+
+        private function close():void {
+            PopUpManager.removePopUp(this);
+        }
+
+        [Bindable]
+        public var usuario:Usuario;
+        ]]></mx:Script>
+
+
+</mx:TitleWindow>

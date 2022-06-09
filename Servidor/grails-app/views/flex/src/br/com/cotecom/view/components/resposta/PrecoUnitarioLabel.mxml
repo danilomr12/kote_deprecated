@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"  width="100%"
+         height="100%" horizontalAlign="center" currentState="semObs"
+        backgroundColor="{OBS_COLOR}">
+    <mx:Script><![CDATA[
+        import br.com.cotecom.model.domain.resposta.ItemResposta;
+        import br.com.cotecom.view.util.DinheiroUtil;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.controls.Alert;
+
+        private const NORMAL_COLOR:uint = 0x000000; // Preto
+        private const OBS_COLOR:uint = 0xffff00; // Amarelo
+        [Bindable]
+        private var _data:Object;
+
+        override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+            super.updateDisplayList(unscaledWidth, unscaledHeight);
+
+            var item:ItemResposta = ItemResposta(data);
+            if ((item.observacao != null && item.observacao != "") || item.produtoAlternativo != null) {
+                this.currentState = "comObs";
+            } else {
+                this.currentState = "semObs";
+            }
+        }
+
+        override public function set data(value:Object):void {
+            _data = value;
+        }
+
+        override public function get data():Object {
+            return _data;
+        }
+
+        public function precoUnitario(data:*):String {
+            var item:ItemResposta = data as ItemResposta;
+            return item.precoUnitario != 0 ?
+                    DinheiroUtil.formatAsReal(item.precoUnitario) : "";
+        }
+
+        private function visualizeObs(data:*):void {
+            var itemResposta:ItemResposta = data as ItemResposta;
+            Alert.show(itemResposta.observacao, "Observação")
+        }
+        ]]>
+        </mx:Script>
+    <mx:states>
+        <mx:State name="comObs">
+            <mx:SetProperty target="{linkButton}" name="visible" value="true"/>
+            <mx:SetProperty target="{linkButton}" name="includeInLayout" value="true"/>
+            <mx:SetStyle target="{this}" name="backgroundAlpha" value="0.5"/>
+            <mx:SetProperty target="{this}" name="buttonMode" value="true"/>
+        </mx:State>
+        <mx:State name="semObs">
+            <mx:SetProperty target="{linkButton}" name="visible" value="false"/>
+            <mx:SetProperty target="{linkButton}" name="includeInLayout" value="false"/>
+            <mx:SetStyle target="{this}" name="backgroundAlpha" value="0"/>
+            <mx:SetProperty target="{this}" name="buttonMode" value="false"/>
+        </mx:State>
+    </mx:states>
+
+    <mx:Label text="{precoUnitario(_data)}" color="{NORMAL_COLOR}" />
+    <mx:LinkButton id="linkButton" click="visualizeObs(_data)" height="20" icon="{Icons.WARNING_24}"
+               toolTip="Clique para visualizar a observação deixada pelo representante" textDecoration="none" />
+</mx:HBox>

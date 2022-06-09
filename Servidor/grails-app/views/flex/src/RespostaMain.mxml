@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+        xmlns:mx="http://www.adobe.com/2006/mxml"
+        xmlns:controllers="br.com.cotecom.control.controllers.*"
+        xmlns:components="br.com.cotecom.view.components.*"
+        xmlns:application="br.com.cotecom.view.components.application.*"
+        creationComplete="init()"
+        preloader="br.com.cotecom.preloader.NewPreloader"
+        paddingTop="0"
+        paddingLeft="0"
+        paddingRight="0"
+        paddingBottom="0"
+        layout="absolute"
+        pageTitle="Kote- Cotações Inteligentes"
+        xmlns:main="br.com.cotecom.view.components.resposta.main.*">
+
+    <mx:Style source="/assets/css/mainSkin.css"/>
+    <controllers:ApplicationController/>
+    <controllers:RepresentanteController/>
+    <controllers:FornecedoresController/>
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.control.events.InitializeEvent;
+        import br.com.cotecom.control.events.LoadEvent;
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.domain.resposta.ItemResposta;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+        import br.com.cotecom.model.utils.EstadoResposta;
+
+        import com.flexspy.FlexSpy;
+
+        import mx.collections.ArrayCollection;
+        import mx.containers.TitleWindow;
+        import mx.core.IFlexDisplayObject;
+        import mx.events.CloseEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var session:Session = Session.getInstance();
+        [Bindable]
+        private var gerenciadorResposta:GerenciadorResposta = GerenciadorResposta.getInstance();
+        [Bindable]
+        public var statusStyle:String;
+        [Bindable]
+        public static var estaEditavel:Boolean = true;
+        public var i:uint = 0;
+        private var _respostas:ArrayCollection;
+
+        public function init():void {
+            var event:InitializeEvent = new InitializeEvent();
+            event.dispatch();
+        }
+
+        private function set status(statusResposta:int):void {
+            RespostaMain.estaEditavel = (statusResposta == EstadoResposta.NOVA_COTACAO || statusResposta == EstadoResposta.RESPONDENDO)
+        }
+
+        private function closePopUp(evt:CloseEvent):void {
+            PopUpManager.removePopUp(evt.target as IFlexDisplayObject)
+        }
+
+        private function editeDadosPessoais(event:MouseEvent):void {
+            var window:TitleWindow = new TitleWindow();
+            window.showCloseButton = true;
+            window.addEventListener(CloseEvent.CLOSE, closePopUp);
+            PopUpManager.addPopUp(window, Application.application as DisplayObject, true);
+            PopUpManager.centerPopUp(window)
+        }
+
+        private function getItensNumeroRestantes():String {
+            var result:String = "";
+            var totalItens:int = gerenciadorResposta.telaResposta.itensResposta.length;
+            var totalPreenchido:int;
+            for each(var item:ItemResposta in gerenciadorResposta.telaResposta.itensResposta) {
+                if (item.precoUnitario > 0)
+                    totalPreenchido++
+            }
+            result += totalPreenchido.toString() + "/" + totalItens.toString() + " preenchidos";
+            return result
+        }
+
+        private function leftMenu_click(event:MouseEvent):void {
+            viewStack.selectedIndex = leftMenu.selectedIndex;
+            if(leftMenu.selectedIndex == 0){
+                new LoadEvent(LoadEvent.RESPOSTAS).dispatch();
+                caixaDeEntrada.selectedIndex = 0;
+            }
+        }
+
+        ]]>
+	</mx:Script>
+
+    <mx:Binding destination="leftMenu.selectedIndex" source="viewStack.selectedIndex"/>
+
+    <main:RespostaTopButtonBar height="30" resposta="{gerenciadorResposta.telaResposta}" />
+
+    <application:Logo/>
+
+    <mx:List id="leftMenu" styleName="leftMenu" dataProvider="{viewStack.getChildren()}" labelField="label"
+             width="180" click="leftMenu_click(event)" selectedIndex="1"/>
+
+    <!--<mx:LinkButton label="FlexSpy"
+                   id="flexSpy"
+                   fontSize="10" left="10" top="300"
+                   toolTip="Iniciar Flex Spy"
+                   click="{FlexSpy.show()}"
+                   visible="true"
+                   includeInLayout="true"/>-->
+
+
+    <mx:VBox left="180" right="10" top="40" bottom="10" height="100%" width="100%">
+        <mx:ViewStack id="viewStack" creationPolicy="all" height="100%" width="100%">
+
+            <main:BaseCaixaEntradaRepresentante id="caixaDeEntrada" label="Caixa de entrada" width="100%" height="100%" />
+        </mx:ViewStack>
+    </mx:VBox>
+</mx:Application>

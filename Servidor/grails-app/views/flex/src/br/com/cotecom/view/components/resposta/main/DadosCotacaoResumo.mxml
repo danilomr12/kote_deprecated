@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml"
+		  title="Dados da Cotação" width="100%" maxWidth="300">
+	 
+	<mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.Session;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+        import br.com.cotecom.view.components.resposta.DadosCotacao;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.core.Application;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        private var gerenciadorResposta:GerenciadorResposta = GerenciadorResposta.getInstance();
+
+        private function mostreDadosCotacao(event:MouseEvent):void {
+            if (gerenciadorResposta.telaResposta == null) {
+                Session.getInstance().messageHandler.showTextMessage("Erro", "Sua Cotação não foi carregada.", Icons.ERROR);
+                return;
+            }
+            var dadosCotacao:DadosCotacao = new DadosCotacao();
+            dadosCotacao.cotacao = gerenciadorResposta.telaResposta.cotacao;
+            PopUpManager.addPopUp(dadosCotacao, Application.application as RespostaMain, true);
+            PopUpManager.centerPopUp(dadosCotacao)
+        }
+        ]]>
+	</mx:Script>
+	
+	<mx:Form height="100%" verticalGap="0">
+		<mx:FormItem label="Estado: ">
+			<mx:Label text="{gerenciadorResposta.telaResposta.resposta.statusStringVisaoComprador()}" fontSize="16" fontWeight="bold" color="#3f3f3f"/>
+		</mx:FormItem>
+		<mx:FormItem label="Enviada em:">
+			<mx:Label text="{formatter.format(gerenciadorResposta.telaResposta.resposta.dataCriacao)}"
+					  fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:FormItem label="Salva em:">
+			<mx:Label text="{formatter.format(gerenciadorResposta.telaResposta.resposta.dataSalva)}" 
+					  fontWeight="normal"/>
+		</mx:FormItem>
+		<mx:Button label="Mais Informações" icon="{Icons.MORE_24}" height="30" click="mostreDadosCotacao(event)"/>
+	</mx:Form>
+	<mx:DateFormatter id="formatter" formatString="DD/MM/YYYY HH:NN"/>
+</mx:Panel>

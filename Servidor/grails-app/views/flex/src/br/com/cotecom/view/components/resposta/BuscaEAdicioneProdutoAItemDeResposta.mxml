@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:busca="br.com.cotecom.view.components.busca.*"
+                xmlns:produto="br.com.cotecom.view.components.produto.*"
+                currentState="{getCurrentState()}"
+                showCloseButton="true" close="close()"
+                width="100%" height="100%"
+                headerHeight="30"
+                paddingBottom="15" paddingLeft="15" paddingRight="15" paddingTop="30">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.control.events.SearchEvent;
+        import br.com.cotecom.model.domain.Constants;
+        import br.com.cotecom.model.domain.dtos.Produto;
+        import br.com.cotecom.model.domain.resposta.ItemResposta;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+
+        import mx.collections.ArrayCollection;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var itensEncontrados:ArrayCollection = new ArrayCollection();
+        [Bindable]
+        public var itemResposta:ItemResposta;
+
+        private function close():void {
+            PopUpManager.removePopUp(this)
+        }
+
+        private function adicioneItem():void {
+            if (this.currentState == 'produtoAlternativoState') {
+                this.itemResposta.produtoAlternativo = dataGridProdutos.selectedItem as Produto;
+            } else if (this.currentState == 'novoProdutoState') {
+                this.itemResposta.produtoAlternativo = produtoForm.produto;
+                GerenciadorResposta.getInstance().setItemAsNotSaved(this.itemResposta);
+            } else if (this.currentState == 'prazoValidadeState') {
+                this.itemResposta.observacao = "A data de validade deste produto é dia " +
+                        formatter.format(validadeDateChooser.selectedDate);
+                GerenciadorResposta.getInstance().setItemAsNotSaved(this.itemResposta);
+            } else if (this.currentState == 'observacaoState') {
+                this.itemResposta.observacao = textAreaObs.text;
+                if (textAreaObs.text != "" && textAreaObs.text != null)
+                    GerenciadorResposta.getInstance().setItemAsNotSaved(this.itemResposta);
+            }
+            close()
+        }
+
+        private function radioGroupClickHandler(event:Event):void {
+            if (sugerirOutroProduto.selected) {
+                this.currentState = 'produtoAlternativoState'
+            } else if (prazoDeValidade.selected) {
+                this.currentState = 'prazoValidadeState'
+            } else if (outraObservacao.selected) {
+                this.currentState = 'observacaoState'
+            }
+        }
+
+        private function removerObs():void {
+            this.itemResposta.observacao = "";
+            this.itemResposta.produtoAlternativo = null;
+            GerenciadorResposta.getInstance().setItemAsNotSaved(this.itemResposta);
+            close();
+        }
+
+        private function getCurrentState():String {
+            if (this.itemResposta.produtoAlternativo == null
+                    && (this.itemResposta.observacao == null
+                    || this.itemResposta.observacao == "")) {
+                return 'observacaoState'
+            }
+            return 'editarObservacaoState'
+        }
+
+        private function novoProduto():void {
+            produtoForm.visible = true;
+            produtoForm.includeInLayout = true;
+        }
+
+        private function setFocusOnTextArea(event:Event):void {
+            if (outraObservacao.selected)
+                focusManager.setFocus(textAreaObs);
+        }
+        ]]></mx:Script>
+    <mx:DateFormatter id="formatter" formatString="DD/MM/YYYY"/>
+    <mx:states>
+        <mx:State name="produtoAlternativoState">
+            <mx:SetProperty name="includeInLayout" target="{produtoAlternativo}" value="true"/>
+            <mx:SetProperty name="visible" target="{produtoAlternativo}" value="true"/>
+            <mx:SetProperty name="includeInLayout" target="{obs}" value="false"/>
+            <mx:SetProperty name="visible" target="{obs}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{validade}" value="false"/>
+            <mx:SetProperty name="visible" target="{validade}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{editarObs}" value="false"/>
+            <mx:SetProperty name="visible" target="{editarObs}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{novoProdutoForm}" value="false"/>
+            <mx:SetProperty name="visible" target="{novoProdutoForm}" value="false"/>
+        </mx:State>
+        <mx:State name="prazoValidadeState">
+            <mx:SetProperty name="includeInLayout" target="{produtoAlternativo}" value="false"/>
+            <mx:SetProperty name="visible" target="{produtoAlternativo}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{obs}" value="false"/>
+            <mx:SetProperty name="visible" target="{obs}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{validade}" value="true"/>
+            <mx:SetProperty name="visible" target="{validade}" value="true"/>
+            <mx:SetProperty name="includeInLayout" target="{editarObs}" value="false"/>
+            <mx:SetProperty name="visible" target="{editarObs}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{novoProdutoForm}" value="false"/>
+            <mx:SetProperty name="visible" target="{novoProdutoForm}" value="false"/>
+        </mx:State>
+        <mx:State name="observacaoState">
+            <mx:SetProperty name="includeInLayout" target="{produtoAlternativo}" value="false"/>
+            <mx:SetProperty name="visible" target="{produtoAlternativo}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{obs}" value="true"/>
+            <mx:SetProperty name="visible" target="{obs}" value="true"/>
+            <mx:SetProperty name="includeInLayout" target="{validade}" value="false"/>
+            <mx:SetProperty name="visible" target="{validade}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{editarObs}" value="false"/>
+            <mx:SetProperty name="visible" target="{editarObs}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{novoProdutoForm}" value="false"/>
+            <mx:SetProperty name="visible" target="{novoProdutoForm}" value="false"/>
+        </mx:State>
+        <mx:State name="editarObservacaoState">
+            <mx:SetProperty name="includeInLayout" target="{produtoAlternativo}" value="false"/>
+            <mx:SetProperty name="visible" target="{produtoAlternativo}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{obs}" value="false"/>
+            <mx:SetProperty name="visible" target="{obs}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{validade}" value="false"/>
+            <mx:SetProperty name="visible" target="{validade}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{editarObs}" value="true"/>
+            <mx:SetProperty name="visible" target="{editarObs}" value="true"/>
+            <mx:SetProperty name="includeInLayout" target="{novoProdutoForm}" value="false"/>
+            <mx:SetProperty name="visible" target="{novoProdutoForm}" value="false"/>
+        </mx:State>
+        <mx:State name="novoProdutoState">
+            <mx:SetProperty name="includeInLayout" target="{produtoAlternativo}" value="false"/>
+            <mx:SetProperty name="visible" target="{produtoAlternativo}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{obs}" value="false"/>
+            <mx:SetProperty name="visible" target="{obs}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{validade}" value="false"/>
+            <mx:SetProperty name="visible" target="{validade}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{editarObs}" value="false"/>
+            <mx:SetProperty name="visible" target="{editarObs}" value="false"/>
+            <mx:SetProperty name="includeInLayout" target="{novoProdutoForm}" value="true"/>
+            <mx:SetProperty name="visible" target="{novoProdutoForm}" value="true"/>
+        </mx:State>
+    </mx:states>
+
+    <mx:HBox>
+        <mx:Label text="Selecione uma opção:"/>
+        <mx:RadioButtonGroup id="opcoes" enabled="true" itemClick="radioGroupClickHandler(event)"/>
+        <mx:RadioButton id="sugerirOutroProduto" label="Sugerir outro produto" groupName="opcoes" selected="false"
+                        includeInLayout="false" visible="false"/>
+        <mx:RadioButton id="prazoDeValidade" label="Prazo de validade próximo" groupName="opcoes"/>
+        <mx:RadioButton id="outraObservacao" label="Outra Observação" groupName="opcoes" click="setFocusOnTextArea(event)" selected="true"/>
+    </mx:HBox>
+    <mx:VBox id="produtoAlternativo" width="100%" height="100%" horizontalAlign="center" visible="false" includeInLayout="false">
+        <mx:HBox width="100%">
+            <busca:Busca width="300" id="busca" alvo="{itensEncontrados}" type="{SearchEvent.PRODUTO}"/>
+            <mx:Label text="Não encontrou o produto?"/>
+            <mx:LinkButton label="Adicione-o agora" click="this.currentState = 'novoProdutoState'"/>
+        </mx:HBox>
+        <mx:DataGrid id="dataGridProdutos" width="100%" height="100%" dataProvider="{itensEncontrados}"
+                     sortableColumns="false" itemDoubleClick="adicioneItem()"
+                     doubleClickEnabled="true"
+                     toolTip="Selecione o produto e clique em adicionar">
+            <mx:columns>
+                <mx:DataGridColumn headerText="Descrição" dataField="descricao" width="350"/>
+                <mx:DataGridColumn headerText="Embalagem" dataField="embalagem" width="80"/>
+                <mx:DataGridColumn headerText="Categoria" dataField="categoria"/>
+            </mx:columns>
+        </mx:DataGrid>        
+    </mx:VBox>
+    <mx:VBox id="novoProdutoForm" horizontalAlign="center" includeInLayout="false" visible="false">
+        <mx:LinkButton label="Buscar produto" click="this.currentState = 'produtoAlternativoState'"/>
+        <produto:ProdutoForm id="produtoForm"/>
+    </mx:VBox>
+    <mx:VBox id="obs" width="100%" height="100%" horizontalAlign="center">
+        <mx:Label text="Escreva os bem detalhadamente para que o comprador possa compreender melhor"/>
+        <mx:TextArea id="textAreaObs" width="100%" height="180"/>
+    </mx:VBox>
+    <mx:VBox id="validade" width="100%" height="100%"  horizontalAlign="center">
+        <mx:Label text="Prazo de validade"/>
+        <mx:DateChooser id="validadeDateChooser"
+                        dayNames="{Constants.DIAS_SEMANA}"
+                        monthNames="{Constants.MESES_ANO}"/>
+    </mx:VBox>
+    <mx:VBox id="editarObs" width="100%" height="100%">
+        <mx:TextArea editable="false" width="100%" height="100%" text="{this.itemResposta.produtoAlternativo?
+        this.itemResposta.produtoAlternativo.toString() : this.itemResposta.observacao}"/>
+        <mx:LinkButton label="Remover observação" click="removerObs()"/>
+    </mx:VBox>
+    <mx:HBox width="100%">
+        <mx:Spacer width="100%"/>
+        <mx:LinkButton label="Cancelar" click="close()" color="blue"/>
+        <mx:Spacer width="100%"/>
+        <mx:Button label="Adicionar" click="adicioneItem()"/>
+        <mx:Spacer width="100%"/>
+    </mx:HBox>
+</mx:TitleWindow>

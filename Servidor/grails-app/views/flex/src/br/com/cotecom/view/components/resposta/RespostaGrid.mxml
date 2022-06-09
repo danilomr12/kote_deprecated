@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:DataGrid xmlns:mx="http://www.adobe.com/2006/mxml"
+             editable="true"
+             verticalGridLines="true"
+             fontSize="13"
+             horizontalGridLines="true"
+             horizontalGridLineColor="#BFBFBF"
+             color="#555555"
+             sortableColumns="true"
+             paddingLeft="0" paddingRight="0"
+             itemEditEnd="onItemEditEnd(event)"
+             itemClick="itemClick(event)"
+             currentState="representanteNaoEditavel"
+             keyDown="itemKeydown(event)"
+             rowCount="20">
+
+    <mx:Script>
+		<![CDATA[
+        import br.com.cotecom.model.domain.resposta.ItemResposta;
+        import br.com.cotecom.model.services.comprador.GerenciadorCotacao;
+        import br.com.cotecom.model.services.resposta.GerenciadorResposta;
+        import br.com.cotecom.view.util.DinheiroUtil;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.controls.DataGrid;
+        import mx.controls.dataGridClasses.DataGridColumn;
+        import mx.core.Application;
+        import mx.core.IFlexDisplayObject;
+        import mx.events.CollectionEvent;
+        import mx.events.DataGridEvent;
+        import mx.events.ListEvent;
+        import mx.managers.PopUpManager;
+
+        public var gerenciadorResposta:GerenciadorResposta = GerenciadorResposta.getInstance();
+
+        public function precoUnitario(data:Object, column:DataGridColumn):String {
+            var item:ItemResposta = data as ItemResposta;
+            return item.precoUnitario != 0 ? DinheiroUtil.formatAsReal(item.precoUnitario) : "";
+        }
+
+        public function precoEmbalagem(data:Object, column:DataGridColumn):String {
+            var item:ItemResposta = data as ItemResposta;
+            return item.precoEmbalagem != 0 ? DinheiroUtil.formatAsReal(item.precoEmbalagem) : "";
+        }
+
+        public function onItemEditEnd(event:DataGridEvent):void {
+            var item:ItemResposta = (event.target as DataGrid).dataProvider[event.rowIndex];
+            var textInputValue:String = event.target.itemEditorInstance.text;
+            textInputValue = textInputValue.replace(",", ".");
+            if (!textInputValue.match(/\d\.($|\d)/) && !textInputValue.match(/\.($|\d)/)) {
+                textInputValue = (Number(textInputValue) / 100).toString();
+            }
+            textInputValue = numberFormatter.format(textInputValue);
+            var itemResposta:ItemResposta = (event.itemRenderer.data as ItemResposta);
+            var valorNumericoTextInput:Number = Number(textInputValue);
+            if (event.columnIndex == 4 || event.columnIndex == 6) {
+                if (item.precoUnitario != valorNumericoTextInput) {
+                    itemResposta.precoUnitario = valorNumericoTextInput;
+                    gerenciadorResposta.setItemAsNotSaved(item);
+                }
+            } else if (event.columnIndex == 3 || event.columnIndex == 5) {
+                if (item.precoEmbalagem != valorNumericoTextInput) {
+                    itemResposta.precoEmbalagem = valorNumericoTextInput;
+                    gerenciadorResposta.setItemAsNotSaved(item);
+                }
+            }
+        }
+
+        protected function itemClick(event:ListEvent):void {
+            //TODO Escrever aqui metodo que redireciona o foco para a coluna preco assim que o usuario clica na grid
+            /*if(currentState == "representante")
+             focusManager.setFocus(event.currentTarget.colunaPrecoEmbalagemRepresentante.itemEditor as TextInput);*/
+        }
+
+        private function showWindow(window:IFlexDisplayObject):void {
+            var app:* = Application.application;
+            PopUpManager.addPopUp(window, app, true);
+            PopUpManager.centerPopUp(window);
+        }
+
+        public function adicioneObs(data:*):void {
+            var titleWindow:BuscaEAdicioneProdutoAItemDeResposta = new BuscaEAdicioneProdutoAItemDeResposta();
+            titleWindow.itemResposta = data as ItemResposta;
+            showWindow(titleWindow);
+        }
+
+        public function getIcon(data:*):* {
+            if (this.currentState == "representanteEditavel" || this.currentState == "representanteNaoEditavel"  ) {
+                return data.produtoAlternativo || data.observacao ? Icons.EDIT_24 : null;
+            } else if (this.currentState == "comprador") {
+                return data.produtoAlternativo || data.observacao ? Icons.WARNING_24 : null;
+            }
+            return null;
+        }
+
+        public function getLabel(data:*):* {
+            return data.produtoAlternativo || data.observacao ? null : '+ Obs';
+        }
+
+        private function itemKeydown(event:KeyboardEvent):void {
+            if ((event.keyCode == Keyboard.UP || event.keyCode == Keyboard.DOWN)
+                    && event.currentTarget.editedItemPosition != null) {
+                var rowIndex:* = DataGrid(event.currentTarget).editedItemPosition.rowIndex;
+                var columnIndex:* = DataGrid(event.currentTarget).editedItemPosition.columnIndex;
+                if (event.keyCode == Keyboard.UP && this.editedItemPosition.rowIndex > 0) {
+                    this.editedItemPosition = {columnIndex:columnIndex, rowIndex:rowIndex - 1};
+                } else if (event.keyCode == Keyboard.DOWN && this.editedItemPosition.rowIndex < this.dataProvider.length - 1) {
+                    this.editedItemPosition = {columnIndex:columnIndex, rowIndex:rowIndex + 1};
+                }
+                this.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE));
+            }
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:states>
+        <mx:State name="representanteNaoEditavel">
+            <mx:SetProperty target="{colunaPrecoEmbalagemRepresentante}" name="editable" value="false"/>
+            <mx:SetProperty target="{colunaPrecoUnitarioRepresentante}" name="editable" value="false"/>
+            <mx:SetProperty target="{colunaPrecoUnitarioComprador}" name="visible" value="false"/>
+            <mx:SetProperty target="{colunaPrecoEmbalagemComprador}" name="visible" value="false"/>
+            <mx:SetProperty target="{colunaPrecoUnitarioRepresentante}" name="visible" value="true"/>
+            <mx:SetProperty target="{colunaPrecoEmbalagemRepresentante}" name="visible" value="true"/>
+        </mx:State>
+        <mx:State name="representanteEditavel">
+            <mx:SetProperty target="{colunaPrecoEmbalagemRepresentante}" name="editable" value="true"/>
+            <mx:SetProperty target="{colunaPrecoUnitarioRepresentante}" name="editable" value="true"/>
+            <mx:SetProperty target="{colunaPrecoUnitarioComprador}" name="visible" value="false"/>
+            <mx:SetProperty target="{colunaPrecoEmbalagemComprador}" name="visible" value="false"/>
+            <mx:SetProperty target="{colunaPrecoUnitarioRepresentante}" name="visible" value="true"/>
+            <mx:SetProperty target="{colunaPrecoEmbalagemRepresentante}" name="visible" value="true"/>
+        </mx:State>
+        <mx:State name="comprador">
+            <mx:SetProperty target="{colunaPrecoUnitarioComprador}" name="visible" value="true"/>
+            <mx:SetProperty target="{colunaPrecoEmbalagemComprador}" name="visible" value="true"/>
+            <mx:SetProperty target="{colunaPrecoUnitarioRepresentante}" name="visible" value="false"/>
+            <mx:SetProperty target="{colunaPrecoEmbalagemRepresentante}" name="visible" value="false"/>
+        </mx:State>
+    </mx:states>
+
+    <mx:NumberFormatter id="numberFormatter"
+                        useThousandsSeparator="false"
+                        precision="2" />
+
+    <mx:columns>
+        <mx:DataGridColumn headerText="Quantidade" dataField="quantidade" width="40" editable="false"/>
+        <mx:DataGridColumn id="colunaDescricao" headerText="Descrição" dataField="descricao" editable="false" textAlign="left" />
+        <mx:DataGridColumn headerText="Embalagem" dataField="embalagem" width="85" editable="false" />
+
+        <mx:DataGridColumn id="colunaPrecoEmbalagemRepresentante" sortable="false"
+                           headerText="Preço Embalagem" labelFunction="precoEmbalagem" width="50"
+                           backgroundColor="#F2F3F8" color="#000000" textAlign="center"/>
+        <mx:DataGridColumn id="colunaPrecoUnitarioRepresentante"  sortable="false"
+                           headerText="Preço Unitário" labelFunction="precoUnitario" width="50"
+                           backgroundColor="#F2F3F8" color="#000000" textAlign="center"/>
+
+        <mx:DataGridColumn id="colunaPrecoEmbalagemComprador" editable="false"    sortable="false"
+                           headerText="Preço Embalagem" labelFunction="precoEmbalagem" width="60"
+                           backgroundColor="#F2F3F8" color="#000000" textAlign="center"/>
+        <mx:DataGridColumn id="colunaPrecoUnitarioComprador" editable="false" sortable="false"
+                           headerText="Preço Unitário" labelFunction="precoUnitario" width="60"
+                           backgroundColor="#F2F3F8" color="#000000" textAlign="center"/>
+
+        <mx:DataGridColumn editable="false" width="50" id="colunaObs" headerText="Obs" visible="true" sortable="false">
+            <mx:itemRenderer>
+                <mx:Component>
+                    <mx:LinkButton
+                            icon="{outerDocument.getIcon(data)}"
+                            label="{outerDocument.getLabel(data)}"
+                            height="20"
+                            enabled="{outerDocument.gerenciadorResposta.editavel}"
+                            click="outerDocument.adicioneObs(data)"
+                            textDecoration="none"
+                            toolTip="Clique para adicionar/editar uma observação ao produto">
+                    </mx:LinkButton>
+                </mx:Component>
+            </mx:itemRenderer>
+        </mx:DataGridColumn>
+    </mx:columns>
+
+</mx:DataGrid>

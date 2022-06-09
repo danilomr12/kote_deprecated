@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:components="br.com.cotecom.view.components.*"
+          xmlns:application="br.com.cotecom.view.components.application.*"
+          xmlns:fornecedores="br.com.cotecom.view.components.fornecedores.*"
+          headerHeight="10" footerColors="[#FFCA51, #FFCA51]"
+          layout="vertical" dropShadowEnabled="true" shadowDirection="left"
+          creationComplete="init(event)">
+
+    <mx:Script><![CDATA[
+        import br.com.cotecom.control.commands.fornecedores.SaveRepresentanteCommand;
+        import br.com.cotecom.control.events.RemoveEvent;
+        import br.com.cotecom.model.domain.dtos.Produto;
+        import br.com.cotecom.model.domain.dtos.usuarios.TipoUsuario;
+        import br.com.cotecom.model.domain.dtos.usuarios.Usuario;
+        import br.com.cotecom.model.services.comprador.GerenciadorRepresentantes;
+        import br.com.cotecom.view.components.fornecedores.CadastroNovoAtendimento;
+        import br.com.cotecom.view.components.fornecedores.InfoRepresentante;
+        import br.com.cotecom.view.util.Icons;
+
+        import mx.collections.ArrayCollection;
+        import mx.controls.Alert;
+        import mx.core.Application;
+        import mx.core.IFlexDisplayObject;
+        import mx.events.CloseEvent;
+        import mx.events.FlexEvent;
+        import mx.managers.PopUpManager;
+
+        [Bindable]
+        public var gerenciadorRepresentantes:GerenciadorRepresentantes = GerenciadorRepresentantes.getInstance();
+        [Bindable]
+        private var representantesEncontrados:ArrayCollection = new ArrayCollection();
+
+        public function init(event:FlexEvent):void {
+        }
+
+        private function mostrePainelBuscaFornecedores():void {
+            this.currentState = "adicionaFornecedoresVisivel"
+        }
+
+        private function ocultePainelAdicaoFornecedor():void {
+            this.currentState = "adicionaFornecedoresOculto"
+        }
+
+
+        private function verRepresentanteSelecionado():void {
+            if (!gridRepresentantes.selectedItem) {
+                Alert.show("Nenhum representante está selecionado", "Detalhes do fornecedor")
+            } else {
+                var infoRepresentante:InfoRepresentante = new InfoRepresentante();
+                infoRepresentante.representante = gridRepresentantes.selectedItem as Usuario;
+                var window:TitleWindow = new TitleWindow();
+                window.showCloseButton = true;
+                window.addChild(infoRepresentante);
+                window.addEventListener(CloseEvent.CLOSE, function ():void {
+                    PopUpManager.removePopUp(window)
+                });
+                PopUpManager.addPopUp(window, Application.application as CompradorMain, true);
+                PopUpManager.centerPopUp(window);
+            }
+        }
+
+        private function showWindow(window:IFlexDisplayObject):void {
+            PopUpManager.addPopUp(window, Application.application as CompradorMain, true);
+            PopUpManager.centerPopUp(window)
+        }
+
+        private function onItemDoubleClick():void {
+            verRepresentanteSelecionado();
+        }
+
+        protected function crieNovoRepresentanteEOAdicioneAosAtendimentos(event:MouseEvent):void {
+            var cadastroNovoAtendimento:CadastroNovoAtendimento = new CadastroNovoAtendimento();
+            cadastroNovoAtendimento.representante = new Usuario(TipoUsuario.REPRESENTANTE);
+            showWindow(cadastroNovoAtendimento);
+        }
+
+        private function removaRepresentanteSelecionado(event:MouseEvent):void {
+            if (!gridRepresentantes.selectedItem) {
+                Alert.show("Nenhum representante está selecionado", "Detalhes do fornecedor")
+            } else {
+                new RemoveEvent(RemoveEvent.ATENDIMENTO, gridRepresentantes.selectedItem).dispatch();
+            }
+        }
+
+        private static function nomeFantasiaLblFunct(object:Object, column:DataGridColumn):String {
+            var representante:Usuario = (object as Usuario);
+            if (representante && representante.empresa)
+                return representante.empresa.nomeFantasia;
+            return "";
+        }
+        ]]>
+	</mx:Script>
+
+    <mx:transitions>
+        <mx:Transition fromState="*" toState="*">
+            <mx:Sequence id="t1" targets="{[panelAdicaoAtendimento]}">
+                <mx:Parallel>
+                    <mx:Move  duration="400"/>
+                    <mx:Resize duration="400"/>
+                </mx:Parallel>
+            </mx:Sequence>
+        </mx:Transition>
+    </mx:transitions>
+
+    <mx:states>
+        <mx:State name="adicionaFornecedoresOculto" >
+            <mx:SetProperty target="{panelAdicaoAtendimento}" name="visible" value="false"/>
+            <mx:SetProperty target="{panelAdicaoAtendimento}" name="includeInLayout" value="false"/>
+        </mx:State>
+        <mx:State name="adicionaFornecedoresVisivel">
+            <mx:SetProperty target="{panelAdicaoAtendimento}" name="visible" value="true"/>
+            <mx:SetProperty target="{panelAdicaoAtendimento}" name="includeInLayout" value="true"/>
+        </mx:State>
+    </mx:states>
+
+    <mx:HDividedBox width="100%" height="100%" >
+
+        <mx:VBox width="100%" height="100%" >
+            <mx:DataGrid height="100%" width="100%"
+                         id="gridRepresentantes"
+                         doubleClickEnabled="true"
+                         itemDoubleClick="onItemDoubleClick()"
+                         dataProvider="{gerenciadorRepresentantes.representantesComAtendimento}">
+                <mx:columns>
+                    <mx:DataGridColumn headerText="Representante" dataField="nome"/>
+                    <mx:DataGridColumn headerText="E-mail do representante" dataField="email"/>
+                    <mx:DataGridColumn headerText="Fornecedor" labelFunction="nomeFantasiaLblFunct"/>
+                </mx:columns>
+            </mx:DataGrid>
+        </mx:VBox>
+
+        <mx:TitleWindow id="panelAdicaoAtendimento" width="350" height="100%"
+                        title="Adicionar novo representantes à seus fornecedores" borderStyle="inset" dropShadowEnabled="true"
+                        visible="false" includeInLayout="false" showCloseButton="true" close="ocultePainelAdicaoFornecedor()">
+            <fornecedores:BuscaEAdicionaAtendimento/>
+            <mx:HRule width="100%"/>
+            <mx:VBox width="100%">
+                <mx:Text width="100%" text="Não encontrou o representante
+					 desejado? Adicione-o agora mesmo"/>
+                <mx:LinkButton label="Adicionar novo representante"
+                               click="crieNovoRepresentanteEOAdicioneAosAtendimentos(event)"/>
+            </mx:VBox>
+        </mx:TitleWindow>
+    </mx:HDividedBox>
+
+    <application:FooterControlBar>
+        <mx:Button height="100%"
+                   label="Adicionar"
+                   toolTip="Busca outros fornecedores para que você possa efetuar cotações"
+                   click="mostrePainelBuscaFornecedores()"
+                   icon="{Icons.ADD_24}"
+                   styleName="barButton"
+                   labelPlacement="bottom"/>
+        <mx:Button height="100%"
+                   label="Detalhes"
+                   icon="{Icons.VIEW_24}"
+                   click="verRepresentanteSelecionado()"
+                   toolTip="Ver informações do representante selecionado"
+                   styleName="barButton"
+                   labelPlacement="bottom"/>
+        <mx:Button height="100%"
+                   label="Remover"
+                   icon="{Icons.DELETE_24}"
+                   click="removaRepresentanteSelecionado(event)"
+                   toolTip="Remove a empresa selecionada de sua lista de fornecedores"
+                   styleName="barButton"
+                   labelPlacement="bottom"/>
+
+    </application:FooterControlBar>
+
+</mx:Panel>

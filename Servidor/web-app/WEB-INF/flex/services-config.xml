@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services-config>
+
+    <services>
+        <service id="grails-remoting-service" class="flex.messaging.services.RemotingService">
+            <adapters>
+                <adapter-definition id="java-object" class="flex.messaging.services.remoting.adapters.JavaAdapter"
+                                    default="true"/>
+            </adapters>
+        </service>
+
+        <!--
+        Grails bootstrap service. This service registers the SpringFactory and 
+        creates destinations for the annotated Grails services.
+        -->
+        <service id="grails-service" class="org.codehaus.groovy.grails.plugins.flex.GrailsBootstrapService"></service>
+
+        <!--
+        Application level default channels. Application level default channels are 
+        necessary when a dynamic destination is being used by a service component
+        and no ChannelSet has been defined for the service component. In that case,
+        application level default channels will be used to contact the destination.
+        -->
+        <default-channels>
+            <channel ref="grails-amf"/>
+        </default-channels>
+    </services>
+
+    <channels>
+        <channel-definition id="grails-amf" class="mx.messaging.channels.AMFChannel">
+            <endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/amf"
+                      class="flex.messaging.endpoints.AMFEndpoint"/>
+        </channel-definition>
+    </channels>
+
+    <channels>
+        <channel-definition id="grails-amf" class="mx.messaging.channels.AMFChannel">
+            <endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/amf"
+                      class="flex.messaging.endpoints.AMFEndpoint"/>
+        </channel-definition>
+    </channels>
+
+
+    <!--<logging>
+        <target class="org.springframework.flex.core.CommonsLoggingTarget" level="All">
+            <properties>
+                <categoryPrefix>blazeds</categoryPrefix>
+                <includeDate>true</includeDate>
+                <includeTime>true</includeTime>
+                <includeCategory>true</includeCategory>
+                <includeLevel>true</includeLevel>
+            </properties>
+            <filters>
+                <pattern>Message.General</pattern>
+                <pattern>Endpoint.*</pattern>
+                <pattern>Service.*</pattern>
+                <pattern>Configuration</pattern>
+            </filters>
+        </target>
+    </logging>-->
+
+    <logging>
+        <target class="flex.messaging.log.ConsoleTarget" level="Warn">
+            <properties>
+                <prefix>[BlazeDS]</prefix>
+                <includeDate>true</includeDate>
+                <includeTime>true</includeTime>
+                <includeLevel>true</includeLevel>
+                <includeCategory>true</includeCategory>
+            </properties>
+            <filters>
+                <pattern>Message.General</pattern>
+                 <pattern>Endpoint.*</pattern>
+                <pattern>Service.*</pattern>
+                <pattern>Configuration</pattern>
+            </filters>
+        </target>
+    </logging>
+
+</services-config>
